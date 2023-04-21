@@ -1,4 +1,4 @@
-# JEL
+# JAM
 
 ## Index
 1. Product Description
