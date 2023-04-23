@@ -1,84 +1,99 @@
-import { Component } from "react";
+import React from "react";
+import { useState } from "react";
 import { signUp } from "../../utilities/users-service";
+import FirstNameSignUp from "./FirstNameSignUp";
+import LastNameSignUp from "./LastNameSignUp";
+import UsernameSignUp from "./UsernameSignUp";
+import EmailSignUp from "./EmailSignUp";
+import PasswordSignUp from "./PasswordSignUp";
+import SuccessSignUp from "./SuccessSignUp";
 
-export default class SignUpForm extends Component {
-    state = {
-        name: "",
+export default function SignUpForm({ setUser }) {
+    const [formNumber, setFormNumber] = useState(1);
+
+    const [newUser, setNewUser] = useState({
+        first_name: "",
+        last_name: "",
+        username: "",
         email: "",
         password: "",
         confirm: "",
         error: "",
-    };
+    });
 
-    handleChange = (evt) => {
-        this.setState({
+    function handleChange(evt) {
+        setNewUser({
+            ...newUser,
             [evt.target.name]: evt.target.value,
             error: "",
         });
-    };
+    }
 
-    handleSubmit = async (evt) => {
+    async function handleSubmit(evt) {
         evt.preventDefault();
         try {
-            const { name, email, password } = this.state;
-            const formData = { name, email, password };
-            // The promise returned by the signUp service
-            // method will resolve to the user object included
-            // in the payload of the JSON Web Token (JWT)
+            const { first_name, last_name, username, email, password } =
+                newUser;
+            const formData = {
+                first_name,
+                last_name,
+                username,
+                email,
+                password,
+            };
             const user = await signUp(formData);
-            this.props.setUser(user);
+            setUser(user);
         } catch {
-            // An error occurred
-            // Probably due to a duplicate email
-            this.setState({ error: "Sign Up Failed - Try Again" });
+            setNewUser({ error: "Sign up failed - try again" });
         }
-    };
-
-    render() {
-        const disable = this.state.password !== this.state.confirm;
-        return (
-            <div>
-                <div className="form-container">
-                    <form autoComplete="off" onSubmit={this.handleSubmit}>
-                        <label>Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={this.state.name}
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <label>Email</label>
-                        <input
-                            type="email"
-                            name="email"
-                            value={this.state.email}
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <label>Password</label>
-                        <input
-                            type="password"
-                            name="password"
-                            value={this.state.password}
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <label>Confirm</label>
-                        <input
-                            type="password"
-                            name="confirm"
-                            value={this.state.confirm}
-                            onChange={this.handleChange}
-                            required
-                        />
-                        <button type="submit" disabled={disable}>
-                            SIGN UP
-                        </button>
-                    </form>
-                </div>
-                <p className="error-message">&nbsp;{this.state.error}</p>
-            </div>
-        );
     }
+
+    function whichForm() {
+        if (formNumber === 1) {
+            return (
+                <FirstNameSignUp
+                    newUser={newUser}
+                    handleChange={handleChange}
+                    setFormNumber={setFormNumber}
+                />
+            );
+        } else if (formNumber === 2) {
+            return (
+                <LastNameSignUp
+                    newUser={newUser}
+                    handleChange={handleChange}
+                    setFormNumber={setFormNumber}
+                />
+            );
+        } else if (formNumber === 3) {
+            return (
+                <UsernameSignUp
+                    newUser={newUser}
+                    handleChange={handleChange}
+                    setFormNumber={setFormNumber}
+                />
+            );
+        } else if (formNumber === 4) {
+            return (
+                <EmailSignUp
+                    newUser={newUser}
+                    handleChange={handleChange}
+                    setFormNumber={setFormNumber}
+                />
+            );
+        } else if (formNumber === 5) {
+            return (
+                <PasswordSignUp
+                    newUser={newUser}
+                    handleChange={handleChange}
+                    setFormNumber={setFormNumber}
+                    handleSubmit={handleSubmit}
+                />
+            );
+        } else {
+            return <SuccessSignUp />;
+        }
+    }
+
+    return <div>{whichForm()}</div>;
 }
