@@ -13,16 +13,16 @@ const chatSchema = new mongoose.Schema({
   messages: [{
     text: {
       type: String,
-      required: true
+    //   required: true
     },
     sender_id: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+    //   required: true,
       ref: 'User'
     },
     date: {
       type: Date,
-      required: true
+    //   required: true
     }
   }]
 });
