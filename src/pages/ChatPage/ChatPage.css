@@ -1,0 +1,29 @@
+.ChatPage {
+    display: flex;
+    flex-direction: column;
+}
+
+.ChatPage > .chat-box {
+    border: solid 1px black;
+    border-radius: 5px;
+    width: 75vw;
+    height: 60vh;
+    align-self: center;
+    background-color: rgb(189, 189, 189);
+    margin-bottom: 10px;
+}
+
+.ChatPage form > button {
+    width: 17%;
+    height: 100%;
+    margin: 0;
+}
+
+.ChatPage form {
+    display: flex;
+    justify-content: center;
+}
+
+.ChatPage form > input {
+    width: 60%;
+}
