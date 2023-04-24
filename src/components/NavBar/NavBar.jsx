@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 import * as userService from '../../utilities/users-service';
 import "./NavBar.css"
+import homeIcon from "../../images/icons/homeIcon.png";
+import chatIcon from "../../images/icons/chatIcon.png";
+import notificationIcon from "../../images/icons/notiBellIcon.png";
+import ProfilePicture from "../../images/icons/profilepicdemo.png"
 
 export default function NavBar({ user, setUser }) {
   function handleLogOut() {
@@ -9,45 +13,76 @@ export default function NavBar({ user, setUser }) {
   }
 
   return (
+    <div className="App">
+      <nav>
+        <ul className="squircles">
+          <li className="squircle white-one"></li>
+          <li className="divider"></li>
+          <li className="squircle purple-one">
+            <div className="popup">
+              <h4 className="popup-text">JAM HQ</h4>
+            </div>
+          </li>
+          <li className="squircle purple-one">
+            <div className="popup">
+              <h4 className="popup-text">CREW</h4>
+            </div>
+          </li>
+          <li className="squircle green-one">
+            <div className="popup">
+              <h4 className="popup-text">GYM SQUAD</h4>
+            </div>
+          </li>
+          <li className="squircle green-one">
+            <div className="popup">
+              <h4 className="popup-text">CODERS</h4>
+            </div>
+          </li>
+          <li className="squircle purple-one">
+            <div className="popup">
+              <h4 className="popup-text">THE DEFTONES</h4>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <header className="header">
+      <div className="nav-icons">
+        <Link to="/">
+          <img src={homeIcon} alt="Home" className="icon" />
+        </Link>
+        <Link to="/inbox">
+          <img src={chatIcon} alt="Inbox" className="icon" />
+        </Link>
+        <Link to="/notifications">
+          <img src={notificationIcon} alt="Notifications" className="icon" />
+        </Link>
+      </div>
+      </header>
+      <main className="main">
+        <section className="friends-list">
+          <h4 className="friend-title">Friends:</h4>
+          <div className="friend-item">
+            <img src={ProfilePicture} alt="Profile" className="profile-pic" />
+            <span className="friend-name">John Doe</span>
+          </div>
+          <div className="friend-item">
+            <img src={ProfilePicture} alt="Profile" className="profile-pic" />
+            <span className="friend-name">John Doe</span>
+          </div>
+          <div className="friend-item">
+            <img src={ProfilePicture} alt="Profile" className="profile-pic" />
+            <span className="friend-name">John Doe</span>
+          </div>
+          <div className="friend-item">
+            <img src={ProfilePicture} alt="Profile" className="profile-pic" />
+            <span className="friend-name">John Doe</span>
+          </div>
+        </section>
+        <section className="chat">
+          {/* Chat content goes here */}
+        </section>
+      </main>
 
-    <nav>
-      <ul className="squircles">
-        <li className="squircle white-one"></li>
-        <li className="divider"></li>
-        <li className="squircle purple-one">
-          <div className="popup">
-            <h4 className="popup-text">JAM HQ</h4>
-          </div>
-        </li>
-        <li className="squircle purple-one">
-        <div className="popup">
-            <h4 className="popup-text">CREW</h4>
-          </div>
-        </li>
-        <li className="squircle green-one">
-        <div className="popup">
-            <h4 className="popup-text">GYM SQUAD</h4>
-          </div>
-        </li>
-        <li className="squircle green-one">
-        <div className="popup">
-            <h4 className="popup-text">CODERS</h4>
-          </div>
-        </li>
-        <li className="squircle purple-one">
-        <div className="popup">
-            <h4 className="popup-text">THE DEFTONES</h4>
-          </div>
-        </li>
-      </ul>
-    </nav>
-    // <nav>
-    //   <Link to="/profile">Order History</Link>
-    //   &nbsp; | &nbsp;
-    //   <Link to="/orders/new">New Order</Link>
-    //   &nbsp;&nbsp;
-    //   <span>Welcome, {user.name}</span>
-    //   &nbsp;&nbsp;<Link to="" onClick={handleLogOut}>Log Out</Link>
-    // </nav>
+    </div>
   );
 }
