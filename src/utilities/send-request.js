@@ -12,7 +12,7 @@ export async function sendRequest(url, method = "GET", payload = null) {
         options.headers = options.headers || {};
         options.headers.Authorization = `Bearer ${token}`;
     }
-
+    
     // Fetch uses an options object as a second arg
     // to make requests other than GET, include data,
     // set headers.
