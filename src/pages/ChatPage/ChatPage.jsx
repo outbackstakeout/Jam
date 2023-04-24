@@ -12,6 +12,11 @@ function ChatPage() {
             socketRef.current = io();
         }
 
+        // define the socket authentication as the web's current token
+        socketRef.current.auth = {
+            token: localStorage.getItem("token"),
+        };
+
         return () => {
             socketRef.current.disconnect();
         };

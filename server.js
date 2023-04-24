@@ -34,8 +34,8 @@ const server = app.listen(port, function () {
 const io = require("./config/socket").init(server);
 
 io.on("connection", (socket) => {
-    console.log("user has connected");
+    console.log(`user id: ${socket.id} has connected`);
     socket.on("disconnect", () => {
-        console.log("user has disconnected");
+        console.log(`user id: ${socket.id} has disconnected`);
     });
 });
