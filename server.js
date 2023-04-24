@@ -35,4 +35,7 @@ const io = require("./config/socket").init(server);
 
 io.on("connection", (socket) => {
     console.log("user has connected");
+    socket.on("disconnect", () => {
+        console.log("user has disconnected");
+    });
 });

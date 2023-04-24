@@ -1,8 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import { io } from "socket.io-client";
 import "./ChatPage.css";
 
 function ChatPage() {
     const [input, setInput] = useState("");
+
+    const socketRef = useRef();
+
+    useEffect(() => {
+        if (!socketRef.current) {
+            socketRef.current = io();
+        }
+
+        return () => {
+            socketRef.current.disconnect();
+        };
+    }, []);
 
     function handleChange(e) {
         setInput(e.target.value);
