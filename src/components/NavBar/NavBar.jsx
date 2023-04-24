@@ -13,7 +13,7 @@ export default function NavBar({ user, setUser }) {
   }
 
   return (
-    <div className="App">
+    <div className="navBar">
       <nav>
         <ul className="squircles">
           <li className="squircle white-one"></li>
