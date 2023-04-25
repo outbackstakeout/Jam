@@ -2,7 +2,6 @@ import React from 'react'
 import './Sidebar.css'
 import AddIcon from '@mui/icons-material/Add';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import SidebarChannel from './SidebarChannel.jsx';
 import SignalCellularAltIcon from '@mui/icons-material/SignalCellularAlt';
 import InfoIcon from '@mui/icons-material/Info';
 import CallIcon from '@mui/icons-material/Call';
@@ -10,6 +9,8 @@ import Avatar from '@mui/material/Avatar';
 import MicIcon from '@mui/icons-material/Mic';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HeadsetIcon from '@mui/icons-material/Headset';
+import SidebarChannel from './SidebarChannel';
+
 
 
 function Sidebar() {
