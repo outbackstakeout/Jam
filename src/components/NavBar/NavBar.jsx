@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
 import * as userService from '../../utilities/users-service';
 import "./NavBar.css"
-import homeIcon from "../../images/icons/homeIcon.png";
-import chatIcon from "../../images/icons/chatIcon.png";
-import notificationIcon from "../../images/icons/notiBellIcon.png";
 
 
 export default function NavBar({ user, setUser }) {
