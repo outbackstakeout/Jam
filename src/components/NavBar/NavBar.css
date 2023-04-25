@@ -16,10 +16,10 @@
   }
   
   nav {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-  }
+      grid-column: 1 / 3;
+      height: 100vh;
+      background-color: #2f3135;
+    }
   
   .squircles {
     background: var(--color-not-quite-black);
