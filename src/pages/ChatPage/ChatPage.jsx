@@ -4,21 +4,33 @@ import "./ChatPage.css";
 
 function ChatPage() {
     const [input, setInput] = useState("");
+    const [msgs, setMsgs] = useState([]);
 
     const socketRef = useRef();
 
     useEffect(() => {
         if (!socketRef.current) {
-            socketRef.current = io();
+            socketRef.current = io({
+                autoConnect: false,
+            });
         }
+        const socket = socketRef.current;
 
-        // define the socket authentication as the web's current token
-        socketRef.current.auth = {
-            token: localStorage.getItem("token"),
-        };
+        // socket.auth = {
+        //     token: localStorage.getItem("token"),
+        // };
+
+        socket.connect();
+
+        // from server.js > io.on > socket.on > socket.broadcast.emit("newMsg")
+        socket.on("newMsg", (msg) => {
+            // console.log("Broadcast received");
+            setMsgs((msgs) => [...msgs, msg]);
+        });
 
         return () => {
-            socketRef.current.disconnect();
+            socket.off("newMsg");
+            socket.disconnect();
         };
     }, []);
 
@@ -28,13 +40,21 @@ function ChatPage() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        setMsgs((msgs) => [...msgs, input]);
+        socketRef.current.emit("sendMsg", input);
         setInput("");
     }
 
     return (
         <div className="ChatPage">
             <h1>ChatPage</h1>
-            <div className="chat-box"></div>
+            <div className="chat-box">
+                <ul>
+                    {msgs.map((msg) => {
+                        return <li>{msg}</li>;
+                    })}
+                </ul>
+            </div>
             <div className="wrapper">
                 <form onSubmit={handleSubmit}>
                     <input type="text" value={input} onChange={handleChange} />
