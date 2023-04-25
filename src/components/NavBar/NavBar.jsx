@@ -45,19 +45,6 @@ export default function NavBar({ user, setUser }) {
           </li>
         </ul>
       </nav>
-      <header className="header">
-        <div className="nav-icons">
-          <Link to="/">
-            <img src={homeIcon} alt="Home" className="icon" />
-          </Link>
-          <Link to="/inbox">
-            <img src={chatIcon} alt="Inbox" className="icon" />
-          </Link>
-          <Link to="/notifications">
-            <img src={notificationIcon} alt="Notifications" className="icon" />
-          </Link>
-        </div>
-      </header>
     </div>
   );
 }
