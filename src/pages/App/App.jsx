@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import { getUser } from "../../utilities/users-service";
+import { getUser } from "../../utilities/users/users-service";
 import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
 import ChatPage from "../ChatPage/ChatPage";

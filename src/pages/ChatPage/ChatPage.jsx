@@ -16,15 +16,10 @@ function ChatPage() {
         }
         const socket = socketRef.current;
 
-        // socket.auth = {
-        //     token: localStorage.getItem("token"),
-        // };
-
         socket.connect();
 
-        // from server.js > io.on > socket.on > socket.broadcast.emit("newMsg")
+        // 💡 from server.js > io.on > socket.on > socket.broadcast.emit("newMsg")
         socket.on("newMsg", (msg) => {
-            // console.log("Broadcast received");
             setMsgs((msgs) => [...msgs, msg]);
         });
 
@@ -38,10 +33,14 @@ function ChatPage() {
         setInput(e.target.value);
     }
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
+
         setMsgs((msgs) => [...msgs, input]);
+
+        // 💡 to server.js > io.on > socket.on
         socketRef.current.emit("sendMsg", input);
+
         setInput("");
     }
 
