@@ -6,7 +6,7 @@ import AuthPage from "../AuthPage/AuthPage";
 import NavBar from "../../components/NavBar/NavBar";
 import Sidebar from "../../Sidebar.jsx"
 import Chat from "../../Chat.jsx";
-import FriendsList from "../../FriendsList.jsx";
+import FriendsList from "../../components/FriendsList/FriendsList";
 
 
 export default function App() {

@@ -1,10 +1,12 @@
 import React from 'react'
-import './FriendsList.css'
-import ProfilePicture from "./images/icons/profilepicdemo.png"
+import '../FriendsList/FriendsList.css'
+import ProfilePicture from "../../images/icons/profilepicdemo.png"
+
+
 
 function FriendsList() {
   return (
-    <main className="main">
+
     <section className="friends-list">
       <h4 className="friend-title">Friends:</h4>
       <div className="friend-item">
@@ -24,7 +26,6 @@ function FriendsList() {
         <span className="friend-name">John Doe</span>
       </div>
     </section>
-  </main>
   )
 }
 
