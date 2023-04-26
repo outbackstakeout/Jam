@@ -1,14 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
 import "./ChatPage.css";
+import { sendRequest } from "../../utilities/users/send-request";
 
 function ChatPage() {
     const [input, setInput] = useState("");
     const [msgs, setMsgs] = useState([]);
+    async function getMessages() {
+        const msgLog = await sendRequest("/api/messages");
+        console.log(msgLog);
+        setMsgs(msgLog);
+    }
 
     const socketRef = useRef();
 
     useEffect(() => {
+        // setMsgs(getMessages());
+        getMessages();
+
         if (!socketRef.current) {
             socketRef.current = io({
                 autoConnect: false,
@@ -36,7 +45,9 @@ function ChatPage() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        setMsgs((msgs) => [...msgs, input]);
+        const newMsg = { text: input };
+
+        setMsgs((msgs) => [...msgs, newMsg]);
 
         // 💡 to server.js > io.on > socket.on
         socketRef.current.emit("sendMsg", input);
@@ -50,7 +61,7 @@ function ChatPage() {
             <div className="chat-box">
                 <ul>
                     {msgs.map((msg) => {
-                        return <li>{msg}</li>;
+                        return <li>{msg.text}</li>;
                     })}
                 </ul>
             </div>

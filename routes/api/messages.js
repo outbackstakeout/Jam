@@ -4,6 +4,6 @@ const messagesCtrl = require("../../controllers/api/messages");
 
 // All paths start with '/api/messages'
 
-router.post("/", messagesCtrl.storeMessage);
+router.get("/", messagesCtrl.getMessages);
 
 module.exports = router;

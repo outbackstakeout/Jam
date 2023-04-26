@@ -1,17 +1,16 @@
 const Message = require("../../models/message");
 
-async function storeMessage(req, res) {
+async function getMessages(req, res) {
     try {
-        const msg = await Message.create(req.body);
-        console.log(
-            `the message being stored in Mongo by storeMessage() in messages controller is: ${msg}`
-        );
+        const msgLog = await Message.find({});
+        res.json(msgLog);
     } catch (err) {
-        console.log(`storeMessage() error in messages controller: ${err}`);
+        console.log(
+            `The error from getMessages() in the controllers/api/messages is: ${err}`
+        );
     }
 }
 
-
 module.exports = {
-    storeMessage,
-}
+    getMessages,
+};
