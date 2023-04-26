@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+// import { Routes, Route } from "react-router-dom";
 import { getUser } from "../../utilities/users/users-service";
 import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
-import ChatPage from "../ChatPage/ChatPage";
+// import ChatPage from "../ChatPage/ChatPage";
 import AuthPage from "../AuthPage/AuthPage";
 import Sidebar from "../../Sidebar.jsx";
 import Chat from "../../Chat.jsx";
@@ -18,9 +18,9 @@ export default function App() {
                 <>
                     <div className="container">
                         <NavBar user={user} setUser={setUser} />
-                        <Routes>
+                        {/* <Routes>
                             <Route path="/" element={<ChatPage />}></Route>
-                        </Routes>
+                        </Routes> */}
                         <Sidebar />
                         <Chat />
                         <FriendsList />
