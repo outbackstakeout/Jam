@@ -7,6 +7,7 @@ import NavBar from "../../components/NavBar/NavBar";
 import Sidebar from "../../Sidebar.jsx"
 import Chat from "../../Chat.jsx";
 import FriendsList from "../../components/FriendsList/FriendsList";
+import ProfilePage from "../../components/ProfilePage/ProfilePage";
 
 
 export default function App() {
@@ -20,7 +21,8 @@ export default function App() {
                         <NavBar user={user} setUser={setUser} />
                         <Sidebar />
                         <Chat />
-                        <FriendsList />
+                        {/* <FriendsList /> */}
+                        <ProfilePage />
                     </div>
                 </>
             ) : (

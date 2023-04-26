@@ -1,0 +1,30 @@
+import React from 'react'
+import '../ProfilePage/ProfilePage.css'
+import MessageIcon from "../../images/icons/message-icon.png"
+import BackIcon from "../../images/icons/backIcon.png"
+
+export default function ProfilePage() {
+    return (
+        <div
+            className='profile-page-container'>
+
+            <div className='profile-page-cover'>
+                <img src={BackIcon} draggable="false" id="go-back" alt="" srcset="" />
+                <div className='profile-page-picture'>
+                </div>
+
+            </div>
+            <div className='profile-page-info-container'>
+                <div className='profile-page-first-last-name'>
+                    <h3 id="profile-page-username"> Username </h3>
+
+
+                    <button id="message"> <img src={MessageIcon} alt="Message" srcset="" /> Message </button>
+
+
+                </div>
+            </div >
+        </div >
+
+    )
+}
