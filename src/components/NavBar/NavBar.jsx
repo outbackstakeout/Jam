@@ -5,6 +5,9 @@ import homeIcon from "../../images/icons/homeIcon.png";
 import chatIcon from "../../images/icons/chatIcon.png";
 import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
+import { Link } from 'react-router-dom';
+import * as userService from '../../utilities/users-service';
+import "./NavBar.css"
 
 export default function NavBar({ user, setUser }) {
     function handleLogOut() {

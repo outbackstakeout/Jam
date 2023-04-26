@@ -5,6 +5,9 @@ import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
 import ChatPage from "../ChatPage/ChatPage";
 import AuthPage from "../AuthPage/AuthPage";
+import Sidebar from "../../Sidebar.jsx";
+import Chat from "../../Chat.jsx";
+import FriendsList from "../../components/FriendsList/FriendsList";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
@@ -13,10 +16,15 @@ export default function App() {
         <main className="App">
             {user ? (
                 <>
-                    <NavBar user={user} setUser={setUser} />
-                    <Routes>
-                        <Route path="/" element={<ChatPage />}></Route>
-                    </Routes>
+                    <div className="container">
+                        <NavBar user={user} setUser={setUser} />
+                        <Routes>
+                            <Route path="/" element={<ChatPage />}></Route>
+                        </Routes>
+                        <Sidebar />
+                        <Chat />
+                        <FriendsList />
+                    </div>
                 </>
             ) : (
                 <AuthPage setUser={setUser} />
