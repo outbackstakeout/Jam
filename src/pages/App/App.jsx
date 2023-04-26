@@ -16,12 +16,12 @@ export default function App() {
         <main className="App">
             {user ? (
                 <>
-                <div className="container">
-                    <NavBar user={user} setUser={setUser} />
-                    <Sidebar />
-                    <Chat />
-                    <FriendsList />
-                </div>
+                    <div className="container">
+                        <NavBar user={user} setUser={setUser} />
+                        <Sidebar />
+                        <Chat />
+                        <FriendsList />
+                    </div>
                 </>
             ) : (
                 <AuthPage setUser={setUser} />
