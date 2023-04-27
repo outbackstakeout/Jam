@@ -12,17 +12,17 @@ import ProfilePage from "../../components/ProfilePage/ProfilePage";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
+    const [selectedRoom, setSelectedRoom] = useState("")
 
     return (
         <main className="App">
             {user ? (
                 <>
                     <div className="container">
-                        <NavBar user={user} setUser={setUser} />
-                        <Sidebar />
-                        <Chat />
-                         <FriendsList />
-                        <ProfilePage />
+                        <NavBar user={user} setUser={setUser} />                   
+                        <Sidebar setSelectedRoom={setSelectedRoom} />
+                        <Chat selectedRoom={selectedRoom} />
+                        <FriendsList />                    
                     </div>
                 </>
             ) : (

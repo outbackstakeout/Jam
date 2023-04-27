@@ -9,14 +9,15 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import GifIcon from "@mui/icons-material/Gif";
 
-function Chat() {
+function Chat({ selectedRoom }) {
     // include pre-return functions from ChatPage.jsx
+    console.log(selectedRoom);
 
     const [input, setInput] = useState("");
     const [msgs, setMsgs] = useState([]);
 
     async function getMessages() {
-        const msgLog = await sendRequest("/api/messages");
+        const msgLog = await sendRequest(`/api/messages/${selectedRoom.id}`);
         console.log(msgLog);
         setMsgs(msgLog);
     }
@@ -55,7 +56,7 @@ function Chat() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        const newMsg = { text: input };
+        const newMsg = { text: input, roomId: selectedRoom.id };
 
         setMsgs((msgs) => [...msgs, newMsg]);
 
@@ -67,7 +68,7 @@ function Chat() {
 
     return (
         <div className="chat">
-            <ChatHeader />
+            <ChatHeader channel={selectedRoom} />
 
             <div className="chat_messages">
                 {/* pass luke msgs state down as a prop */}
@@ -79,7 +80,7 @@ function Chat() {
                 <AddCircleIcon fontSize="large" />
                 <form onSubmit={handleSubmit}>
                     <input
-                        placeholder={`Message #TESTCHANNEL`}
+                        placeholder={`Message #${selectedRoom?.name || ""}`}
                         value={input}
                         onChange={handleChange}
                     />
