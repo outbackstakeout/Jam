@@ -11,6 +11,7 @@ import FriendsList from "../../components/FriendsList/FriendsList";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
+    const [selectedRoom, setSelectedRoom] = useState(null)
 
     return (
         <main className="App">
@@ -18,11 +19,8 @@ export default function App() {
                 <>
                     <div className="container">
                         <NavBar user={user} setUser={setUser} />
-                        {/* <Routes>
-                            <Route path="/" element={<ChatPage />}></Route>
-                        </Routes> */}
-                        <Sidebar />
-                        <Chat />
+                        <Sidebar setSelectedRoom={setSelectedRoom} />
+                        <Chat selectedRoom={selectedRoom} />
                         <FriendsList />
                     </div>
                 </>

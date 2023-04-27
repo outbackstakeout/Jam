@@ -1,83 +1,92 @@
-const express = require("express");
-const path = require("path");
-const logger = require("morgan");
-require("dotenv").config();
-require("./config/database");
-const Message = require("./models/message");
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+require('dotenv').config();
+require('./config/database');
+const Message = require('./models/message');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 
-// this middleware gets called automatically whenever a request gets sent to the server vvv
-app.use(logger("dev"));
+// This middleware gets called automatically whenever a request gets sent to the server
+app.use(logger('dev'));
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "build")));
-app.use(require("./config/checkToken"));
-// ^^^
+app.use(express.static(path.join(__dirname, 'build')));
+app.use(require('./config/checkToken'));
 
 const port = process.env.PORT || 3001;
 
-// api routes that link through to the controllers (users and messages)
-app.use("/api/users", require("./routes/api/users"));
-app.use("/api/messages", require("./routes/api/messages"));
+// API routes that link through to the controllers (users and messages)
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/messages', require('./routes/api/messages'));
 
 async function storeMessage(msg) {
     try {
         const storeMsg = await Message.create(msg);
-        console.log("storeMessage() success!");
+        console.log('storeMessage() success!');
     } catch (err) {
         console.log(`The error from storeMessage() in server.js is: ${err}`);
     }
 }
 
-app.get("/*", function (req, res) {
-    res.sendFile(path.join(__dirname, "build", "index.html"));
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 const server = app.listen(port, function () {
     console.log(`Express app running on port ${port}`);
 });
 
+const io = require('./config/socket').init(server);
 
-// const io = require('socket.io')(3000, {
-//     cors: {
-//         origin: ["http://localhost:8080"],
-//     },
-// })
+const rooms = {};
 
-// io.on('connection', socket => {
-//     console.log(socket.id)
-//     socket.on("send-message", (message, room) => {
-//         if (room === '') {
-//             socket.broadcast.emit('receive', message)
-//         }else {
-//             socket.to(room).emit('receive', message)
-//         }
-//     })
-//     socket.on('join-room', (room, cb) => {
-//         socket.join(room)
-//         cb(`Joined ${room}`)
-//     })
-// })
-
-const io = require("./config/socket").init(server);
-
-io.on("connection", (socket) => {
+io.on('connection', (socket) => {
     console.log(`user id: ${socket.id} has connected`);
 
-    socket.on("disconnect", () => {
-        console.log(`user id: ${socket.id} has disconnected`);
+    socket.on('createRoom', (roomName) => {
+        const roomId = uuidv4();
+        const newRoom = { id: roomId, name: roomName, users: [] };
+        rooms[roomId] = newRoom;
+        io.emit('roomCreated', newRoom);
     });
 
-    // 💡 from ChatPage.jsx > ChatPage() > handleSubmit() > socketRef.current.emit("sendMsg", input);
-    socket.on("sendMsg", (msg) => {
+    socket.on('joinRoom', (roomId) => {
+        // Add the user to the room with the given ID
+        console.log(`User ${socket.id} joined room ${roomId}`);
+        if (!rooms[roomId]) {
+            return;
+        }
+        rooms[roomId].users.push(socket.id);
+        socket.join(`room-${roomId}`);
+        io.in(`room-${roomId}`).emit('userJoined', { roomId, userId: socket.id });
+    });
+
+    socket.on('leaveRoom', (roomId) => {
+        // Remove the user from the room with the given ID
+        console.log(`User ${socket.id} left room ${roomId}`);
+        if (!rooms[roomId]) {
+            return;
+        }
+        rooms[roomId].users = rooms[roomId].users.filter((userId) => userId !== socket.id);
+        socket.leave(`room-${roomId}`);
+        io.in(`room-${roomId}`).emit('userLeft', { roomId, userId: socket.id });
+    });
+
+    socket.on('sendMsg', (msg, roomId) => {
         storeMessage({ text: msg });
-        // 💡 to ChatPage.jsx > ChatPage() > useEffect() > socket.on("newMsg", (msg)
-        socket.broadcast.emit("newMsg", msg);
+        io.in(`room-${roomId}`).emit('newMsg', { text: msg, sender: socket.id });
     });
 
-    // socket.on('join chat', (room) => {
-    //     socket.join(room);
-    //     console.log("User Joined Room: " + Room)
-    // })
-});
+    socket.on('disconnect', () => {
+        console.log(`user id: ${socket.id} has disconnected`);
+        for (const roomId in rooms) {
+            if (rooms[roomId].users.includes(socket.id)) {
+                rooms[roomId].users = rooms[roomId].users.filter((userId) => userId !== socket.id);
+                socket.leave(`room-${roomId}`);
+                io.in(`room-${roomId}`).emit('userLeft', { roomId, userId: socket.id });
+            }
+        }
+    });
+})

@@ -9,7 +9,7 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import GifIcon from "@mui/icons-material/Gif";
 
-function Chat() {
+function Chat(selectedRoom) {
     // include pre-return functions from ChatPage.jsx
 
     const [input, setInput] = useState("");
@@ -67,6 +67,7 @@ function Chat() {
 
     return (
         <div className="chat">
+            {selectedRoom}
             <ChatHeader />
 
             <div className="chat_messages">
