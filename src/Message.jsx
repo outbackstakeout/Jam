@@ -1,20 +1,23 @@
-import { Avatar } from '@mui/material'
-import React from 'react'
-import './Message.css'
+import { Avatar } from "@mui/material";
+import React from "react";
+import "./Message.css";
 
-function Message() {
-  return (
-    <div className="message">
-        <Avatar />
-        <div className="message_info">
-            <h4>seanmunjal
-                <span className="message_timestamp">this is a timestamp</span>
+function Message({ msg }) {
+    return (
+        <div className="message">
+            <Avatar />
+            <div className="message_info">
+                <h4>
+                    seanmunjal
+                    <span className="message_timestamp">
+                        this is a timestamp
+                    </span>
                 </h4>
 
-                <p>This is a message</p>
+                <p>{msg.text}</p>
+            </div>
         </div>
-    </div>
-  )
+    );
 }
 
-export default Message
+export default Message;

@@ -1,32 +1,56 @@
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
-// Always require and configure near the top
 require("dotenv").config();
-// Connect to the database
 require("./config/database");
+const Message = require("./models/message");
 
 const app = express();
 
+// this middleware gets called automatically whenever a request gets sent to the server vvv
 app.use(logger("dev"));
 app.use(express.json());
 
-// Configure both serve-favicon & static middleware
-// to serve from the production 'build' folder
 app.use(express.static(path.join(__dirname, "build")));
 app.use(require("./config/checkToken"));
+// ^^^
 
 const port = process.env.PORT || 3001;
 
-// Put API routes here, before the "catch all" route
+// api routes that link through to the controllers (users and messages)
 app.use("/api/users", require("./routes/api/users"));
+app.use("/api/messages", require("./routes/api/messages"));
 
-// The following "catch all" route (note the *) is necessary
-// to return the index.html on all non-AJAX/API requests
+async function storeMessage(msg) {
+    try {
+        const storeMsg = await Message.create(msg);
+        console.log("storeMessage() success!");
+    } catch (err) {
+        console.log(`The error from storeMessage() in server.js is: ${err}`);
+    }
+}
+
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
-app.listen(port, function () {
+const server = app.listen(port, function () {
     console.log(`Express app running on port ${port}`);
+});
+
+const io = require("./config/socket").init(server);
+
+io.on("connection", (socket) => {
+    console.log(`user id: ${socket.id} has connected`);
+
+    socket.on("disconnect", () => {
+        console.log(`user id: ${socket.id} has disconnected`);
+    });
+
+    // 💡 from ChatPage.jsx > ChatPage() > handleSubmit() > socketRef.current.emit("sendMsg", input);
+    socket.on("sendMsg", (msg) => {
+        storeMessage({ text: msg });
+        // 💡 to ChatPage.jsx > ChatPage() > useEffect() > socket.on("newMsg", (msg)
+        socket.broadcast.emit("newMsg", msg);
+    });
 });

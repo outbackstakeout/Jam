@@ -7,8 +7,6 @@ async function checkToken(req, res) {
     res.json(req.exp);
 }
 
-
-
 async function create(req, res) {
     try {
         // Add the user to the db
