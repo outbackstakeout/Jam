@@ -30,7 +30,7 @@
 .profile-page-picture {
     position: relative;
     margin-left: 5%;
-    outline-color: red;
+    outline-color: white;
     outline-style: solid;
     outline-width: 5px;
     border-radius: 50%;
@@ -67,7 +67,7 @@
     margin: 20px 10px auto;
     width: 90%;
     color: white;
-    padding: 15px 32px;
+    padding: 15px 30px;
     text-align: center;
     text-decoration: none;
     display: inline-flex;
@@ -93,4 +93,30 @@
 
 #message:hover {
     background-color: #cb743e;
+}
+
+#signOut {
+    background-color: #f31212;
+    /* Orange */
+    border: none;
+    border-radius: 10px;
+    position: relative;
+    margin: 10px 10px auto;
+    width: 90%;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    font-size: 16px;
+    flex: 1;
+    font-size: 15px;
+    min-width: 100px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#signOut:hover {
+    background-color: #cc1c1c;
 }

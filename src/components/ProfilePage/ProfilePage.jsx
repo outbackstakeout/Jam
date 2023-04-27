@@ -19,8 +19,9 @@ export default function ProfilePage() {
                     <h3 id="profile-page-username"> Username </h3>
 
 
-                    <button id="message"> <img src={MessageIcon} alt="Message" srcset="" /> Message </button>
+                    <button id="message">  Message </button>
 
+                    <button id="signOut"> Sign Out </button>
 
                 </div>
             </div >
