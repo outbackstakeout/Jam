@@ -75,4 +75,9 @@ io.on("connection", (socket) => {
         // 💡 to ChatPage.jsx > ChatPage() > useEffect() > socket.on("newMsg", (msg)
         socket.broadcast.emit("newMsg", msg);
     });
+
+    // socket.on('join chat', (room) => {
+    //     socket.join(room);
+    //     console.log("User Joined Room: " + Room)
+    // })
 });
