@@ -3,6 +3,14 @@ const Schema = mongoose.Schema;
 
 const messageSchema = new Schema(
     {
+        jam: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Jam",
+        },
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        },
         text: { type: String },
     },
     {

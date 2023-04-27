@@ -20,6 +20,24 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
+        jams: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Jam",
+            },
+        ],
+        jars: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Jar",
+            },
+        ],
+        messages: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Message",
+            },
+        ],
     },
     {
         timestamps: true,
