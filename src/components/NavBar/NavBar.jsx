@@ -6,7 +6,7 @@ import chatIcon from "../../images/icons/chatIcon.png";
 import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 
-export default function NavBar({ user, setUser }) {
+export default function NavBar({ user, setUser, jars }) {
     function handleLogOut() {
         userService.logOut();
         setUser(null);

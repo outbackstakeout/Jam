@@ -24,7 +24,6 @@ function Chat() {
     const socketRef = useRef();
 
     useEffect(() => {
-        // setMsgs(getMessages());
         getMessages();
 
         if (!socketRef.current) {
