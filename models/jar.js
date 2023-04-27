@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const jarSchema = new Schema(
     {
+        name: {
+            type: String,
+            required: true,
+        },
         jams: [
             {
                 type: mongoose.Schema.Types.ObjectId,

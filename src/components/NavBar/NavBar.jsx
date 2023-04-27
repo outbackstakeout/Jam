@@ -18,6 +18,15 @@ export default function NavBar({ user, setUser, jars }) {
                 <ul className="squircles">
                     <li className="squircle white-one"></li>
                     <li className="divider"></li>
+                    {jars.map((jar) => {
+                        return (
+                            <li className="squircle purple-one">
+                                <div className="popup">
+                                    <h4 className="popup-text">{jar.name}</h4>
+                                </div>
+                            </li>
+                        );
+                    })}
                     <li className="squircle purple-one">
                         <div className="popup">
                             <h4 className="popup-text">JAM HQ</h4>

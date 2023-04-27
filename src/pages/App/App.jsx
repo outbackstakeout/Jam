@@ -15,7 +15,10 @@ export default function App() {
     const [user, setUser] = useState(getUser());
     const [jars, setJars] = useState([]);
     const [jams, setJams] = useState([]);
-    const [currentjam, setCurrentJam] = useState({});
+    const [currentJar, setCurrentJar] = useState({});
+    const [currentJam, setCurrentJam] = useState({});
+    let jarSelected;
+    let jamSelected;
 
     async function getJars() {
         const jarList = await sendRequest("/api/jars");
@@ -29,8 +32,17 @@ export default function App() {
 
     useEffect(() => {
         getJars();
-        getJams();
     }, []);
+
+    function pickJar(jar) {
+        jarSelected = true;
+        setCurrentJar(jar);
+    }
+
+    function pickJam(jam) {
+        jamSelected = true;
+        setCurrentJam(jam);
+    }
 
     return (
         <main className="App">
@@ -39,7 +51,7 @@ export default function App() {
                     <div className="container">
                         <NavBar user={user} setUser={setUser} jars={jars} />
                         <Sidebar jams={jams} />
-                        <Chat />
+                        <Chat jam={currentjam} />
                         <FriendsList />
                         <ProfilePage />
                     </div>
