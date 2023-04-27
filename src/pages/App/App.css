@@ -1,5 +1,12 @@
 .container {
-    display: grid;
-    grid-template-columns: 5% 15% 71% auto;
-    height: 100vh;
-  }
+  grid-template-columns: 5% 15% 65% 15%;
+  display: grid;
+  gap: 5px;
+  height: 100vh;
+  overflow: hidden;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  /* border-radius: 15px; */
+}
