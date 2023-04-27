@@ -21,7 +21,7 @@ export default function App() {
                         <NavBar user={user} setUser={setUser} />
                         <Sidebar />
                         <Chat />
-                         <FriendsList />
+                        <FriendsList />
                         <ProfilePage />
                     </div>
                 </>
