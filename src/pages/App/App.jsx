@@ -11,7 +11,7 @@ import FriendsList from "../../components/FriendsList/FriendsList";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
-    const [selectedRoom, setSelectedRoom] = useState(null)
+    const [selectedRoom, setSelectedRoom] = useState("")
 
     return (
         <main className="App">

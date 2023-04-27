@@ -48,11 +48,15 @@ function Sidebar({ setSelectedRoom }) {
     if (newRoom.name) {
       setRooms([...rooms, newRoom]);
       socketRef.current.emit("createRoom", newRoom);
+      socketRef.current.emit("joinRoom", newRoom.id);
     }
   };
 
-  const handleRoomClick = (roomId) => {
-    setSelectedRoom(roomId);
+  const handleRoomClick = (roomId, roomName) => {
+    setSelectedRoom({id: roomId, name: roomName});
+    socketRef.current.emit("joinRoom", roomId);
+    
+
   }
 
   return (
@@ -80,7 +84,7 @@ function Sidebar({ setSelectedRoom }) {
             id={room.id} 
             channel={room.name}
             selected={room.id === setSelectedRoom}
-            onClick={() => handleRoomClick(room.id)} />
+            onClick={() => handleRoomClick(room.id, room.name)} />
           ))}
         </div>
       </div>
