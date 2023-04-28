@@ -5,6 +5,7 @@ require("dotenv").config();
 require("./config/database");
 const Message = require("./models/message");
 const { v4: uuidv4 } = require("uuid");
+const Jam = require("./models/jam");
 
 const app = express();
 
@@ -32,6 +33,18 @@ async function storeMessage(msg) {
     }
 }
 
+async function createJam(roomName, id, user) {
+    try {
+        const newJam = await Jam.create({
+            name: roomName,
+            socket_id: id,
+            users: [user],
+        });
+    } catch (err) {
+        console.log(`The error from createJam() in server.js is: ${err}`);
+    }
+}
+
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 });
@@ -49,7 +62,8 @@ io.on("connection", (socket) => {
 
     socket.on("createRoom", (roomName) => {
         const roomId = uuidv4();
-        const newRoom = { id: roomId, name: roomName, users: [] };
+        const newRoom = { id: roomId, name: roomName, users: [roomName.user] };
+        createJam(roomName.name, roomName.id, roomName.user);
         rooms[roomId] = newRoom;
         io.emit("roomCreated", newRoom);
     });

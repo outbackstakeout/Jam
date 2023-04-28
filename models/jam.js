@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 const jamSchema = new Schema(
     {
+        name: {
+            type: String,
+            required: true,
+        },
         messages: [
             {
                 type: mongoose.Schema.Types.ObjectId,
@@ -17,6 +21,11 @@ const jamSchema = new Schema(
         jar: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Jar",
+        },
+        socket_id: {
+            type: String,
+            required: true,
+            unique: true,
         },
     },
     {

@@ -48,33 +48,36 @@ export default function App() {
 
     const handleFriendClick = () => {
         setShowProfilePage(true);
-    }
-
-    const handleExitClick = () => {
-      setShowProfilePage(false);
     };
 
+    const handleExitClick = () => {
+        setShowProfilePage(false);
+    };
 
     return (
         <main className="App">
             {user ? (
                 <>
                     <div className="container">
-
                         <NavBar
                             user={user}
                             setUser={setUser}
                             jars={jars}
                             getJars={getJars}
-                        />                  
-                        <Sidebar setSelectedRoom={setSelectedRoom} jams={jams} />
+                        />
+                        <Sidebar
+                            setSelectedRoom={setSelectedRoom}
+                            jams={jams}
+                            user={user}
+                        />
                         <Chat selectedRoom={selectedRoom} jam={currentJam} />
                         {showProfilePage ? (
                             <ProfilePage handleExitClick={handleExitClick} />
                         ) : (
-                            <FriendsList handleFriendClick={handleFriendClick} />
-                        )}                    
-
+                            <FriendsList
+                                handleFriendClick={handleFriendClick}
+                            />
+                        )}
                     </div>
                 </>
             ) : (

@@ -25,8 +25,6 @@ export default function NavBar({ user, setUser, jars, getJars }) {
                 <ul className="squircles">
                     <li className="squircle white-one"></li>
                     <li className="divider"></li>
-
-                    {/*  */}
                     {jars.map((jar) => {
                         return (
                             <li className="squircle purple-one">
