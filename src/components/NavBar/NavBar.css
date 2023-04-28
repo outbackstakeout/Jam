@@ -16,7 +16,8 @@
   }
   
   body {
-    background-image: linear-gradient(var(--raspberry-rose), var(--mimi), var(--raspberry-rose));
+    /* background-image: linear-gradient(var(--raspberry-rose), var(--mimi), var(--raspberry-rose)); */
+    background-color: var(--jet);
     color: var(--color-full-white)
   }
   
@@ -27,7 +28,8 @@
     }
   
   .squircles {
-    background-image: linear-gradient(var(--vanilla), var(--mimi));
+    /* background-image: linear-gradient(var(--vanilla), var(--mimi)); */
+    background-color: var(--raspberry-rose);
     position: absolute;
     min-height: 97vh;
     border-radius: 15px;
@@ -48,7 +50,7 @@
   }
   
   .squircle {
-    background:var(--raspberry-rose);
+    background:var(--mimi);
     width: 48px;
     height: 48px;
     border-radius: 50px;

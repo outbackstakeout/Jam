@@ -3,14 +3,15 @@
   --raspberry-rose: #cb738f;
   --scream: #239e08;
   --mimi: #FFD3E8;
-  --pale: #E8D7FF;
+  --pale: #e8d7ff00;
 }
 
 .chat {
     display: flex;
     flex-direction: column;
     flex: 0.75;
-    background-image: linear-gradient(var(--mimi), var(--pale));
+    background-color: var(--vanilla);
+    background-image: linear-gradient(var(--raspberry-rose), rgba(23, 23, 23, 0.234));
     height: 100vh;
 }
 
@@ -24,11 +25,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px;
+    padding: 5px;
     border-radius:5px;
     margin: 20px;
-    border-top: 1px solid gray;
-    background-image: linear-gradient(var(--vanilla), var(--mimi), var(--vanilla));
+    background-color: var(--mimi);
 }
 
   .chat_input > form > input {
@@ -51,4 +51,9 @@
 
   .chat_inputIcons > .MuiSvgIcon-root {
     padding: 10px;
+    margin-right: 10px;
+  }
+
+  #add-circle-icon {
+    margin-left: 15px;
   }
