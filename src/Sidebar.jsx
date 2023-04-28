@@ -53,7 +53,8 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
     };
 
     const handleRoomClick = (roomId, roomName) => {
-        setSelectedRoom({ id: roomId, name: roomName });
+        // setSelectedRoom({ id: roomId, name: roomName });
+        setSelectedRoom(roomName);
         socket.emit("joinRoom", roomId);
     };
 
