@@ -120,3 +120,7 @@
 #signOut:hover {
     background-color: #cc1c1c;
 }
+
+img {
+    cursor: pointer;
+}
