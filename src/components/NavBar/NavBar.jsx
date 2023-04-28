@@ -7,6 +7,7 @@ import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 
 export default function NavBar({ user, setUser, jars }) {
+    // we wanna move this to user profile
     function handleLogOut() {
         userService.logOut();
         setUser(null);
@@ -18,6 +19,8 @@ export default function NavBar({ user, setUser, jars }) {
                 <ul className="squircles">
                     <li className="squircle white-one"></li>
                     <li className="divider"></li>
+
+                    {/*  */}
                     {jars.map((jar) => {
                         return (
                             <li className="squircle purple-one">
@@ -27,6 +30,8 @@ export default function NavBar({ user, setUser, jars }) {
                             </li>
                         );
                     })}
+                    {/*  */}
+
                     <li className="squircle purple-one">
                         <div className="popup">
                             <h4 className="popup-text">JAM HQ</h4>
