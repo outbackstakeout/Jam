@@ -13,7 +13,7 @@ import SidebarChannel from "./SidebarChannel";
 import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 
-function Sidebar({ setSelectedRoom, jams }) {
+function Sidebar({ setSelectedRoom, jams, user }) {
     const [rooms, setRooms] = useState([]);
     const socketRef = useRef();
 
@@ -43,6 +43,7 @@ function Sidebar({ setSelectedRoom, jams }) {
         const newRoom = {
             id: uuidv4(),
             name: prompt("Enter a name for the new room:"),
+            user: user,
         };
         if (newRoom.name) {
             setRooms([...rooms, newRoom]);

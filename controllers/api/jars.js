@@ -25,6 +25,7 @@ async function createJar(req, res) {
         const user = await User.findById(req.user._id);
         console.log(user);
         const jar = await Jar.create({ users: [user._id] });
+
         let jarArr = user.jars;
         jarArr.push(jar);
         user.jars = jarArr;
