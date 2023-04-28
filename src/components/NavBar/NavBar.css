@@ -1,17 +1,22 @@
 /* //variable declarations */
 :root {
-    --color-not-quite-black: #252627;
-    --color-dark: #575757;
-    --color-ligther-dark: #555657;
+    --vanilla: #FFFADC;
+    --jet: #2A2B2E;
+    --raspberry-rose: #cb738f;
+    --scream: #239e08;
+    --mimi: #FFD3E8;
+    
+    --color-not-quite-black: #154beacd;
+    --color-ligther-dark: #f0155a;
     --color-full-white: #ffffff;
     --color-actually-black: #000000;
     --color-fantastic-green: #00ae7a;
-    --color-graphe-purple:  #6F2DA8;
-    --color-cool-gray: #8C92AC;
+    --color-graphe-purple:  #a82d2d;
+    --color-cool-gray: #0f37e9;
   }
   
   body {
-    background: var(--color-dark);
+    background-image: linear-gradient(var(--raspberry-rose), var(--mimi), var(--raspberry-rose));
     color: var(--color-full-white)
   }
   
@@ -22,7 +27,7 @@
     }
   
   .squircles {
-    background: var(--color-not-quite-black);
+    background-image: linear-gradient(var(--vanilla), var(--mimi));
     position: absolute;
     min-height: 97vh;
     border-radius: 15px;
@@ -43,7 +48,7 @@
   }
   
   .squircle {
-    background:var(--color-ligther-dark);
+    background:var(--raspberry-rose);
     width: 48px;
     height: 48px;
     border-radius: 50px;

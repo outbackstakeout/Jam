@@ -7,7 +7,7 @@ import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
 
-export default function NavBar({ user, setUser, jars }) {
+export default function NavBar({ user, setUser, jars, getJars }) {
     // we wanna move this to user profile
     function handleLogOut() {
         userService.logOut();
@@ -16,6 +16,7 @@ export default function NavBar({ user, setUser, jars }) {
 
     function handleCreate() {
         sendRequest("/api/jars/create", "POST");
+        getJars();
     }
 
     return (

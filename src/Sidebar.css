@@ -1,19 +1,27 @@
+:root {
+    --vanilla: #FFFADC;
+    --jet: #2A2B2E;
+    --raspberry-rose: #cb738f;
+    --scream: #239e08;
+    --mimi: #FFD3E8;
+    --pale: #E8D7FF;
+}
 
 .sidebar {
     grid-column: 2 / 3;
     height: 100vh;
-    background-color: #2f3135;
+    background-image: linear-gradient(var(--vanilla), var(--mimi));
     display: flex;
     flex-direction: column;
-  }
+}
 
 .sidebar_top {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color:#2f3135;
-    color: white;
+    background-image: linear-gradient(var(--vanilla), var(--mimi));
+    color: var(--jet);
     border-bottom: 3px solid #26282c;
 }
 
@@ -26,7 +34,7 @@
 }
 
 .sidebar_addChannel:hover{
-    color: white;
+    color: var(--vanilla);
 }
 
 .sidebar_channelsHeader{
@@ -34,8 +42,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-color:#2f3135;
-    color: gray;
+    background-image: linear-gradient(var(--mimi), var(--vanilla));
+    color: var(--jet);
 }
 
 .sidebar_header{
@@ -47,8 +55,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: gray;
-    background-color: #2f3135;
+    color: var(--jet);
+    background-image: linear-gradient(var(--vanilla), var(--mimi));
     padding: 10px;
     border-top: 1px solid gray;
 }
@@ -59,12 +67,11 @@
 }
 
 .sidebar_voiceIcon{
-    color: #4fb185;
-
+    color: var(--scream);
 }
 
 .sidebar_voiceInfo > h3 {
-    color: #4fb185;
+    color: var(--scream);
 }
 
 .sidebar_voiceInfo > p {

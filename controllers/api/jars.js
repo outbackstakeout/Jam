@@ -6,7 +6,7 @@ async function getJars(req, res) {
         if (!req.user) {
             throw new Error();
         }
-        const user = await User.findOne({ id: req.user.id });
+        const user = await User.findOne({ id: req.user._id });
         const jarList = user.jars;
         res.json(jarList);
     } catch (err) {
