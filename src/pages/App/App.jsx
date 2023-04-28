@@ -13,8 +13,8 @@ import ProfilePage from "../../components/ProfilePage/ProfilePage";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
-
     const [selectedRoom, setSelectedRoom] = useState("");
+    const [showProfilePage, setShowProfilePage] = useState(false);
     const [jars, setJars] = useState([]);
     const [jams, setJams] = useState([]);
     const [currentJar, setCurrentJar] = useState({});
@@ -46,23 +46,35 @@ export default function App() {
         setCurrentJam(jam);
     }
 
+    const handleFriendClick = () => {
+        setShowProfilePage(true);
+    }
+
+    const handleExitClick = () => {
+      setShowProfilePage(false);
+    };
+
+
     return (
         <main className="App">
             {user ? (
                 <>
                     <div className="container">
+
                         <NavBar
                             user={user}
                             setUser={setUser}
                             jars={jars}
                             getJars={getJars}
-                        />
-                        <Sidebar
-                            setSelectedRoom={setSelectedRoom}
-                            jams={jams}
-                        />
+                        />                  
+                        <Sidebar setSelectedRoom={setSelectedRoom} jams={jams} />
                         <Chat selectedRoom={selectedRoom} jam={currentJam} />
-                        <FriendsList />
+                        {showProfilePage ? (
+                            <ProfilePage handleExitClick={handleExitClick} />
+                        ) : (
+                            <FriendsList handleFriendClick={handleFriendClick} />
+                        )}                    
+
                     </div>
                 </>
             ) : (
