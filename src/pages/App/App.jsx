@@ -13,6 +13,8 @@ import ProfilePage from "../../components/ProfilePage/ProfilePage";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
+
+    const [selectedRoom, setSelectedRoom] = useState("")
     const [jars, setJars] = useState([]);
     const [jams, setJams] = useState([]);
     const [currentJar, setCurrentJar] = useState({});
@@ -49,11 +51,10 @@ export default function App() {
             {user ? (
                 <>
                     <div className="container">
-                        <NavBar user={user} setUser={setUser} jars={jars} />
-                        <Sidebar jams={jams} />
-                        <Chat jam={currentjam} />
-                        <FriendsList />
-                        <ProfilePage />
+                        <NavBar user={user} setUser={setUser} jars={jars} />                   
+                        <Sidebar setSelectedRoom={setSelectedRoom} jams={jams} />
+                        <Chat selectedRoom={selectedRoom} jam={currentJam}/>
+                        <FriendsList />                    
                     </div>
                 </>
             ) : (

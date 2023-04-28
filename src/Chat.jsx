@@ -9,21 +9,28 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import GifIcon from "@mui/icons-material/Gif";
 
-function Chat() {
+function Chat({ selectedRoom }) {
     // include pre-return functions from ChatPage.jsx
+    console.log(selectedRoom);
 
     const [input, setInput] = useState("");
     const [msgs, setMsgs] = useState([]);
+    const [roomMessages, setRoomMessages] = useState({});
 
     async function getMessages() {
-        const msgLog = await sendRequest("/api/messages");
+        const msgLog = await sendRequest(`/api/messages/${selectedRoom.id}`);
+
+        //i could use prevState and a ...prevState thing to bring back previous messages from state, but not sure exactly how
         console.log(msgLog);
         setMsgs(msgLog);
     }
 
     const socketRef = useRef();
+    const roomIdRef = useRef();
 
     useEffect(() => {
+
+        setMsgs([]);
         getMessages();
 
         if (!socketRef.current) {
@@ -33,19 +40,35 @@ function Chat() {
         }
         const socket = socketRef.current;
 
-        socket.connect();
+        if (selectedRoom) {
+            // Set the room ID so it can be accessed inside socket callbacks
+            roomIdRef.current = selectedRoom.id;
 
-        // 💡 from server.js > io.on > socket.on > socket.broadcast.emit("newMsg")
-        socket.on("newMsg", (msg) => {
-            // const newMsg = { text: msg }
-            setMsgs((msgs) => [...msgs, msg]);
-        });
+            // Get the messages for the selected room
+            getMessages(selectedRoom.id).then((msgLog) => {
+                setMsgs(msgLog);
+            });
+
+            // Connect the socket to the server
+            socket.connect();
+
+            // Set up the event listeners for the selected room
+            socket.on("newMsg", (msg) => {
+                if (msg.roomId === roomIdRef.current) {
+                    setMsgs((msgs) => [...msgs, msg]);
+                }
+            });
+
+            // Join the selected room
+            socket.emit("joinRoom", selectedRoom.id);
+        }
+
 
         return () => {
             socket.off("newMsg");
             socket.disconnect();
         };
-    }, []);
+    }, [selectedRoom]);
 
     function handleChange(e) {
         setInput(e.target.value);
@@ -54,7 +77,7 @@ function Chat() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        const newMsg = { text: input };
+        const newMsg = { text: input, roomId: selectedRoom.id };
 
         setMsgs((msgs) => [...msgs, newMsg]);
 
@@ -66,7 +89,7 @@ function Chat() {
 
     return (
         <div className="chat">
-            <ChatHeader />
+            <ChatHeader channel={selectedRoom?.name || ""} />
 
             <div className="chat_messages">
                 {/* pass luke msgs state down as a prop */}
@@ -78,7 +101,7 @@ function Chat() {
                 <AddCircleIcon fontSize="large" />
                 <form onSubmit={handleSubmit}>
                     <input
-                        placeholder={`Message #TESTCHANNEL`}
+                        placeholder={`Message #${selectedRoom?.name || ""}`}
                         value={input}
                         onChange={handleChange}
                     />
