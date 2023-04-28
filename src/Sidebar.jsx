@@ -10,9 +10,10 @@ import MicIcon from "@mui/icons-material/Mic";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HeadsetIcon from "@mui/icons-material/Headset";
 import SidebarChannel from "./SidebarChannel";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 
+// 🎉 user might drill in hear
 function Sidebar({ setSelectedRoom, jams, user, socket }) {
     const [rooms, setRooms] = useState([]);
     // const socketRef = useRef();
@@ -43,10 +44,9 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
         const newRoom = {
             id: uuidv4(),
             name: prompt("Enter a name for the new room:"),
-            user: user,
+            // user: user,
         };
         if (newRoom.name) {
-            // setRooms([...rooms, newRoom]);
             socket.emit("createRoom", newRoom);
             socket.emit("joinRoom", newRoom.id);
         }

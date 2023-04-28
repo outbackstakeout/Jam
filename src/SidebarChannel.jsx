@@ -3,7 +3,7 @@ import "./SidebarChannel.css";
 
 function SidebarChannel({ id, channel, selected, onClick, setSelectedRoom }) {
     const handleClick = () => {
-        setSelectedRoom({ id, name: channel });
+        setSelectedRoom({ id, channel });
         onClick();
     };
     return (
@@ -11,7 +11,7 @@ function SidebarChannel({ id, channel, selected, onClick, setSelectedRoom }) {
             className={`sidebarChannel ${
                 selected && "sidebarChannel--selected"
             }`}
-            onClick={() => onClick(id, channel)}
+            onClick={handleClick}
         >
             <h4>
                 <span className="sidebarChannel_hash">#</span>

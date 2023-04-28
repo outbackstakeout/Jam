@@ -63,7 +63,7 @@ io.on("connection", (socket) => {
     socket.on("createRoom", (roomName) => {
         const roomId = uuidv4();
         const newRoom = { id: roomId, name: roomName, users: [roomName.user] };
-        createJam(roomName.name, roomName.id, roomName.user);
+        // createJam(roomName.name, roomName.id, roomName.user);
         rooms[roomId] = newRoom;
         io.emit("roomCreated", newRoom);
     });
@@ -101,7 +101,7 @@ io.on("connection", (socket) => {
         //     text: msg,
         //     sender: socket.id,
         // });
-        socket.broadcast.emit('newMsg', msg)
+        socket.broadcast.emit("newMsg", msg);
     });
 
     socket.on("disconnect", () => {
