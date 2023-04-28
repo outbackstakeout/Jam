@@ -1,28 +1,27 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const jarSchema = new Schema(
+const jamSchema = new Schema(
     {
-        name: {
-            type: String,
-            required: true,
-        },
-        jams: [
+        messages: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Jam",
+                ref: "Message",
             },
         ],
         users: [
             {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "User",
             },
         ],
+        jar: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Jar",
+        },
     },
     {
         timestamps: true,
     }
 );
 
-module.exports = mongoose.model("Jar", jarSchema);
+module.exports = mongoose.model("Jam", jamSchema);

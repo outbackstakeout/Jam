@@ -17,9 +17,12 @@ app.use(require('./config/checkToken'));
 
 const port = process.env.PORT || 3001;
 
-// API routes that link through to the controllers (users and messages)
-app.use('/api/users', require('./routes/api/users'));
-app.use('/api/messages', require('./routes/api/messages'));
+
+// api routes that link through to the controllers (users and messages)
+app.use("/api/users", require("./routes/api/users"));
+app.use("/api.jars", require("./routes/api/jars"));
+app.use("/api/jams", require("./routes/api/jams"));
+app.use("/api/messages", require("./routes/api/messages"));
 
 async function storeMessage(msg) {
     try {

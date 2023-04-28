@@ -14,6 +14,20 @@ import { io } from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 
 
+function Sidebar({ jams }) {
+    return (
+        <div className="sidebar">
+            <div className="sidebar_top">
+                <h3>Sean Munjal</h3>
+                <ExpandMoreIcon />
+            </div>
+            <div className="sidebar_channels">
+                <div className="sidebar_channelsHeader">
+                    <div className="sidebar_header">
+                        <ExpandMoreIcon />
+                        <h4>Text Channels</h4>
+                    </div>
+
 function Sidebar({ setSelectedRoom }) {
   const [rooms, setRooms] = useState([]);
   const socketRef = useRef();
@@ -116,6 +130,13 @@ function Sidebar({ setSelectedRoom }) {
       </div>
     </div>
   );
+
+                <div className="sidebar_channelsList">
+                    {jams.map((jamItem) => {
+                        return <SidebarChannel jam={jamItem} />;
+                    })}
+                </div>
+           
 }
 
-export default Sidebar
+export default Sidebar;
