@@ -32,11 +32,11 @@ function Chat({ selectedRoom, socket }) {
         setMsgs([]);
         getMessages();
 
-        if (!socket) {
-            socket = io({
-                autoConnect: false,
-            });
-        }
+        // if (!socket) {
+        //     socket = io({
+        //         autoConnect: false,
+        //     });
+        // }
         // const socket = socketRef.current;
 
         if (selectedRoom) {
@@ -52,20 +52,20 @@ function Chat({ selectedRoom, socket }) {
             // socket.connect();
 
             // Set up the event listeners for the selected room
-            
         }
-            socket.on("newMsg", (msg) => {
-                // if (msg.roomId === roomIdRef.current) {
-                    // }
-                    setMsgs((msgs) => [...msgs, msg]);
-                });
-                
-                // Join the selected room
-            // socket.emit("joinRoom", selectedRoom.id);
+        socket.on("newMsg", (msg) => {
+            // if (msg.roomId === roomIdRef.current) {
+            // }
+            const newMsg = { text: msg };
+            setMsgs((msgs) => [...msgs, newMsg]);
+        });
+
+        // Join the selected room
+        // socket.emit("joinRoom", selectedRoom.id);
 
         return () => {
             socket.off("newMsg");
-            socket.disconnect();
+            // socket.disconnect();
         };
     }, [selectedRoom]);
 
@@ -75,15 +75,15 @@ function Chat({ selectedRoom, socket }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        
+
         const newMsg = { text: input };
         // roomId: selectedRoom.id place this in next to text input
 
         setMsgs((msgs) => [...msgs, newMsg]);
-        console.log('handle submit is working')
+        console.log("handle submit is working");
         // 💡 to server.js > io.on > socket.on
         socket.emit("sendMsg", input);
-        console.log(newMsg)
+        console.log(newMsg);
 
         setInput("");
     }

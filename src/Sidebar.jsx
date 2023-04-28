@@ -18,15 +18,14 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
     // const socketRef = useRef();
 
     useEffect(() => {
-        if (!socket) {
-            socket = io({
-                autoConnect: false,
-                path: "/socket",
-            });
-        }
-        
+        // if (!socket) {
+        //     socket = io({
+        //         autoConnect: false,
+        //         path: "/socket",
+        //     });
+        // }
 
-        socket.connect();
+        // socket.connect();
 
         socket.on("roomCreated", (room) => {
             console.log("Room Created: ", room);
@@ -34,7 +33,8 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
         });
 
         return () => {
-            socket.disconnect();
+            socket.off("roomCreate");
+            // socket.disconnect();
         };
     }, []);
 
@@ -46,7 +46,7 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
             user: user,
         };
         if (newRoom.name) {
-            setRooms([...rooms, newRoom]);
+            // setRooms([...rooms, newRoom]);
             socket.emit("createRoom", newRoom);
             socket.emit("joinRoom", newRoom.id);
         }

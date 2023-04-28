@@ -11,6 +11,7 @@ import Chat from "../../Chat.jsx";
 import FriendsList from "../../components/FriendsList/FriendsList";
 import ProfilePage from "../../components/ProfilePage/ProfilePage";
 import { io } from "socket.io-client";
+// import * as socket from "../../utilities/socket";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
@@ -25,7 +26,7 @@ export default function App() {
     let jamSelected;
 
     const socketRef = useRef();
-    let socket = socketRef.current;
+    // let socket = socketRef.current;
     async function getJars() {
         const jarList = await sendRequest("/api/jars");
         setJars(jarList);
@@ -37,17 +38,14 @@ export default function App() {
     }
 
     useEffect(() => {
-            getJars();
-            if (!socket) {
-            socket = io({
+        getJars();
+        if (!socketRef.current) {
+            socketRef.current = io({
                 autoConnect: false,
             });
         }
-        
-       
 
-        socket.connect();
-        
+        socketRef.current.connect();
     }, []);
 
     function pickJar(jar) {
@@ -79,13 +77,23 @@ export default function App() {
                             jars={jars}
                             getJars={getJars}
                         />
-                        <Sidebar
-                            setSelectedRoom={setSelectedRoom}
-                            jams={jams}
-                            user={user}
-                            socket={socket}
-                        />
-                        <Chat selectedRoom={selectedRoom} jam={currentJam} socket={socket} />
+
+                        {socketRef.current && (
+                            <>
+                                <Sidebar
+                                    setSelectedRoom={setSelectedRoom}
+                                    jams={jams}
+                                    user={user}
+                                    socket={socketRef.current}
+                                />
+                                <Chat
+                                    selectedRoom={selectedRoom}
+                                    jam={currentJam}
+                                    socket={socketRef.current}
+                                />
+                            </>
+                        )}
+
                         {showProfilePage ? (
                             <ProfilePage handleExitClick={handleExitClick} />
                         ) : (
