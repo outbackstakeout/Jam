@@ -3,13 +3,13 @@ import '../ProfilePage/ProfilePage.css'
 import MessageIcon from "../../images/icons/message-icon.png"
 import BackIcon from "../../images/icons/backIcon.png"
 
-export default function ProfilePage() {
+export default function ProfilePage(props) {
     return (
         <div
             className='profile-page-container'>
 
             <div className='profile-page-cover'>
-                <img src={BackIcon} draggable="false" id="go-back" alt="" srcset="" />
+                <img src={BackIcon} draggable="false" id="go-back" alt="" srcset="" onClick={() => props.handleExitClick()} />
                 <div className='profile-page-picture'>
                 </div>
 

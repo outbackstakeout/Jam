@@ -4,24 +4,12 @@ import ProfilePicture from "../../images/icons/profilepicdemo.png"
 
 
 
-function FriendsList() {
+function FriendsList(props) {
   return (
 
     <section className="friends-list">
-      <h4 className="friend-title">Friends:</h4>
-      <div className="friend-item">
-        <img src={ProfilePicture} alt="Profile" className="profile-pic" />
-        <span className="friend-name">John Doe</span>
-      </div>
-      <div className="friend-item">
-        <img src={ProfilePicture} alt="Profile" className="profile-pic" />
-        <span className="friend-name">John Doe</span>
-      </div>
-      <div className="friend-item">
-        <img src={ProfilePicture} alt="Profile" className="profile-pic" />
-        <span className="friend-name">John Doe</span>
-      </div>
-      <div className="friend-item">
+      <h4 className="friend-title">Online: </h4>
+      <div className="friend-item" onClick={props.handleFriendClick}>
         <img src={ProfilePicture} alt="Profile" className="profile-pic" />
         <span className="friend-name">John Doe</span>
       </div>
