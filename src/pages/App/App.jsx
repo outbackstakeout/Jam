@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import { Routes, Route } from "react-router-dom";
 import { getUser } from "../../utilities/users/users-service";
 import { sendRequest } from "../../utilities/users/send-request";
@@ -10,9 +10,11 @@ import Sidebar from "../../Sidebar.jsx";
 import Chat from "../../Chat.jsx";
 import FriendsList from "../../components/FriendsList/FriendsList";
 import ProfilePage from "../../components/ProfilePage/ProfilePage";
+import { io } from "socket.io-client";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
+    // const [socket, setSocket] = useState(null)
     const [selectedRoom, setSelectedRoom] = useState("");
     const [showProfilePage, setShowProfilePage] = useState(false);
     const [jars, setJars] = useState([]);
@@ -22,6 +24,8 @@ export default function App() {
     let jarSelected;
     let jamSelected;
 
+    const socketRef = useRef();
+    let socket = socketRef.current;
     async function getJars() {
         const jarList = await sendRequest("/api/jars");
         setJars(jarList);
@@ -33,7 +37,17 @@ export default function App() {
     }
 
     useEffect(() => {
-        getJars();
+            getJars();
+            if (!socket) {
+            socket = io({
+                autoConnect: false,
+            });
+        }
+        
+       
+
+        socket.connect();
+        
     }, []);
 
     function pickJar(jar) {
@@ -69,8 +83,9 @@ export default function App() {
                             setSelectedRoom={setSelectedRoom}
                             jams={jams}
                             user={user}
+                            socket={socket}
                         />
-                        <Chat selectedRoom={selectedRoom} jam={currentJam} />
+                        <Chat selectedRoom={selectedRoom} jam={currentJam} socket={socket} />
                         {showProfilePage ? (
                             <ProfilePage handleExitClick={handleExitClick} />
                         ) : (

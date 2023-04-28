@@ -9,7 +9,7 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import GifIcon from "@mui/icons-material/Gif";
 
-function Chat({ selectedRoom }) {
+function Chat({ selectedRoom, socket }) {
     // include pre-return functions from ChatPage.jsx
     console.log(selectedRoom);
 
@@ -25,19 +25,19 @@ function Chat({ selectedRoom }) {
         setMsgs(msgLog);
     }
 
-    const socketRef = useRef();
+    // const socketRef = useRef();
     const roomIdRef = useRef();
 
     useEffect(() => {
         setMsgs([]);
         getMessages();
 
-        if (!socketRef.current) {
-            socketRef.current = io({
+        if (!socket) {
+            socket = io({
                 autoConnect: false,
             });
         }
-        const socket = socketRef.current;
+        // const socket = socketRef.current;
 
         if (selectedRoom) {
             // Set the room ID so it can be accessed inside socket callbacks
@@ -49,18 +49,19 @@ function Chat({ selectedRoom }) {
             });
 
             // Connect the socket to the server
-            socket.connect();
+            // socket.connect();
 
             // Set up the event listeners for the selected room
-            socket.on("newMsg", (msg) => {
-                if (msg.roomId === roomIdRef.current) {
-                    setMsgs((msgs) => [...msgs, msg]);
-                }
-            });
-
-            // Join the selected room
-            socket.emit("joinRoom", selectedRoom.id);
+            
         }
+            socket.on("newMsg", (msg) => {
+                // if (msg.roomId === roomIdRef.current) {
+                    // }
+                    setMsgs((msgs) => [...msgs, msg]);
+                });
+                
+                // Join the selected room
+            // socket.emit("joinRoom", selectedRoom.id);
 
         return () => {
             socket.off("newMsg");
@@ -74,13 +75,15 @@ function Chat({ selectedRoom }) {
 
     async function handleSubmit(e) {
         e.preventDefault();
-
-        const newMsg = { text: input, roomId: selectedRoom.id };
+        
+        const newMsg = { text: input };
+        // roomId: selectedRoom.id place this in next to text input
 
         setMsgs((msgs) => [...msgs, newMsg]);
-
+        console.log('handle submit is working')
         // 💡 to server.js > io.on > socket.on
-        socketRef.current.emit("sendMsg", input);
+        socket.emit("sendMsg", input);
+        console.log(newMsg)
 
         setInput("");
     }

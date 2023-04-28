@@ -95,12 +95,13 @@ io.on("connection", (socket) => {
         io.in(`room-${roomId}`).emit("userLeft", { roomId, userId: socket.id });
     });
 
-    socket.on("sendMsg", (msg, roomId) => {
+    socket.on("sendMsg", (msg) => {
         storeMessage({ text: msg });
-        io.in(`room-${roomId}`).emit("newMsg", {
-            text: msg,
-            sender: socket.id,
-        });
+        // io.in(`room-${roomId}`).emit("newMsg", {
+        //     text: msg,
+        //     sender: socket.id,
+        // });
+        socket.broadcast.emit('newMsg', msg)
     });
 
     socket.on("disconnect", () => {

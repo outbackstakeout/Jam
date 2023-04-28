@@ -13,18 +13,18 @@ import SidebarChannel from "./SidebarChannel";
 import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 
-function Sidebar({ setSelectedRoom, jams, user }) {
+function Sidebar({ setSelectedRoom, jams, user, socket }) {
     const [rooms, setRooms] = useState([]);
-    const socketRef = useRef();
+    // const socketRef = useRef();
 
     useEffect(() => {
-        if (!socketRef.current) {
-            socketRef.current = io({
+        if (!socket) {
+            socket = io({
                 autoConnect: false,
                 path: "/socket",
             });
         }
-        const socket = socketRef.current;
+        
 
         socket.connect();
 
@@ -47,14 +47,14 @@ function Sidebar({ setSelectedRoom, jams, user }) {
         };
         if (newRoom.name) {
             setRooms([...rooms, newRoom]);
-            socketRef.current.emit("createRoom", newRoom);
-            socketRef.current.emit("joinRoom", newRoom.id);
+            socket.emit("createRoom", newRoom);
+            socket.emit("joinRoom", newRoom.id);
         }
     };
 
     const handleRoomClick = (roomId, roomName) => {
         setSelectedRoom({ id: roomId, name: roomName });
-        socketRef.current.emit("joinRoom", roomId);
+        socket.emit("joinRoom", roomId);
     };
 
     return (
