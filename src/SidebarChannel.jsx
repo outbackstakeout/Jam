@@ -1,7 +1,11 @@
 import React from 'react';
 import "./SidebarChannel.css";
 
-function SidebarChannel({ id, channel, selected, onClick }) {
+function SidebarChannel({ id, channel, selected, onClick, setSelectedRoom }) {
+  const handleClick = () => {
+    setSelectedRoom({ id, name: channel});
+    onClick();
+  }
   return (
     <div
       className={`sidebarChannel ${selected && "sidebarChannel--selected"}`}

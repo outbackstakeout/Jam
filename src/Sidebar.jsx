@@ -84,7 +84,8 @@ function Sidebar({ setSelectedRoom }) {
             id={room.id} 
             channel={room.name}
             selected={room.id === setSelectedRoom}
-            onClick={() => handleRoomClick(room.id, room.name)} />
+            onClick={() => handleRoomClick(room.id, room.name)}
+            setSelectedRoom = {setSelectedRoom} />
           ))}
         </div>
       </div>

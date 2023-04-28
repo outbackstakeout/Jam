@@ -12,7 +12,7 @@ function ChatHeader(channel) {
     <div className = "chatHeader">
         <div className="chatHeader_left">
             <h3><span className="chatHeader_hash">#</span>
-            {channel.name}
+            {channel.channel}
             </h3>
         </div>
         <div className="chatHeader_right">
