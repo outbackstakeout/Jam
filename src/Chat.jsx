@@ -29,7 +29,6 @@ function Chat({ selectedRoom }) {
     const roomIdRef = useRef();
 
     useEffect(() => {
-
         setMsgs([]);
         getMessages();
 
@@ -62,7 +61,6 @@ function Chat({ selectedRoom }) {
             // Join the selected room
             socket.emit("joinRoom", selectedRoom.id);
         }
-
 
         return () => {
             socket.off("newMsg");
@@ -98,7 +96,7 @@ function Chat({ selectedRoom }) {
                 })}
             </div>
             <div className="chat_input">
-                <AddCircleIcon fontSize="large" />
+                <AddCircleIcon fontSize="large" id="add-circle-icon" />
                 <form onSubmit={handleSubmit}>
                     <input
                         placeholder={`Message #${selectedRoom?.name || ""}`}

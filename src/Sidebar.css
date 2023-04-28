@@ -10,7 +10,8 @@
 .sidebar {
     grid-column: 2 / 3;
     height: 100vh;
-    background-image: linear-gradient(var(--vanilla), var(--mimi));
+    /* background-image: linear-gradient(var(--vanilla), var(--mimi)); */
+    background-color: var(--mimi);
     display: flex;
     flex-direction: column;
 }
@@ -20,9 +21,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-image: linear-gradient(var(--vanilla), var(--mimi));
+    /* background-image: linear-gradient(var(--vanilla), var(--mimi)); */
+    background-color: var(--mimi);
     color: var(--jet);
-    border-bottom: 3px solid #26282c;
+    border-bottom: 0.5px solid var(--raspberry-rose);
 }
 
 .sidebar_channels{
@@ -42,7 +44,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    background-image: linear-gradient(var(--mimi), var(--vanilla));
+    /* background-image: linear-gradient(var(--mimi), var(--vanilla)); */
+    background-color: var(--mimi);
     color: var(--jet);
 }
 
@@ -56,9 +59,10 @@
     justify-content: space-between;
     align-items: center;
     color: var(--jet);
-    background-image: linear-gradient(var(--vanilla), var(--mimi));
+    /* background-image: linear-gradient(var(--vanilla), var(--mimi)); */
+    background-color: var(--mimi);
     padding: 10px;
-    border-top: 1px solid gray;
+    border-top: 0.5px solid var(--raspberry-rose);
 }
 
 .sidebar_voiceInfo{
@@ -71,7 +75,7 @@
 }
 
 .sidebar_voiceInfo > h3 {
-    color: var(--scream);
+    color: var(--jet);
 }
 
 .sidebar_voiceInfo > p {
