@@ -5,6 +5,7 @@ const jarSchema = new Schema(
     {
         name: {
             type: String,
+            default: "Fresh Jar",
             required: true,
         },
         jams: [

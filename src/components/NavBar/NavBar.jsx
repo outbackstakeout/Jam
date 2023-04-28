@@ -5,12 +5,17 @@ import homeIcon from "../../images/icons/homeIcon.png";
 import chatIcon from "../../images/icons/chatIcon.png";
 import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
+import { sendRequest } from "../../utilities/users/send-request";
 
 export default function NavBar({ user, setUser, jars }) {
     // we wanna move this to user profile
     function handleLogOut() {
         userService.logOut();
         setUser(null);
+    }
+
+    function handleCreate() {
+        sendRequest("/api/jars/create", "POST");
     }
 
     return (
@@ -31,12 +36,13 @@ export default function NavBar({ user, setUser, jars }) {
                         );
                     })}
                     {/*  */}
-
-                    <li className="squircle purple-one">
-                        <div className="popup">
-                            <h4 className="popup-text">JAM HQ</h4>
-                        </div>
-                    </li>
+                    <button onClick={handleCreate}>
+                        <li className="squircle purple-one">
+                            <div className="popup">
+                                <h4 className="popup-text">JAM HQ</h4>
+                            </div>
+                        </li>
+                    </button>
                     <li className="squircle purple-one">
                         <div className="popup">
                             <h4 className="popup-text">CREW</h4>
