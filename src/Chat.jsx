@@ -29,6 +29,7 @@ function Chat({ selectedRoom }) {
     const roomIdRef = useRef();
 
     useEffect(() => {
+
         setMsgs([]);
         getMessages();
 

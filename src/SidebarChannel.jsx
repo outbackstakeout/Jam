@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "./SidebarChannel.css";
 
 function SidebarChannel({ id, channel, selected, onClick, setSelectedRoom }) {
@@ -16,4 +16,4 @@ function SidebarChannel({ id, channel, selected, onClick, setSelectedRoom }) {
   )
 }
 
-export default SidebarChannel
+export default SidebarChannel;

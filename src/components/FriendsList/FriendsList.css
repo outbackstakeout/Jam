@@ -3,16 +3,15 @@
 }
 
 .friends-list {
-
   margin: 6px;
   grid-column: 4 / 4;
   display: flex;
   flex-direction: column;
   min-width: 150px;
-  background: var(--color-not-quite-black);
+  background: var(--vanilla);
   padding: 25px 1rem 25px 1rem;
   gap: 1rem;
-  color: #fff;
+  color: var(--jet);
   overflow-y: none;
   list-style: none;
   /* position: fixed; */
