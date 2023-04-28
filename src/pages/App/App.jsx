@@ -13,6 +13,15 @@ import ProfilePage from "../../components/ProfilePage/ProfilePage";
 export default function App() {
     const [user, setUser] = useState(getUser());
     const [selectedRoom, setSelectedRoom] = useState("")
+    const [showProfilePage, setShowProfilePage] = useState(false);
+
+    const handleFriendClick = () => {
+        setShowProfilePage(true);
+    }
+
+    const handleExitClick = () => {
+      setShowProfilePage(false);
+    };
 
     return (
         <main className="App">
@@ -22,7 +31,11 @@ export default function App() {
                         <NavBar user={user} setUser={setUser} />                   
                         <Sidebar setSelectedRoom={setSelectedRoom} />
                         <Chat selectedRoom={selectedRoom} />
-                        <FriendsList />                    
+                        {showProfilePage ? (
+                            <ProfilePage handleExitClick={handleExitClick} />
+                        ) : (
+                            <FriendsList handleFriendClick={handleFriendClick} />
+                        )}                    
                     </div>
                 </>
             ) : (
