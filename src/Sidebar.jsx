@@ -59,15 +59,23 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
         }
     };
 
+    // const handleNewJarName = () => {
+    //     const newJarName = {
+    //         name: prompt("What do you want to call this Jar?🫙"),
+    //     };
+    //     if (newJarName) {
+    //         setJarName(newJarName);
+    //         socket.emit("renameJar", (currentJar._id, newJarName));
+    //     }
+    // };
     const handleNewJarName = () => {
-        const newJarName = {
-            name: prompt("What do you want to call this Jar?🫙"),
-        };
+        const newJarName = prompt("What do you want to call this Jar?🫙");
         if (newJarName) {
+            socket.emit("renameJar", newJarName);
             setJarName(newJarName);
-            socket.emit("renameJar", (currentJar._id, newJarName));
-        }
+        };
     };
+
 
     const handleRoomClick = (roomId, roomName) => {
         // setSelectedRoom({ id: roomId, name: roomName });
