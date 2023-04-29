@@ -13,3 +13,12 @@
     color: #8F4158;
     cursor: pointer;
 }
+
+.email{
+    font-weight: bold;
+    color: #8F4158;
+}
+
+.password{
+    font-weight: bold;
+}

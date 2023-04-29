@@ -32,7 +32,7 @@ export default function LoginForm({ setUser }) {
         <div>
             <div className="form-container">
                 <form autoComplete="off" onSubmit={handleSubmit}>
-                    <label>Email</label>
+                    <label className="email">Email</label>
                     <input
                         type="text"
                         name="email"
@@ -40,7 +40,7 @@ export default function LoginForm({ setUser }) {
                         onChange={handleChange}
                         required
                     />
-                    <label>Password</label>
+                    <label className="password">Password</label>
                     <input
                         type="password"
                         name="password"
