@@ -3,7 +3,7 @@
     flex-direction: column;
     min-width: 150px;
     display: flex;
-    background-color: rgb(24, 24, 24);
+    background-color: var(--mimi);
     margin: 6px;
     height: 99vh;
     width: 90%;
@@ -12,7 +12,7 @@
 }
 
 .profile-page-cover {
-    background-color: yellow;
+    background-color: #C0DBEA;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     position: relative;
@@ -43,7 +43,8 @@
 }
 
 .profile-page-info-container {
-    background-color: rgb(55, 55, 55);
+    background-color: var(--vanilla);
+    background-image: linear-gradient(var(--raspberry-rose), rgba(23, 23, 23, 0.234));
     position: relative;
     margin-top: 35%;
     margin-right: 6px;
@@ -59,22 +60,23 @@
 
 
 #message {
-    background-color: #FF934F;
+    background-color: #FDF4F5;
     /* Orange */
     border: none;
-    border-radius: 10px;
-    position: relative;
-    margin: 20px 10px auto;
-    width: 90%;
-    color: white;
-    padding: 15px 30px;
+    position: absolute;
+    bottom: 50px;
+    margin: 0 10px;
+    width: 20%;
+    color: darkslategray;
+    padding: 10px 20px;
     text-align: center;
     text-decoration: none;
     display: inline-flex;
-    font-size: 16px;
+    font-size: 5px;
+    font-weight: bold;
     flex: 1;
-    font-size: 15px;
-    min-width: 100px;
+    font-size: 14px;
+    min-width: 80px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -92,33 +94,38 @@
 }
 
 #message:hover {
-    background-color: #cb743e;
+    background-color: rebeccapurple;
+    color: white;
+    font-weight: bold;
+    
 }
 
 #signOut {
-    background-color: #f31212;
+    background-color: #C0DBEA;
     /* Orange */
     border: none;
-    border-radius: 10px;
-    position: relative;
-    margin: 10px 10px auto;
-    width: 90%;
-    color: white;
-    padding: 15px 30px;
+    position: absolute;
+    bottom: 50px;
+    right: 15px;
+    width: 39%;
+    color: darkslategray;
+    padding: 10px 3px;
     text-align: center;
     text-decoration: none;
     display: inline-flex;
-    font-size: 16px;
+    font-size: 5px;
+    font-weight: bold;
     flex: 1;
-    font-size: 15px;
-    min-width: 100px;
+    font-size: 14px;
     align-items: center;
     justify-content: center;
     cursor: pointer;
 }
 
 #signOut:hover {
-    background-color: #cc1c1c;
+    background-color: white;
+    color: hotpink;
+    font-weight: bold;
 }
 
 img {
