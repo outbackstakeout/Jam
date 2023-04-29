@@ -1,0 +1,28 @@
+.message{
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    color: var(--jet);
+}
+
+
+.message_info {
+    margin-left: 20px;
+}
+
+.message_info p {
+    /* background-image: linear-gradient(var(--mimi), var(--pale)); */
+    background-color: var(--mimi);
+    background-attachment: fixed;
+    border-radius: 10px;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    margin-top: 5px;
+}
+
+.message_timestamp{
+    color: var(--jet);
+    margin-left: 20px;
+    font-size: x-small;
+}

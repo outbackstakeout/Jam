@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { signUp } from "../../utilities/users-service";
+import { signUp } from "../../utilities/users/users-service";
 import FirstNameSignUp from "./FirstNameSignUp";
 import LastNameSignUp from "./LastNameSignUp";
 import UsernameSignUp from "./UsernameSignUp";
@@ -41,6 +41,8 @@ export default function SignUpForm({ setUser }) {
                 email,
                 password,
             };
+
+            // 🙋🏽‍♂️ passing user data to user signUp function from utilities/users/users-service
             const user = await signUp(formData);
             setUser(user);
         } catch {

@@ -7,12 +7,6 @@ async function checkToken(req, res) {
     res.json(req.exp);
 }
 
-module.exports = {
-    create,
-    login,
-    checkToken,
-};
-
 async function create(req, res) {
     try {
         // Add the user to the db
@@ -47,3 +41,9 @@ function createJWT(user) {
         { expiresIn: "24h" }
     );
 }
+
+module.exports = {
+    create,
+    login,
+    checkToken,
+};
