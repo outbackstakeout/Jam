@@ -11,7 +11,7 @@ import GifIcon from "@mui/icons-material/Gif";
 
 function Chat({ selectedRoom, socket }) {
     // include pre-return functions from ChatPage.jsx
-    console.log(selectedRoom);
+    // console.log(selectedRoom);
 
     const [input, setInput] = useState("");
     const [msgs, setMsgs] = useState([]);

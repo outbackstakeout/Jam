@@ -7,16 +7,34 @@ import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
 
-export default function NavBar({ user, setUser, jars, getJars }) {
+export default function NavBar({ currentUser, jars, setJarList, pickJar }) {
     // we wanna move this to user profile
-    function handleLogOut() {
-        userService.logOut();
-        setUser(null);
+    // function handleLogOut() {
+    //     userService.logOut();
+    //     setUser(null);
+    // }
+
+    async function handleCreate() {
+        try {
+            const payload = {
+                name: "Fresh Jar",
+                jams: [],
+                user: currentUser,
+            };
+            const newJar = await sendRequest(
+                "/api/jars/create",
+                "POST",
+                payload
+            );
+            setJarList(newJar);
+            console.log("HANDLE CREATE");
+        } catch (err) {
+            console.log(`handleCreate() in NavBar says the error is: ${err}`);
+        }
     }
 
-    function handleCreate() {
-        sendRequest("/api/jars/create", "POST");
-        getJars();
+    function handleClick(jar) {
+        pickJar(jar);
     }
 
     return (
@@ -27,7 +45,11 @@ export default function NavBar({ user, setUser, jars, getJars }) {
                     <li className="divider"></li>
                     {jars.map((jar) => {
                         return (
-                            <li className="squircle purple-one">
+                            <li
+                                key={jar._id}
+                                className="squircle purple-one"
+                                onClick={() => handleClick(jar)}
+                            >
                                 <div className="popup">
                                     <h4 className="popup-text">{jar.name}</h4>
                                 </div>
@@ -42,26 +64,6 @@ export default function NavBar({ user, setUser, jars, getJars }) {
                             </div>
                         </li>
                     </button>
-                    <li className="squircle purple-one">
-                        <div className="popup">
-                            <h4 className="popup-text">CREW</h4>
-                        </div>
-                    </li>
-                    <li className="squircle green-one">
-                        <div className="popup">
-                            <h4 className="popup-text">GYM SQUAD</h4>
-                        </div>
-                    </li>
-                    <li className="squircle green-one">
-                        <div className="popup">
-                            <h4 className="popup-text">CODERS</h4>
-                        </div>
-                    </li>
-                    <li className="squircle purple-one">
-                        <div className="popup">
-                            <h4 className="popup-text">THE DEFTONES</h4>
-                        </div>
-                    </li>
                 </ul>
             </nav>
         </div>

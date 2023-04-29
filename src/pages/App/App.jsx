@@ -28,14 +28,16 @@ export default function App() {
     const socketRef = useRef();
     // let socket = socketRef.current;
     async function getJars() {
+        console.log("getJars() function in App.jsx");
         const jarList = await sendRequest("/api/jars");
+        console.log(jarList);
         setJars(jarList);
     }
 
-    async function getJams() {
-        const jamList = await sendRequest("/api/jams");
-        setJams(jamList);
-    }
+    // async function getJams() {
+    //     const jamList = await sendRequest("/api/jams");
+    //     setJams(jamList);
+    // }
 
     useEffect(() => {
         getJars();
@@ -51,6 +53,10 @@ export default function App() {
     function pickJar(jar) {
         jarSelected = true;
         setCurrentJar(jar);
+    }
+
+    function setJarList(newJar) {
+        setJars((jars) => [...jars, newJar]);
     }
 
     function pickJam(jam) {
@@ -72,10 +78,10 @@ export default function App() {
                 <>
                     <div className="container">
                         <NavBar
-                            user={user}
-                            setUser={setUser}
+                            currentUser={user}
                             jars={jars}
-                            getJars={getJars}
+                            setJarList={setJarList}
+                            pickJar={pickJar}
                         />
 
                         {socketRef.current && (
