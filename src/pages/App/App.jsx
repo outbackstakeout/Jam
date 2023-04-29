@@ -91,6 +91,7 @@ export default function App() {
                                     jams={jams}
                                     user={user}
                                     socket={socketRef.current}
+                                    currentJar={currentJar}
                                 />
                                 <Chat
                                     selectedRoom={selectedRoom}

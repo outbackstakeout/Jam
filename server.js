@@ -6,6 +6,7 @@ require("./config/database");
 const Message = require("./models/message");
 const { v4: uuidv4 } = require("uuid");
 const Jam = require("./models/jam");
+const Jar = require("./models/jar");
 
 const app = express();
 
@@ -83,13 +84,15 @@ io.on("connection", (socket) => {
     });
 
     socket.on("renameJar", (jarId, newJarName) => {
-        console.log(`The new jar name is ${newJarName.name}`);
-        Jar.findByIdAndUpdate(jarId, {name: newJarName}).then((updatedJar) => {
-            console.log(`Updated jar name to ${updatedJar.name}`);
-            io.to(`jar:${jarId}`).emit("jarRenamed", updatedJar.name);
-        }).catch((err) => {
-            console.error("Error in updating Jar name", err);
-        });
+        console.log(`The new jar name is ${newJarName}`);
+        Jar.findByIdAndUpdate(jarId, { name: newJarName })
+            .then((updatedJar) => {
+                console.log(`Updated jar name to ${updatedJar.name}`);
+                io.to(`jar:${jarId}`).emit("jarRenamed", updatedJar.name);
+            })
+            .catch((err) => {
+                console.error("Error in updating Jar name", err);
+            });
     });
 
     socket.on("leaveRoom", (roomId) => {

@@ -12,12 +12,12 @@ import HeadsetIcon from "@mui/icons-material/Headset";
 import SidebarChannel from "./SidebarChannel";
 // import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 
 // 🎉 user might drill in hear
-function Sidebar({ setSelectedRoom, jams, user, socket }) {
+function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
     const [rooms, setRooms] = useState([]);
-    const [jarName, setJarName] = useState('');
+    const [jarName, setJarName] = useState("");
     // const socketRef = useRef();
 
     useEffect(() => {
@@ -41,9 +41,9 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
         };
     }, []);
 
-    socket.on("renamedJar", (newJarName) => {
-        console.log(`The new jar name is ${newJarName.name}`);
-        setJarName(newJarName.name);
+    socket.on("jarRenamed", (newJarName) => {
+        console.log(`The new jar name is ${newJarName}`);
+        setJarName(newJarName);
     });
 
     const handleCreateRoom = () => {
@@ -64,9 +64,9 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
             name: prompt("What do you want to call this Jar?🫙"),
         };
         if (newJarName) {
-            setJarName(newJarName)
-            socket.emit("renameJar", { jarId: jarId, newName: newJarName });
-        };
+            setJarName(newJarName);
+            socket.emit("renameJar", (currentJar._id, newJarName));
+        }
     };
 
     const handleRoomClick = (roomId, roomName) => {
