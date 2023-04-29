@@ -12,10 +12,12 @@ import HeadsetIcon from "@mui/icons-material/Headset";
 import SidebarChannel from "./SidebarChannel";
 // import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
+import EditIcon from '@mui/icons-material/Edit';
 
 // 🎉 user might drill in hear
 function Sidebar({ setSelectedRoom, jams, user, socket }) {
     const [rooms, setRooms] = useState([]);
+    const [jarName, setJarName] = useState('');
     // const socketRef = useRef();
 
     useEffect(() => {
@@ -39,6 +41,11 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
         };
     }, []);
 
+    socket.on("renamedJar", (newJarName) => {
+        console.log(`The new jar name is ${newJarName.name}`);
+        setJarName(newJarName.name);
+    });
+
     const handleCreateRoom = () => {
         console.log("Creating a new room...");
         const newRoom = {
@@ -52,6 +59,16 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
         }
     };
 
+    const handleNewJarName = () => {
+        const newJarName = {
+            name: prompt("What do you want to call this Jar?🫙"),
+        };
+        if (newJarName) {
+            setJarName(newJarName)
+            socket.emit("renameJar", { jarId: jarId, newName: newJarName });
+        };
+    };
+
     const handleRoomClick = (roomId, roomName) => {
         // setSelectedRoom({ id: roomId, name: roomName });
         setSelectedRoom(roomName);
@@ -61,8 +78,11 @@ function Sidebar({ setSelectedRoom, jams, user, socket }) {
     return (
         <div className="sidebar">
             <div className="sidebar_top">
-                <h3>Sean Munjal</h3>
-                <ExpandMoreIcon />
+                <h3>{jarName || "Fresh Jar"}</h3>
+                <EditIcon
+                    className="sidebar_changeJarName"
+                    onClick={() => handleNewJarName()}
+                />
             </div>
             <div className="sidebar_channels">
                 <div className="sidebar_channelsHeader">

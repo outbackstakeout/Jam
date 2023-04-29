@@ -95,3 +95,15 @@
     padding: 10px;
 }
 
+@media screen and (max-width: 768px) {
+    .sidebar {
+        grid-column: 1 / 2;
+        height: auto;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .sidebar_top {
+        flex-direction: column;
+        align-items: flex-start;
+    }}

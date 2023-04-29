@@ -82,6 +82,16 @@ io.on("connection", (socket) => {
         });
     });
 
+    socket.on("renameJar", (jarId, newJarName) => {
+        console.log(`The new jar name is ${newJarName.name}`);
+        Jar.findByIdAndUpdate(jarId, {name: newJarName}).then((updatedJar) => {
+            console.log(`Updated jar name to ${updatedJar.name}`);
+            io.to(`jar:${jarId}`).emit("jarRenamed", updatedJar.name);
+        }).catch((err) => {
+            console.error("Error in updating Jar name", err);
+        });
+    });
+
     socket.on("leaveRoom", (roomId) => {
         // Remove the user from the room with the given ID
         console.log(`User ${socket.id} left room ${roomId}`);
