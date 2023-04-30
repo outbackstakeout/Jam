@@ -48,6 +48,19 @@ async function createJam(roomName, id, user) {
     }
 }
 
+async function renameJar(id, newName) {
+    try {
+        const jar = await Jar.findByIdAndUpdate(id, {
+            name: newName,
+        });
+        console.log(`renameJar() in server.js says the jar is: ${jar}`);
+        const renamedJar = await Jar.findById(id);
+        return renamedJar;
+    } catch (err) {
+        console.log(`The error from renameJar() from server.js is: ${err}`);
+    }
+}
+
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 });
