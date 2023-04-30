@@ -59,7 +59,7 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar }) {
                     })}
                     {/*  */}
                     <AddBoxIcon
-                    className="add_jam"
+                    className="add_jar"
                     onClick={() => handleCreate()} />
                 </ul>
             </nav>

@@ -6,7 +6,7 @@
     background-color: var(--mimi);
     margin: 6px;
     height: 99vh;
-    width: 90%;
+    width: 95%;
     border-radius: 10px;
 
 }
@@ -97,7 +97,7 @@
     background-color: rebeccapurple;
     color: white;
     font-weight: bold;
-    
+
 }
 
 #signOut {
@@ -130,4 +130,10 @@
 
 img {
     cursor: pointer;
+}
+
+
+@media only screen and (max-width: 1400px) { #signOut {
+        display: none;
+    }
 }
