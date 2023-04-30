@@ -17,8 +17,9 @@ import EditIcon from "@mui/icons-material/Edit";
 // 🎉 user might drill in hear
 function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
     const [rooms, setRooms] = useState([]);
-    const [jarName, setJarName] = useState("");
+    const [jarName, setJarName] = useState(currentJar.name);
     // const socketRef = useRef();
+    const [editing, setEditing] = useState(false);
 
     useEffect(() => {
         // if (!socket) {
@@ -35,16 +36,17 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
             setRooms((rooms) => [...rooms, room]);
         });
 
+        socket.on("jarRenamed", (newJarName) => {
+            console.log(`The new jar name is ${newJarName}`);
+            setJarName(newJarName);
+        });
+
         return () => {
-            socket.off("roomCreate");
+            socket.off("roomCreated");
+            socket.off("jarRenamed");
             // socket.disconnect();
         };
     }, []);
-
-    socket.on("jarRenamed", (newJarName) => {
-        console.log(`The new jar name is ${newJarName}`);
-        setJarName(newJarName);
-    });
 
     const handleCreateRoom = () => {
         console.log("Creating a new room...");
@@ -59,15 +61,27 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
         }
     };
 
-    const handleNewJarName = () => {
-        const newJarName = {
-            name: prompt("What do you want to call this Jar?🫙"),
-        };
-        if (newJarName) {
-            setJarName(newJarName);
-            socket.emit("renameJar", (currentJar._id, newJarName));
+    // function isn't getting called
+    function handleNewJarName(e) {
+        console.log("🛶🛶🛶");
+        e.preventDefault();
+        const newJarName = jarName;
+        const jarId = currentJar._id;
+        console.log(
+            `handleNewJarName() in sidebar says the jarName is: ${jarName} and the jarId is: ${jarId}`
+        );
+        if (jarId) {
+            socket.emit("renameJar", jarId, newJarName);
         }
-    };
+    }
+
+    function handleEditClick() {
+        setEditing(true);
+    }
+
+    function handleNameChange(e) {
+        setJarName(e.target.value);
+    }
 
     const handleRoomClick = (roomId, roomName) => {
         // setSelectedRoom({ id: roomId, name: roomName });
@@ -78,10 +92,26 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
     return (
         <div className="sidebar">
             <div className="sidebar_top">
-                <h3>{jarName || "Fresh Jar"}</h3>
+                <h3>
+                    {editing ? (
+                        <form onSubmit={handleNewJarName}>
+                            <input
+                                type="text"
+                                name="name"
+                                value={jarName}
+                                onChange={handleNameChange}
+                                required
+                            />
+                            <button type="submit" hidden></button>
+                        </form>
+                    ) : (
+                        currentJar.name
+                        // `${currentJar._id}`
+                    )}
+                </h3>
                 <EditIcon
                     className="sidebar_changeJarName"
-                    onClick={() => handleNewJarName()}
+                    onClick={handleEditClick}
                 />
             </div>
             <div className="sidebar_channels">
