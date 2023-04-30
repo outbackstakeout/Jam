@@ -46,6 +46,16 @@ async function createJam(roomName, id, user) {
     }
 }
 
+const updatedJarName = async (jarId, newJarName) => {
+    try {
+        const updatedJar = Jar.findByIdAndUpdate(jarId, { name: newJarName }, { new: true}).exec();
+        console.log(`updated jar name is ${updatedJar.name}`);
+        return updatedJar.name;
+    } catch (err) {
+        console.error("Error updating jar")
+    }
+}
+
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
 });
@@ -83,16 +93,10 @@ io.on("connection", (socket) => {
         });
     });
 
-    socket.on("renameJar", (jarId, newJarName) => {
-        console.log(`The new jar name is ${newJarName}`);
-        Jar.findByIdAndUpdate(jarId, { name: newJarName })
-            .then((updatedJar) => {
-                console.log(`Updated jar name to ${updatedJar.name}`);
-                io.to(`jar:${jarId}`).emit("jarRenamed", updatedJar.name);
-            })
-            .catch((err) => {
-                console.error("Error in updating Jar name", err);
-            });
+    socket.on("renameJar", async (jarId, newJarName) => {
+        console.log(`the new jar name is ${newJarName}`);
+        const updatedName = await updatedJarName(jarId, newJarName);
+        io.to(`jar:${jarId}`).emit("jarRenamed", updatedName);
     });
 
     socket.on("leaveRoom", (roomId) => {

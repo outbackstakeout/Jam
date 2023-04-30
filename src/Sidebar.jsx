@@ -71,8 +71,9 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
     const handleNewJarName = () => {
         const newJarName = prompt("What do you want to call this Jar?🫙");
         if (newJarName) {
-            socket.emit("renameJar", newJarName);
+            socket.emit("renameJar", currentJar._id, newJarName);
             setJarName(newJarName);
+            
         };
     };
 
