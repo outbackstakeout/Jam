@@ -16,7 +16,9 @@ export default function ProfilePage(props) {
             </div>
             <div className='profile-page-info-container'>
                 <div className='profile-page-first-last-name'>
-                    <h3 id="profile-page-username"> Username </h3>
+                    <h3 id="profile-page-username"> {props.user.username} </h3>
+                    <p className="users_name">{props.user.first_name} {props.user.last_name}</p>
+                    <p className="users_email">{props.user.email}</p>
 
 
                     <button id="message">  Message </button>

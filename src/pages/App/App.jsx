@@ -109,9 +109,12 @@ export default function App() {
                         <div className="container-4">
                         {showProfilePage ? (
                             
-                            <ProfilePage handleExitClick={handleExitClick} />
+                            <ProfilePage 
+                            user={user}
+                            handleExitClick={handleExitClick} />
                         ) : (
                             <FriendsList
+                                user={user}
                                 handleFriendClick={handleFriendClick}
                             />
                             

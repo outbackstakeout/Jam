@@ -55,6 +55,7 @@
 
 #profile-page-username {
     margin: 20px 20px auto;
+    text-align: center;
 }
 
 
@@ -136,4 +137,22 @@ img {
 @media only screen and (max-width: 1400px) { #signOut {
         display: none;
     }
+}
+
+.users_name {
+    font-weight: bold;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 50px;
+    padding: 2px;
+    margin-left: 2px;
+}
+
+.users_email {
+    font-weight:bold;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 5px;
+    padding: 2px;
+    margin-left: 2px;
 }

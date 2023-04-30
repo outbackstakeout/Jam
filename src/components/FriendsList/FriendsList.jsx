@@ -11,7 +11,7 @@ function FriendsList(props) {
       <h4 className="friend-title">Online: </h4>
       <div className="friend-item" onClick={props.handleFriendClick}>
         <img src={ProfilePicture} alt="Profile" className="profile-pic" />
-        <span className="friend-name">John Doe</span>
+        <span className="friend-name">{props.user.username}</span>
       </div>
     </section>
   )
