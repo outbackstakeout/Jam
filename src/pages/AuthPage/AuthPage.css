@@ -6,7 +6,7 @@
     background-color: #FBD5DB;
 }
 
-.login > button {
+.login>button {
     width: 300px;
     background-color: #8F4158;
     color: #eff2f5;
@@ -14,13 +14,13 @@
     padding: 20px;
 }
 
-.login > button:hover {
+.login>button:hover {
     background-color: #eff2f5;
     color: #8F4158;
     cursor: pointer;
 }
 
-.login > div > img {
+.login>div>img {
     object-fit: contain;
     height: 500px;
 }

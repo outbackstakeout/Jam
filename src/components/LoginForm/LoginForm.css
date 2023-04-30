@@ -1,3 +1,107 @@
+.signin-form-body {
+    background-color: #f1f1f1;
+    box-shadow: 0 0 20px rgba(0, 0, 0, .1);
+    text-align: center;
+    /* UP and BOTTOM, LEFT and RIGHT alignment */
+    max-width: 350px;
+    /* ENSURES HORIZONTAL CENTERING */
+    margin: 0 auto;
+    margin-top: 20vh;
+    /* Overflow hides flow out of the form */
+    border-radius: 5px;
+    overflow: hidden;
+    padding: 30px;
+
+
+}
+
+.user-signin-form,
+.user-signin-form * {
+    box-sizing: border-box;
+    font-family: sans-serif;
+
+}
+
+.jam-logo-container img {
+    display: block;
+    max-width: 200px;
+    margin: 10px auto;
+    padding: 5px;
+    height: 200px;
+    width: auto;
+}
+
+.signin-form-content {
+    padding: 5px;
+}
+
+.signin-form-header {
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: #1e1e1e;
+
+}
+
+.signin-form-input {
+    padding: 12px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 5%;
+    border: 2px solid rgb(210, 210, 210);
+    border-radius: 5px;
+    outline: none;
+    /* background-color: #f1f1f1; */
+    transition: border-color 0.2s;
+}
+
+.signin-form-input:focus {
+    border-color: #8F4158;
+}
+
+.signin-form-input::placeholder {
+    color: #aaaaaa;
+}
+
+.signin-form-button {
+    padding: 10px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    background-color: rgb(254, 54, 54);
+    width: 45%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-right: 10px;
+
+}
+
+.signin-form-button:active {
+    background-color: #e11d3a;
+}
+
+.signup-form-button {
+    padding: 10px;
+    color: black;
+    font-weight: bold;
+    background-color: var(--background-color);
+    width: 45%;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.signup-form-button:active {
+    background-color: #e7c5ca;
+}
+
+/* 
 .form-container button {
     width: 200px;
     background-color: #8F4158;
@@ -21,4 +125,4 @@
 
 .password{
     font-weight: bold;
-}
+} */
