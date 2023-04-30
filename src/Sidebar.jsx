@@ -14,23 +14,13 @@ import SidebarChannel from "./SidebarChannel";
 import { v4 as uuidv4 } from "uuid";
 import EditIcon from "@mui/icons-material/Edit";
 
-// 🎉 user might drill in hear
-function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
+// 🎉 user might drill in here
+function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
     const [rooms, setRooms] = useState([]);
     const [jarName, setJarName] = useState(currentJar.name);
-    // const socketRef = useRef();
     const [editing, setEditing] = useState(false);
 
     useEffect(() => {
-        // if (!socket) {
-        //     socket = io({
-        //         autoConnect: false,
-        //         path: "/socket",
-        //     });
-        // }
-
-        // socket.connect();
-
         socket.on("roomCreated", (room) => {
             console.log("Room Created: ", room);
             setRooms((rooms) => [...rooms, room]);
@@ -38,14 +28,13 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
 
         socket.on("jarRenamed", (renamedJar) => {
             console.log(`The new jar name is ${renamedJar.name}`);
-            setJarName(renamedJar.name);
             pickJar(renamedJar);
+            setJarName(renamedJar.name);
         });
 
         return () => {
             socket.off("roomCreated");
             socket.off("jarRenamed");
-            // socket.disconnect();
         };
     }, []);
 
@@ -107,7 +96,8 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
                             <button type="submit" hidden></button>
                         </form>
                     ) : (
-                        currentJar.name
+                        jarName
+                        // currentJar.name
                         // `${currentJar._id}`
                     )}
                 </h3>
@@ -172,11 +162,11 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
         </div>
     );
 
-    <div className="sidebar_channelsList">
-        {jams.map((jamItem) => {
-            return <SidebarChannel jam={jamItem} />;
-        })}
-    </div>;
+    // <div className="sidebar_channelsList">
+    //     {jams.map((jamItem) => {
+    //         return <SidebarChannel jam={jamItem} />;
+    //     })}
+    // </div>;
 }
 
 export default Sidebar;

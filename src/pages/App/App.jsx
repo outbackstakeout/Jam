@@ -40,7 +40,6 @@ export default function App() {
     // }
 
     useEffect(() => {
-        getJars();
         if (!socketRef.current) {
             socketRef.current = io({
                 autoConnect: false,
@@ -51,8 +50,16 @@ export default function App() {
     }, []);
 
     function pickJar(jar) {
+        console.log("pickJar() in App.jsx hit successfully");
+        console.log(
+            `The jar that pickJar() received from NavBar is: ${jar.name}`
+        );
+        console.log(
+            `The current jar before resetting it is ${currentJar.name}`
+        );
         jarSelected = true;
         setCurrentJar(jar);
+        console.log(`And now the current jar is: ${currentJar.name}`);
     }
 
     function setJarList(newJar) {
@@ -82,6 +89,7 @@ export default function App() {
                             jars={jars}
                             setJarList={setJarList}
                             pickJar={pickJar}
+                            getJars={getJars}
                         />
 
                         {socketRef.current && (
