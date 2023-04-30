@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 import EditIcon from "@mui/icons-material/Edit";
 
 // 🎉 user might drill in hear
-function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
+function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
     const [rooms, setRooms] = useState([]);
     const [jarName, setJarName] = useState(currentJar.name);
     // const socketRef = useRef();
@@ -36,9 +36,10 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
             setRooms((rooms) => [...rooms, room]);
         });
 
-        socket.on("jarRenamed", (newJarName) => {
-            console.log(`The new jar name is ${newJarName}`);
-            setJarName(newJarName);
+        socket.on("jarRenamed", (renamedJar) => {
+            console.log(`The new jar name is ${renamedJar.name}`);
+            setJarName(renamedJar.name);
+            pickJar(renamedJar);
         });
 
         return () => {
@@ -73,6 +74,7 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar }) {
         if (jarId) {
             socket.emit("renameJar", jarId, newJarName);
         }
+        setEditing(false);
     }
 
     function handleEditClick() {

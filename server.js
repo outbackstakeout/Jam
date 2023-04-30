@@ -54,6 +54,8 @@ async function renameJar(id, newName) {
             name: newName,
         });
         console.log(`renameJar() in server.js says the jar is: ${jar}`);
+        const renamedJar = await Jar.findById(id);
+        return renamedJar;
     } catch (err) {
         console.log(`The error from renameJar() from server.js is: ${err}`);
     }
@@ -104,9 +106,9 @@ io.on("connection", (socket) => {
         if (!mongoose.Types.ObjectId.isValid(jarId)) {
             console.log(`ERRORz`);
         }
-        renameJar(jarId, newJarName);
+        const renamedJar = renameJar(jarId, newJarName);
         try {
-            io.to(`jar:${jarId}`).emit("jarRenamed", newJarName);
+            io.to(`jar:${jarId}`).emit("jarRenamed", renamedJar);
         } catch (err) {
             console.log(
                 `The error from socket.on("renameJar") in server.js is: ${err}`
