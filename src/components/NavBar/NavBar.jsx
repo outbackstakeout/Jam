@@ -6,6 +6,7 @@ import chatIcon from "../../images/icons/chatIcon.png";
 import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default function NavBar({ currentUser, jars, setJarList, pickJar }) {
     // we wanna move this to user profile
@@ -57,13 +58,9 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar }) {
                         );
                     })}
                     {/*  */}
-                    <button onClick={handleCreate}>
-                        <li className="squircle purple-one">
-                            <div className="popup">
-                                <h4 className="popup-text">JAM HQ</h4>
-                            </div>
-                        </li>
-                    </button>
+                    <AddBoxIcon
+                    className="add_jam"
+                    onClick={() => handleCreate()} />
                 </ul>
             </nav>
         </div>
