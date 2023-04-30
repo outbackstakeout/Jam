@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const path = require("path");
 const logger = require("morgan");
 require("dotenv").config();
@@ -7,6 +8,7 @@ const Message = require("./models/message");
 const { v4: uuidv4 } = require("uuid");
 const Jam = require("./models/jam");
 const Jar = require("./models/jar");
+const { ObjectId } = require("mongodb");
 
 const app = express();
 
@@ -43,16 +45,6 @@ async function createJam(roomName, id, user) {
         });
     } catch (err) {
         console.log(`The error from createJam() in server.js is: ${err}`);
-    }
-}
-
-const updatedJarName = async (jarId, newJarName) => {
-    try {
-        const updatedJar = Jar.findByIdAndUpdate(jarId, { name: newJarName }, { new: true}).exec();
-        console.log(`updated jar name is ${updatedJar.name}`);
-        return updatedJar.name;
-    } catch (err) {
-        console.error("Error updating jar")
     }
 }
 
@@ -93,10 +85,33 @@ io.on("connection", (socket) => {
         });
     });
 
-    socket.on("renameJar", async (jarId, newJarName) => {
-        console.log(`the new jar name is ${newJarName}`);
-        const updatedName = await updatedJarName(jarId, newJarName);
-        io.to(`jar:${jarId}`).emit("jarRenamed", updatedName);
+    socket.on("renameJar", (jarId, newJarName) => {
+        console.log(
+            `The new jar name is ${newJarName} and the jarId is ${jarId}`
+        );
+
+        if (!mongoose.Types.ObjectId.isValid(jarId)) {
+            console.log(`ERRORz`);
+        }
+        const renamedJar = renameJar(jarId, newJarName);
+        try {
+            io.to(`jar:${jarId}`).emit("jarRenamed", renamedJar);
+        } catch (err) {
+            console.log(
+                `The error from socket.on("renameJar") in server.js is: ${err}`
+            );
+        }
+
+        // Jar.findByIdAndUpdate(jarId, { name: newJarName })
+        //     .then((updatedJar) => {
+        //         console.log(`Updated jar name to ${updatedJar.name}`);
+        //         io.to(`jar:${jarId}`).emit("jarRenamed", updatedJar.name);
+        //     })
+        //     .catch((err) => {
+        //         console.error(
+        //             `Error in updating Jar name from .catch in socket.on("renamejar"), ${err}`
+        //         );
+        //     });
     });
 
     socket.on("leaveRoom", (roomId) => {

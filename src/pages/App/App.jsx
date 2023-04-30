@@ -30,7 +30,7 @@ export default function App() {
     async function getJars() {
         console.log("getJars() function in App.jsx");
         const jarList = await sendRequest("/api/jars");
-        console.log(jarList);
+        // console.log(jarList);
         setJars(jarList);
     }
 
@@ -92,6 +92,7 @@ export default function App() {
                                     user={user}
                                     socket={socketRef.current}
                                     currentJar={currentJar}
+                                    pickJar={pickJar}
                                 />
                                 <Chat
                                     selectedRoom={selectedRoom}
