@@ -36,13 +36,20 @@ async function storeMessage(msg) {
     }
 }
 
-async function createJam(roomName, id, user) {
+async function createJam(roomName, user, jarId, socketId) {
     try {
         const newJam = await Jam.create({
             name: roomName,
-            socket_id: id,
-            users: [user],
+            messages: [],
+            users: [user._id],
+            jar: jarId,
+            socket_id: socketId,
         });
+        const jar = await Jar.findById(jarId);
+        jamArr = jar.jams;
+        jamArr.push(newJam);
+        jar.jams = jamArr;
+        await jar.save();
     } catch (err) {
         console.log(`The error from createJam() in server.js is: ${err}`);
     }
@@ -76,10 +83,10 @@ const rooms = {};
 io.on("connection", (socket) => {
     console.log(`user id: ${socket.id} has connected`);
 
-    socket.on("createRoom", (roomName) => {
+    socket.on("createRoom", (userId, jarId, roomName) => {
         const roomId = uuidv4();
         const newRoom = { id: roomId, name: roomName, users: [roomName.user] };
-        // createJam(roomName.name, roomName.id, roomName.user);
+        createJam(roomName, userId, jarId, roomId);
         rooms[roomId] = newRoom;
         io.emit("roomCreated", newRoom);
     });

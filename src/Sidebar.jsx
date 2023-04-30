@@ -15,7 +15,7 @@ import { v4 as uuidv4 } from "uuid";
 import EditIcon from "@mui/icons-material/Edit";
 
 // 🎉 user might drill in here
-function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
+function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar, user }) {
     const [rooms, setRooms] = useState([]);
     const [jarName, setJarName] = useState(currentJar.name);
     const [editing, setEditing] = useState(false);
@@ -43,10 +43,16 @@ function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
         const newRoom = {
             id: uuidv4(),
             name: prompt("Enter a name for the new room:"),
-            // user: user,
+            user: user,
         };
         if (newRoom.name) {
-            socket.emit("createRoom", newRoom);
+            console.log(currentJar.id);
+            socket.emit(
+                "createRoom",
+                newRoom.user,
+                currentJar.id,
+                newRoom.name
+            );
             socket.emit("joinRoom", newRoom.id);
         }
     };

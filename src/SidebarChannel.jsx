@@ -16,7 +16,7 @@ function SidebarChannel({ id, channel, selected, onClick, setSelectedRoom }) {
         >
             <h4>
                 <span className="sidebarChannel_hash">#</span>
-                {channel.name}
+                {channel}
             </h4>
         </div>
     );
