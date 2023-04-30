@@ -7,6 +7,8 @@ import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
 import { useEffect } from "react";
+import AddBoxIcon from '@mui/icons-material/AddBox';
+
 
 export default function NavBar({
     currentUser,
@@ -68,13 +70,9 @@ export default function NavBar({
                         );
                     })}
                     {/*  */}
-                    <button onClick={handleCreate}>
-                        <li className="squircle purple-one">
-                            <div className="popup">
-                                <h4 className="popup-text">JAM HQ</h4>
-                            </div>
-                        </li>
-                    </button>
+                    <AddBoxIcon
+                    className="add_jar"
+                    onClick={() => handleCreate()} />
                 </ul>
             </nav>
         </div>

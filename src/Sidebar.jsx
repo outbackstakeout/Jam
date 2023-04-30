@@ -80,6 +80,8 @@ function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar, user }) {
         setJarName(e.target.value);
     }
 
+
+
     const handleRoomClick = (roomId, roomName) => {
         // setSelectedRoom({ id: roomId, name: roomName });
         setSelectedRoom(roomName);
@@ -156,7 +158,7 @@ function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar, user }) {
             <div className="sidebar_profile">
                 <Avatar src="https://cdn.discordapp.com/attachments/1067565429771481131/1067565566413516961/95705FF1-2815-442F-B814-08C2F99B0C8F.jpg" />
                 <div className="sidebar_profileInfo">
-                    <h3>@seanmunjal</h3>
+                    <h3>@{user.username}</h3>
                     <p>#thisismyID</p>
                 </div>
                 <div className="sidebar_profileIcons">

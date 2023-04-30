@@ -23,7 +23,8 @@
   
   nav {
       grid-column: 1 / 4;
-      height: 100vh;
+      height: 100%;
+      position: fixed;
       background-color: #2f3135;
     }
   
@@ -32,8 +33,7 @@
     background-color: var(--raspberry-rose);
     position: absolute;
     min-height: 97vh;
-    border-radius: 15px;
-    padding: .5rem;
+    padding: .7rem;
     left: -9px;
     top: -5px;
     bottom: 10px;
@@ -154,3 +154,9 @@
 }
 
 
+.add_jar{
+  cursor: pointer;
+  width: 55px !important;
+  height: 55px !important;
+  padding: 10px;
+}

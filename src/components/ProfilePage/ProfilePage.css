@@ -6,7 +6,7 @@
     background-color: var(--mimi);
     margin: 6px;
     height: 99vh;
-    width: 90%;
+    width: 95%;
     border-radius: 10px;
 
 }
@@ -55,6 +55,7 @@
 
 #profile-page-username {
     margin: 20px 20px auto;
+    text-align: center;
 }
 
 
@@ -97,7 +98,7 @@
     background-color: rebeccapurple;
     color: white;
     font-weight: bold;
-    
+
 }
 
 #signOut {
@@ -130,4 +131,28 @@
 
 img {
     cursor: pointer;
+}
+
+
+@media only screen and (max-width: 1400px) { #signOut {
+        display: none;
+    }
+}
+
+.users_name {
+    font-weight: bold;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 50px;
+    padding: 2px;
+    margin-left: 2px;
+}
+
+.users_email {
+    font-weight:bold;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 5px;
+    padding: 2px;
+    margin-left: 2px;
 }
