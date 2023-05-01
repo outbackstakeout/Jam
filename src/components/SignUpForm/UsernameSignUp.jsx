@@ -1,4 +1,5 @@
 import React from "react";
+import jamlogo from "../../images/icons/jamtransparent.png";
 
 export default function UsernameSignUp({
     newUser,
@@ -12,6 +13,9 @@ export default function UsernameSignUp({
 
     return (
         <div className="signin-form-body">
+            <div className="jam-logo-container">
+                <img src={jamlogo} alt="jam logo" />
+            </div>
             <form autoComplete="off" onSubmit={handleUsernameSubmit}>
                 <input
                     placeholder="Username"
