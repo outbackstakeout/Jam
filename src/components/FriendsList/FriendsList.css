@@ -3,7 +3,7 @@
 }
 
 .friends-list {
-  margin: 6px;
+  /* margin: 6px; */
   grid-column: 4 / 4;
   display: flex;
   flex-direction: column;

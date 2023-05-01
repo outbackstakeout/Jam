@@ -13,9 +13,10 @@ import SidebarChannel from "./SidebarChannel";
 // import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 import EditIcon from "@mui/icons-material/Edit";
+import axios from "axios";
 
 // 🎉 user might drill in hear
-function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
+function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar, setCurrentJar }) {
     const [rooms, setRooms] = useState([]);
     const [jarName, setJarName] = useState(currentJar.name);
     // const socketRef = useRef();
@@ -37,6 +38,7 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
         });
 
         socket.on("jarRenamed", (renamedJar) => {
+            setCurrentJar(renamedJar)
             console.log(`The new jar name is ${renamedJar.name}`);
             setJarName(renamedJar.name);
             pickJar(renamedJar);
@@ -63,19 +65,29 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
     };
 
     // function isn't getting called
-    function handleNewJarName(e) {
-        console.log("🛶🛶🛶");
-        e.preventDefault();
-        const newJarName = jarName;
-        const jarId = currentJar._id;
-        console.log(
-            `handleNewJarName() in sidebar says the jarName is: ${jarName} and the jarId is: ${jarId}`
-        );
-        if (jarId) {
+async function handleNewJarName(e) {
+    console.log("🛶🛶🛶");
+    e.preventDefault();
+    const newJarName = jarName;
+    const jarId = currentJar._id;
+    console.log(
+        `handleNewJarName() in sidebar says the jarName is: ${jarName} and the jarId is: ${jarId}`
+    );
+    if (jarId) {
+        try {
+            const res = await axios.post('/rename-jar', {
+                jarId: jarId,
+                newJarName: newJarName
+            });
+            const renamedJar = res.data;
+            setCurrentJar(currentJar => ({...currentJar, name: renamedJar.name}));
             socket.emit("renameJar", jarId, newJarName);
+        } catch (err) {
+            console.log(err);
         }
-        setEditing(false);
     }
+    setEditing(false);
+}
 
     function handleEditClick() {
         setEditing(true);
@@ -124,11 +136,12 @@ function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar }) {
                         <ExpandMoreIcon />
                         <h4>Text Channels</h4>
                     </div>
-
+                    
                     <AddIcon
                         className="sidebar_addChannel"
                         onClick={() => handleCreateRoom()}
                     />
+                    
                 </div>
                 <div className="sidebar_channelsList">
                     {rooms.map((room) => (

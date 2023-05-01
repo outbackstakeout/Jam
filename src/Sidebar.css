@@ -9,6 +9,7 @@
 
 .sidebar {
     grid-column: 2 / span 1;
+    gap: 2px;
     height: 100vh;
     /* background-image: linear-gradient(var(--vanilla), var(--mimi)); */
     background-color: var(--mimi);
@@ -93,4 +94,8 @@
 
 .sidebar_profileIcons > .MuiSvgIcon-root {
     padding: 10px;
+}
+
+.sidebar_changeJarName{
+    cursor: pointer;
 }

@@ -83,6 +83,8 @@ export default function App() {
                             jars={jars}
                             setJarList={setJarList}
                             pickJar={pickJar}
+                            currentJar={currentJar}
+                            setCurrentJar={setCurrentJar}
                         />
                         </div>
                         {socketRef.current && (
@@ -94,6 +96,7 @@ export default function App() {
                                     user={user}
                                     socket={socketRef.current}
                                     currentJar={currentJar}
+                                    setCurrentJar={setCurrentJar}
                                     pickJar={pickJar}
                                 />
                             </div>

@@ -8,7 +8,7 @@ import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
-export default function NavBar({ currentUser, jars, setJarList, pickJar }) {
+export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurrentJar, currentJar }) {
     // we wanna move this to user profile
     // function handleLogOut() {
     //     userService.logOut();
@@ -35,6 +35,8 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar }) {
     }
 
     function handleClick(jar) {
+        setCurrentJar(jar);
+        console.log(`Current Jar is: ${JSON.stringify(currentJar)}`)
         pickJar(jar);
     }
 
@@ -48,19 +50,19 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar }) {
                         return (
                             <li
                                 key={jar._id}
-                                className="squircle purple-one"
+                                className={`squircle purple-one ${currentJar._id === jar._id ? "active" : ""}`} // <-- add the 'selected' class if the jar is selected
                                 onClick={() => handleClick(jar)}
                             >
                                 <div className="popup">
-                                    <h4 className="popup-text">{jar.name}</h4>
+                                    <h4 className="popup-text">{currentJar._id === jar._id ? currentJar.name : jar.name}</h4>
                                 </div>
                             </li>
                         );
                     })}
                     {/*  */}
                     <AddBoxIcon
-                    className="add_jar"
-                    onClick={() => handleCreate()} />
+                        className="add_jar"
+                        onClick={() => handleCreate()} />
                 </ul>
             </nav>
         </div>
