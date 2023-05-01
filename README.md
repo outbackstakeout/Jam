@@ -14,7 +14,7 @@ Sweeten your day with Jam, the internet's tastiest new (web-based) messaging pla
 
 ## User Stories
 
-As a user, I would like to have a platform where I can sign in and stay logged in throughout the site.
+As a visitor, when I browse to the app, I would like to have a platform where I can sign in and stay logged in throughout the site.
 
 As a user, I would like to have a platform where I can log out.
 
@@ -42,6 +42,6 @@ https://lucid.app/lucidchart/82f852d0-e45e-4d1e-a4db-a74145eb6bdb/edit?viewport_
 
 ## DevTeam
 
-Sean Munjal - https://github.com/TheForeverOptimist
-Ali Colak - https://github.com/imalicolak
-Luke Tyson - https://github.com/guantanamobosch
+Socket Rooms, UI, and Components - Sean Munjal - https://github.com/TheForeverOptimist
+Models, UI, and Components - Ali Colak - https://github.com/imalicolak
+Sockets, API Calls, UI - Luke Tyson - https://github.com/guantanamobosch
