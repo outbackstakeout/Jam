@@ -1,5 +1,5 @@
 .container {
-  grid-template-columns: 5% 15% 65% 15%;
+  grid-template-columns: 5% 15% 65% 1fr;
   display: grid;
   gap: 5px;
   height: 100vh;
@@ -9,4 +9,15 @@
   margin-top: 5px;
   margin-bottom: 5px;
   /* border-radius: 15px; */
+}
+
+body {
+  overflow: hidden;
+}
+
+.column-1,
+.column-2,
+.column-3,
+.column-4 {
+  min-width: 0;
 }

@@ -84,39 +84,53 @@ export default function App() {
             {user ? (
                 <>
                     <div className="container">
+                        <div className="container-1">
                         <NavBar
                             currentUser={user}
                             jars={jars}
                             setJarList={setJarList}
                             pickJar={pickJar}
                             getJars={getJars}
+                            currentJar={currentJar}
+                            setCurrentJar={setCurrentJar}
                         />
-
+                        </div>
                         {socketRef.current && (
                             <>
+                            <div className="container-2">
                                 <Sidebar
                                     setSelectedRoom={setSelectedRoom}
                                     jams={jams}
                                     user={user}
                                     socket={socketRef.current}
                                     currentJar={currentJar}
+                                    setCurrentJar={setCurrentJar}
                                     pickJar={pickJar}
                                 />
+                            </div>
+                            <div className="container-3">
                                 <Chat
                                     selectedRoom={selectedRoom}
                                     jam={currentJam}
                                     socket={socketRef.current}
                                 />
+                                </div>
                             </>
                         )}
-
+                        <div className="container-4">
                         {showProfilePage ? (
-                            <ProfilePage handleExitClick={handleExitClick} />
+                            
+                            <ProfilePage 
+                            user={user}
+                            handleExitClick={handleExitClick} />
                         ) : (
                             <FriendsList
+                                user={user}
                                 handleFriendClick={handleFriendClick}
                             />
+                            
                         )}
+                        </div>
                     </div>
                 </>
             ) : (

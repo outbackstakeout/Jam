@@ -13,9 +13,11 @@ import SidebarChannel from "./SidebarChannel";
 // import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 import EditIcon from "@mui/icons-material/Edit";
+import axios from "axios";
 
-// 🎉 user might drill in here
-function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
+
+// 🎉 user might drill in hear
+function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar, setCurrentJar }) {
     const [rooms, setRooms] = useState([]);
     const [jarName, setJarName] = useState(currentJar.name);
     const [editing, setEditing] = useState(false);
@@ -27,6 +29,7 @@ function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
         });
 
         socket.on("jarRenamed", (renamedJar) => {
+            setCurrentJar(renamedJar)
             console.log(`The new jar name is ${renamedJar.name}`);
             pickJar(renamedJar);
             setJarName(renamedJar.name);
@@ -52,19 +55,29 @@ function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
     };
 
     // function isn't getting called
-    function handleNewJarName(e) {
-        console.log("🛶🛶🛶");
-        e.preventDefault();
-        const newJarName = jarName;
-        const jarId = currentJar._id;
-        console.log(
-            `handleNewJarName() in sidebar says the jarName is: ${jarName} and the jarId is: ${jarId}`
-        );
-        if (jarId) {
+async function handleNewJarName(e) {
+    console.log("🛶🛶🛶");
+    e.preventDefault();
+    const newJarName = jarName;
+    const jarId = currentJar._id;
+    console.log(
+        `handleNewJarName() in sidebar says the jarName is: ${jarName} and the jarId is: ${jarId}`
+    );
+    if (jarId) {
+        try {
+            const res = await axios.post('/rename-jar', {
+                jarId: jarId,
+                newJarName: newJarName
+            });
+            const renamedJar = res.data;
+            setCurrentJar(currentJar => ({...currentJar, name: renamedJar.name}));
             socket.emit("renameJar", jarId, newJarName);
+        } catch (err) {
+            console.log(err);
         }
-        setEditing(false);
     }
+    setEditing(false);
+}
 
     function handleEditClick() {
         setEditing(true);
@@ -73,6 +86,8 @@ function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
     function handleNameChange(e) {
         setJarName(e.target.value);
     }
+
+
 
     const handleRoomClick = (roomId, roomName) => {
         // setSelectedRoom({ id: roomId, name: roomName });
@@ -112,11 +127,12 @@ function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
                         <ExpandMoreIcon />
                         <h4>Text Channels</h4>
                     </div>
-
+                    
                     <AddIcon
                         className="sidebar_addChannel"
                         onClick={() => handleCreateRoom()}
                     />
+                    
                 </div>
                 <div className="sidebar_channelsList">
                     {rooms.map((room) => (
@@ -150,7 +166,7 @@ function Sidebar({ setSelectedRoom, jams, socket, currentJar, pickJar }) {
             <div className="sidebar_profile">
                 <Avatar src="https://cdn.discordapp.com/attachments/1067565429771481131/1067565566413516961/95705FF1-2815-442F-B814-08C2F99B0C8F.jpg" />
                 <div className="sidebar_profileInfo">
-                    <h3>@seanmunjal</h3>
+                    <h3>@{user.username}</h3>
                     <p>#thisismyID</p>
                 </div>
                 <div className="sidebar_profileIcons">
