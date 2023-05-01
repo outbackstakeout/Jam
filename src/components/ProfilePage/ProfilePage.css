@@ -1,0 +1,158 @@
+.profile-page-container {
+    grid-column: 4 / 4;
+    flex-direction: column;
+    min-width: 150px;
+    display: flex;
+    background-color: var(--mimi);
+    margin: 6px;
+    height: 99vh;
+    width: 95%;
+    border-radius: 10px;
+
+}
+
+.profile-page-cover {
+    background-color: #C0DBEA;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    position: relative;
+    height: auto;
+    width: 250;
+}
+
+#go-back {
+    position: relative;
+    height: 25px;
+    width: 25px;
+    margin: 10px 5px auto;
+}
+
+.profile-page-picture {
+    position: relative;
+    margin-left: 5%;
+    outline-color: white;
+    outline-style: solid;
+    outline-width: 5px;
+    border-radius: 50%;
+    background-color: blue;
+    height: 75px;
+    width: 75px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    top: 30%;
+}
+
+.profile-page-info-container {
+    background-color: var(--vanilla);
+    background-image: linear-gradient(var(--raspberry-rose), rgba(23, 23, 23, 0.234));
+    position: relative;
+    margin-top: 35%;
+    margin-right: 6px;
+    margin-left: 6px;
+    border-radius: 10px;
+    height: 400px;
+}
+
+#profile-page-username {
+    margin: 20px 20px auto;
+    text-align: center;
+}
+
+
+
+#message {
+    background-color: #FDF4F5;
+    /* Orange */
+    border: none;
+    position: absolute;
+    bottom: 50px;
+    margin: 0 10px;
+    width: 20%;
+    color: darkslategray;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    font-size: 5px;
+    font-weight: bold;
+    flex: 1;
+    font-size: 14px;
+    min-width: 80px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+}
+
+#message img {
+    position: relative;
+    display: flex;
+    height: 25px;
+    width: 25px;
+    margin-right: 5px;
+    margin-top: 5px;
+
+}
+
+#message:hover {
+    background-color: rebeccapurple;
+    color: white;
+    font-weight: bold;
+
+}
+
+#signOut {
+    background-color: #C0DBEA;
+    /* Orange */
+    border: none;
+    position: absolute;
+    bottom: 50px;
+    right: 15px;
+    width: 39%;
+    color: darkslategray;
+    padding: 10px 3px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-flex;
+    font-size: 5px;
+    font-weight: bold;
+    flex: 1;
+    font-size: 14px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+#signOut:hover {
+    background-color: white;
+    color: hotpink;
+    font-weight: bold;
+}
+
+img {
+    cursor: pointer;
+}
+
+
+@media only screen and (max-width: 1400px) { #signOut {
+        display: none;
+    }
+}
+
+.users_name {
+    font-weight: bold;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 50px;
+    padding: 2px;
+    margin-left: 2px;
+}
+
+.users_email {
+    font-weight:bold;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 5px;
+    padding: 2px;
+    margin-left: 2px;
+}
