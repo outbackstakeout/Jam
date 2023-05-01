@@ -4,9 +4,11 @@
 
 1. Product Description
 2. User Stories
-3. Wireframe(s)
-4. ERD
-5. DevTeam
+3. Technologies
+4. Getting Started
+5. Wireframe(s)
+6. ERD
+7. DevTeam
 
 ## Product Description
 
@@ -30,14 +32,29 @@ As a user, I would like all of my chats and channels to be stored neatly in the 
 
 As a user, I would like to be able to access my profile and edit my settings (username, email, profile picture).
 
+## Technologies
+
+-MongoDB & Mongoose
+-Express
+-React
+-Node.js
+-Socket.io
+-CSS
+-Material UI
+-Bcrypt
+-Json Web Tokens
+
+## Getting Started
+-LINK TO HEROKU APP
+
 ## Wireframe(s)
 
-Below is a link to the wireframes which we have drawn to demonstrate the navigation and presentation of our website.
+Below is a link to the wireframes which we have drawn to demonstrate the navigation and presentation of our website.  
 https://www.figma.com/file/FGy1ZqXHe8Tx9EceO8BetS/Project-4%3A-Jam?node-id=0%3A1&t=VPwqbRplaq3P1YJB-1
 
 ## ERD
 
-Below is a link to the entity relationship diagram which we have drawn to model our data structure and flow.
+Below is a link to the entity relationship diagram which we have drawn to model our data structure and flow.  
 https://lucid.app/lucidchart/82f852d0-e45e-4d1e-a4db-a74145eb6bdb/edit?viewport_loc=51%2C135%2C1661%2C1093%2C0_0&invitationId=inv_82990059-fc05-4ed0-814f-2c1c42f2a621
 
 ## DevTeam
