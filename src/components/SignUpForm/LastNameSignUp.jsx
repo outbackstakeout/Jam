@@ -13,12 +13,13 @@ export default function LastNameSignUp({
     return (
         <div className="form-container">
             <form autoComplete="off" onSubmit={handleLastNameSubmit}>
-                <label>Last Name</label>
                 <input
+                    placeholder="Last Name"
                     type="text"
                     name="last_name"
                     value={newUser.last_name}
                     onChange={handleChange}
+                    className="signin-form-input"
                     required
                 />
                 <button type="submit">Next</button>

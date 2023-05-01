@@ -7,14 +7,17 @@ export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
     }
 
     return (
+
+
         <div className="form-container">
             <form autoComplete="off" onSubmit={handleEmailSubmit}>
-                <label>Email</label>
                 <input
+                    placeholder="Email"
                     type="text"
                     name="email"
                     value={newUser.email}
                     onChange={handleChange}
+                    className="signin-form-input"
                     required
                 />
                 <button type="submit">Next</button>

@@ -3,6 +3,7 @@ import * as usersService from "../../utilities/users/users-service";
 import '../LoginForm/LoginForm.css'
 import jamlogo from '../../images/icons/jamtransparent.png'
 
+
 export default function LoginForm({ setUser }) {
     const [credentials, setCredentials] = useState({
         email: "",
@@ -16,7 +17,8 @@ export default function LoginForm({ setUser }) {
 
 
     }
-    const [showSignUp, setShowSignUp] = useState(false);
+
+
 
     async function handleSubmit(evt) {
         // Prevent form from being submitted to the server
@@ -45,7 +47,7 @@ export default function LoginForm({ setUser }) {
                 <form autoComplete="off" onSubmit={handleSubmit}>
                     <input
                         placeholder="Email"
-                        type="email"
+                        type="text"
                         name="email"
                         value={credentials.email}
                         onChange={handleChange}
@@ -63,9 +65,14 @@ export default function LoginForm({ setUser }) {
                         required
                     />
                     <div className="signup-form-button">
-                        <button type="submit" className="signin-form-button">Sign In</button>
-                        <button className='signup-form-button' onClick={() => setShowSignUp(!showSignUp)}>{showSignUp ? 'Log In' : 'Sign Up'}</button>
+                        <div className="signinout-button">
+
+
+
+                        </div>
+
                     </div>
+
                 </form>
                 <p className="error-message">&nbsp;{error}</p>
             </div>
