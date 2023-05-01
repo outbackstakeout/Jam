@@ -33,6 +33,7 @@ As a user, I would like to be able to access my profile and edit my settings (us
 ## Wireframe(s)
 
 Below is a link to the wireframes which we have drawn to demonstrate the navigation and presentation of our website.
+https://www.figma.com/file/FGy1ZqXHe8Tx9EceO8BetS/Project-4%3A-Jam?node-id=0%3A1&t=VPwqbRplaq3P1YJB-1
 
 ## ERD
 
