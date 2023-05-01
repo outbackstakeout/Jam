@@ -1,6 +1,8 @@
 import { useState } from "react";
 import * as usersService from "../../utilities/users/users-service";
-import './LoginForm.css'
+import '../LoginForm/LoginForm.css'
+import jamlogo from '../../images/icons/jamtransparent.png'
+
 
 export default function LoginForm({ setUser }) {
     const [credentials, setCredentials] = useState({
@@ -12,7 +14,11 @@ export default function LoginForm({ setUser }) {
     function handleChange(evt) {
         setCredentials({ ...credentials, [evt.target.name]: evt.target.value });
         setError("");
+
+
     }
+
+
 
     async function handleSubmit(evt) {
         // Prevent form from being submitted to the server
@@ -29,31 +35,48 @@ export default function LoginForm({ setUser }) {
     }
 
     return (
-        <div>
-            <div className="form-container">
+
+        <div className="signin-form-body">
+            <div className="signin-form-content">
+                <div className="signin-form-content">
+                    <div className="jam-logo-container">
+                        <img src={jamlogo} alt="jam logo" />
+                    </div>
+
+                </div>
                 <form autoComplete="off" onSubmit={handleSubmit}>
-                    <label className="email">Email</label>
                     <input
+                        placeholder="Email"
                         type="text"
                         name="email"
                         value={credentials.email}
                         onChange={handleChange}
+                        className="signin-form-input"
                         required
                     />
-                    <label className="password">Password</label>
+
                     <input
+                        placeholder="Password"
                         type="password"
                         name="password"
                         value={credentials.password}
                         onChange={handleChange}
+                        className="signin-form-input"
                         required
                     />
-                    <div className="button">
-                    <button type="submit">LOG IN</button>
+                    <div className="signup-form-button">
+                        <div className="signinout-button">
+
+                            <button className="signin-form-button " type="submit">LOG IN</button>
+
+
+                        </div>
+
                     </div>
+
                 </form>
+                <p className="error-message">&nbsp;{error}</p>
             </div>
-            <p className="error-message">&nbsp;{error}</p>
         </div>
     );
 }

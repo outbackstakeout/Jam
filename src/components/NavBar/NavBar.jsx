@@ -6,6 +6,7 @@ import chatIcon from "../../images/icons/chatIcon.png";
 import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
+import { useEffect } from "react";
 import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurrentJar, currentJar }) {
@@ -14,6 +15,10 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurr
     //     userService.logOut();
     //     setUser(null);
     // }
+
+    useEffect(() => {
+        getJars();
+    }, []);
 
     async function handleCreate() {
         try {

@@ -53,8 +53,8 @@ async function renameJar(id, newName) {
         const jar = await Jar.findByIdAndUpdate(id, {
             name: newName,
         });
-        console.log(`renameJar() in server.js says the jar is: ${jar}`);
         const renamedJar = await Jar.findById(id);
+        console.log(`renameJar() in server.js says the jar is: ${renamedJar}`);
          io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
         return renamedJar;
     } catch (err) {

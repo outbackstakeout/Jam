@@ -1,5 +1,5 @@
 import React from "react";
-
+import jamlogo from '../../images/icons/jamtransparent.png'
 export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
     async function handleEmailSubmit(evt) {
         evt.preventDefault();
@@ -7,17 +7,24 @@ export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
     }
 
     return (
-        <div className="form-container">
+
+
+        <div className="signin-form-body">
+            <div className="jam-logo-container">
+                <img src={jamlogo} alt="jam logo" />
+            </div>
             <form autoComplete="off" onSubmit={handleEmailSubmit}>
-                <label>Email</label>
                 <input
+                    placeholder="Email"
                     type="text"
                     name="email"
                     value={newUser.email}
                     onChange={handleChange}
+                    className="signin-form-input"
                     required
                 />
-                <button type="submit">Next</button>
+                <button
+                    className="signin-form-button" type="submit">Next</button>
             </form>
         </div>
     );

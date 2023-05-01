@@ -1,5 +1,5 @@
 import React from "react";
-
+import jamlogo from '../../images/icons/jamtransparent.png'
 export default function LastNameSignUp({
     newUser,
     handleChange,
@@ -11,17 +11,23 @@ export default function LastNameSignUp({
     }
 
     return (
-        <div className="form-container">
+        <div className="signin-form-body">
+            <div className="jam-logo-container">
+                <img src={jamlogo} alt="jam logo" />
+            </div>
             <form autoComplete="off" onSubmit={handleLastNameSubmit}>
-                <label>Last Name</label>
                 <input
+                    placeholder="Last Name"
                     type="text"
                     name="last_name"
                     value={newUser.last_name}
                     onChange={handleChange}
+                    className="signin-form-input"
                     required
                 />
-                <button type="submit">Next</button>
+                <button
+                    className="signin-form-button"
+                    type="submit">Next</button>
             </form>
         </div>
     );
