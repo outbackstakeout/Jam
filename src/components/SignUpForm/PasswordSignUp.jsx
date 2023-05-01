@@ -1,4 +1,5 @@
 import React from "react";
+import jamlogo from '../../images/icons/jamtransparent.png'
 
 export default function PasswordSignUp({
     newUser,
@@ -14,7 +15,10 @@ export default function PasswordSignUp({
     const disable = newUser.password !== newUser.confirm;
 
     return (
-        <div className="form-container">
+        <div className="signin-form-body">
+            <div className="jam-logo-container">
+                <img src={jamlogo} alt="jam logo" />
+            </div>
             <form autoComplete="off" onSubmit={handlePasswordSubmit}>
                 <input
                     placeholder="Password"
@@ -34,7 +38,9 @@ export default function PasswordSignUp({
                     className="signin-form-input"
                     required
                 />
-                <button type="submit" disabled={disable}>
+                <button
+                    className="signin-form-button"
+                    type="submit" disabled={disable}>
                     Sign Up
                 </button>
             </form>

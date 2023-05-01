@@ -67,6 +67,7 @@ export default function LoginForm({ setUser }) {
                     <div className="signup-form-button">
                         <div className="signinout-button">
 
+                            <button className="signin-form-button " type="submit">LOG IN</button>
 
 
                         </div>

@@ -88,8 +88,8 @@
     padding: 10px;
     color: black;
     font-weight: bold;
-    background-color: var(--background-color);
-    width: 45%;
+    /* background-color: ; */
+    width: 35%;
     border: none;
     outline: none;
     border-radius: 5px;
@@ -99,6 +99,10 @@
 
 .signup-form-button:active {
     background-color: #e7c5ca;
+}
+
+.error-message {
+    color: black;
 }
 
 /* 

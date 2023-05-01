@@ -11,7 +11,7 @@ export default function UsernameSignUp({
     }
 
     return (
-        <div className="form-container">
+        <div className="signin-form-body">
             <form autoComplete="off" onSubmit={handleUsernameSubmit}>
                 <input
                     placeholder="Username"
@@ -22,7 +22,9 @@ export default function UsernameSignUp({
                     className="signin-form-input"
                     required
                 />
-                <button type="submit">Next</button>
+                <button
+                    className="signin-form-button"
+                    type="submit">Next</button>
             </form>
         </div>
     );
