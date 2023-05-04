@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-// import { Routes, Route } from "react-router-dom";
 import { getUser } from "../../utilities/users/users-service";
 import { sendRequest } from "../../utilities/users/send-request";
 import "./App.css";
 import NavBar from "../../components/NavBar/NavBar";
-// import ChatPage from "../ChatPage/ChatPage";
 import AuthPage from "../AuthPage/AuthPage";
-import Sidebar from "../../Sidebar.jsx";
-import Chat from "../../Chat.jsx";
+import Sidebar from "../../components/Sidebar/Sidebar.jsx";
+import Chat from "../Chat/Chat.jsx";
 import FriendsList from "../../components/FriendsList/FriendsList";
 import ProfilePage from "../../components/ProfilePage/ProfilePage";
 import { io } from "socket.io-client";
@@ -15,7 +13,6 @@ import { io } from "socket.io-client";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
-    // const [socket, setSocket] = useState(null)
     const [selectedRoom, setSelectedRoom] = useState("");
     const [showProfilePage, setShowProfilePage] = useState(false);
     const [jars, setJars] = useState([]);
@@ -26,18 +23,11 @@ export default function App() {
     let jamSelected;
 
     const socketRef = useRef();
-    // let socket = socketRef.current;
     async function getJars() {
         console.log("getJars() function in App.jsx");
         const jarList = await sendRequest("/api/jars");
-        // console.log(jarList);
         setJars(jarList);
     }
-
-    // async function getJams() {
-    //     const jamList = await sendRequest("/api/jams");
-    //     setJams(jamList);
-    // }
 
     useEffect(() => {
         if (!socketRef.current) {
@@ -85,51 +75,50 @@ export default function App() {
                 <>
                     <div className="container">
                         <div className="container-1">
-                        <NavBar
-                            currentUser={user}
-                            jars={jars}
-                            setJarList={setJarList}
-                            pickJar={pickJar}
-                            getJars={getJars}
-                            currentJar={currentJar}
-                            setCurrentJar={setCurrentJar}
-                        />
+                            <NavBar
+                                currentUser={user}
+                                jars={jars}
+                                setJarList={setJarList}
+                                pickJar={pickJar}
+                                getJars={getJars}
+                                currentJar={currentJar}
+                                setCurrentJar={setCurrentJar}
+                            />
                         </div>
                         {socketRef.current && (
                             <>
-                            <div className="container-2">
-                                <Sidebar
-                                    setSelectedRoom={setSelectedRoom}
-                                    jams={jams}
-                                    user={user}
-                                    socket={socketRef.current}
-                                    currentJar={currentJar}
-                                    setCurrentJar={setCurrentJar}
-                                    pickJar={pickJar}
-                                />
-                            </div>
-                            <div className="container-3">
-                                <Chat
-                                    selectedRoom={selectedRoom}
-                                    jam={currentJam}
-                                    socket={socketRef.current}
-                                />
+                                <div className="container-2">
+                                    <Sidebar
+                                        setSelectedRoom={setSelectedRoom}
+                                        jams={jams}
+                                        user={user}
+                                        socket={socketRef.current}
+                                        currentJar={currentJar}
+                                        setCurrentJar={setCurrentJar}
+                                        pickJar={pickJar}
+                                    />
+                                </div>
+                                <div className="container-3">
+                                    <Chat
+                                        selectedRoom={selectedRoom}
+                                        jam={currentJam}
+                                        socket={socketRef.current}
+                                    />
                                 </div>
                             </>
                         )}
                         <div className="container-4">
-                        {showProfilePage ? (
-                            
-                            <ProfilePage 
-                            user={user}
-                            handleExitClick={handleExitClick} />
-                        ) : (
-                            <FriendsList
-                                user={user}
-                                handleFriendClick={handleFriendClick}
-                            />
-                            
-                        )}
+                            {showProfilePage ? (
+                                <ProfilePage
+                                    user={user}
+                                    handleExitClick={handleExitClick}
+                                />
+                            ) : (
+                                <FriendsList
+                                    user={user}
+                                    handleFriendClick={handleFriendClick}
+                                />
+                            )}
                         </div>
                     </div>
                 </>

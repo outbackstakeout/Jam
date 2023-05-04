@@ -7,9 +7,17 @@ import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
 import { useEffect } from "react";
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
-export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurrentJar, currentJar }) {
+export default function NavBar({
+    currentUser,
+    getJars,
+    jars,
+    setJarList,
+    pickJar,
+    setCurrentJar,
+    currentJar,
+}) {
     // we wanna move this to user profile
     // function handleLogOut() {
     //     userService.logOut();
@@ -41,7 +49,7 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurr
 
     function handleClick(jar) {
         setCurrentJar(jar);
-        console.log(`Current Jar is: ${JSON.stringify(currentJar)}`)
+        console.log(`Current Jar is: ${JSON.stringify(currentJar)}`);
         pickJar(jar);
     }
 
@@ -55,11 +63,17 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurr
                         return (
                             <li
                                 key={jar._id}
-                                className={`squircle purple-one ${currentJar._id === jar._id ? "active" : ""}`} // <-- add the 'selected' class if the jar is selected
+                                className={`squircle purple-one ${
+                                    currentJar._id === jar._id ? "active" : ""
+                                }`} // <-- add the 'selected' class if the jar is selected
                                 onClick={() => handleClick(jar)}
                             >
                                 <div className="popup">
-                                    <h4 className="popup-text">{currentJar._id === jar._id ? currentJar.name : jar.name}</h4>
+                                    <h4 className="popup-text">
+                                        {currentJar._id === jar._id
+                                            ? currentJar.name
+                                            : jar.name}
+                                    </h4>
                                 </div>
                             </li>
                         );
@@ -67,7 +81,8 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurr
                     {/*  */}
                     <AddBoxIcon
                         className="add_jar"
-                        onClick={() => handleCreate()} />
+                        onClick={() => handleCreate()}
+                    />
                 </ul>
             </nav>
         </div>
