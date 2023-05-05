@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -10,12 +10,10 @@ import MicIcon from "@mui/icons-material/Mic";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HeadsetIcon from "@mui/icons-material/Headset";
 import SidebarChannel from "../SidebarChannel/SidebarChannel";
-// import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 
-// 🎉 user might drill in hear
 function Sidebar({
     setSelectedRoom,
     jams,
@@ -26,10 +24,14 @@ function Sidebar({
     setCurrentJar,
 }) {
     const [rooms, setRooms] = useState([]);
-    const [jarName, setJarName] = useState(currentJar.name);
+    const [jarName, setJarName] = useState("");
     const [editing, setEditing] = useState(false);
 
     useEffect(() => {
+        if (currentJar.name) {
+            setJarName(currentJar.name);
+        }
+
         socket.on("roomCreated", (room) => {
             console.log("Room Created: ", room);
             setRooms((rooms) => [...rooms, room]);
@@ -119,9 +121,7 @@ function Sidebar({
                             <button type="submit" hidden></button>
                         </form>
                     ) : (
-                        jarName
-                        // currentJar.name
-                        // `${currentJar._id}`
+                        currentJar.name
                     )}
                 </h3>
                 <EditIcon

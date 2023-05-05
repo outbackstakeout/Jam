@@ -43,14 +43,16 @@ export default function NavBar({
             setJarList(newJar);
             console.log("HANDLE CREATE");
         } catch (err) {
-            console.log(`handleCreate() in NavBar says the error is: ${err}`);
+            console.log(
+                `handleCreate() in NavBar.jsx says the error is: ${err}`
+            );
         }
     }
 
     function handleClick(jar) {
         setCurrentJar(jar);
         console.log(`Current Jar is: ${JSON.stringify(currentJar)}`);
-        pickJar(jar);
+        // pickJar(jar);
     }
 
     return (

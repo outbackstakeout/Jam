@@ -9,7 +9,6 @@ import Chat from "../Chat/Chat.jsx";
 import FriendsList from "../../components/FriendsList/FriendsList";
 import ProfilePage from "../../components/ProfilePage/ProfilePage";
 import { io } from "socket.io-client";
-// import * as socket from "../../utilities/socket";
 
 export default function App() {
     const [user, setUser] = useState(getUser());
@@ -19,16 +18,9 @@ export default function App() {
     const [jams, setJams] = useState([]);
     const [currentJar, setCurrentJar] = useState({});
     const [currentJam, setCurrentJam] = useState({});
-    let jarSelected;
     let jamSelected;
 
     const socketRef = useRef();
-    async function getJars() {
-        console.log("getJars() function in App.jsx");
-        const jarList = await sendRequest("/api/jars");
-        setJars(jarList);
-    }
-
     useEffect(() => {
         if (!socketRef.current) {
             socketRef.current = io({
@@ -39,6 +31,12 @@ export default function App() {
         socketRef.current.connect();
     }, []);
 
+    async function getJars() {
+        console.log("getJars() function in App.jsx");
+        const jarList = await sendRequest("/api/jars");
+        setJars(jarList);
+    }
+
     function pickJar(jar) {
         console.log("pickJar() in App.jsx hit successfully");
         console.log(
@@ -47,7 +45,6 @@ export default function App() {
         console.log(
             `The current jar before resetting it is ${currentJar.name}`
         );
-        jarSelected = true;
         setCurrentJar(jar);
         console.log(`And now the current jar is: ${currentJar.name}`);
     }
