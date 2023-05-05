@@ -51,8 +51,9 @@ export default function NavBar({
 
     function handleClick(jar) {
         setCurrentJar(jar);
-        console.log(`Current Jar is: ${JSON.stringify(currentJar)}`);
-        // pickJar(jar);
+
+        // ⬇️ This will log before the CurrentJar state in app.jsx is actually updated
+        // console.log(`Current Jar is: ${JSON.stringify(currentJar)}`);
     }
 
     return (

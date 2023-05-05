@@ -17,6 +17,7 @@ function Chat({ selectedRoom, socket }) {
     const [msgs, setMsgs] = useState([]);
     const [roomMessages, setRoomMessages] = useState({});
 
+    // 👩🏼‍🔧 this function is leaving an unresolved promise which is being reported in the client-side console
     async function getMessages() {
         const msgLog = await sendRequest(`/api/messages/${selectedRoom.id}`);
 

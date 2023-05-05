@@ -55,24 +55,24 @@ async function renameJar(id, newName) {
         });
         const renamedJar = await Jar.findById(id);
         console.log(`renameJar() in server.js says the jar is: ${renamedJar}`);
-         io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
+        io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
         return renamedJar;
     } catch (err) {
         console.log(`The error from renameJar() from server.js is: ${err}`);
     }
 }
 
-app.post('/rename-jar', async (req, res) => {
-  const { jarId, newJarName } = req.body;
-  try {
-    const renamedJar = await renameJar(jarId, newJarName);
-    res.json(renamedJar);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error renaming jar');
-  }
+// 🔗 Sidebar.jsx > Sidebar() > handleNewJarName(e) > axios.post
+app.post("/rename-jar", async (req, res) => {
+    const { jarId, newJarName } = req.body;
+    try {
+        const renamedJar = await renameJar(jarId, newJarName);
+        res.json(renamedJar);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error renaming jar");
+    }
 });
-
 
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
@@ -120,7 +120,7 @@ io.on("connection", (socket) => {
             console.log(`ERRORz`);
         }
         try {
-        const renamedJar = renameJar(jarId, newJarName);
+            const renamedJar = renameJar(jarId, newJarName);
             io.to(`jar:${jarId}`).emit("jarRenamed", renamedJar);
         } catch (err) {
             console.log(

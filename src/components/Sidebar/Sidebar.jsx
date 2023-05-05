@@ -40,7 +40,7 @@ function Sidebar({
         socket.on("jarRenamed", (renamedJar) => {
             setCurrentJar(renamedJar);
             console.log(`The new jar name is ${renamedJar.name}`);
-            pickJar(renamedJar);
+            // pickJar(renamedJar);
             setJarName(renamedJar.name);
         });
 
@@ -63,7 +63,6 @@ function Sidebar({
         }
     };
 
-    // function isn't getting called
     async function handleNewJarName(e) {
         console.log("🛶🛶🛶");
         e.preventDefault();
@@ -74,6 +73,7 @@ function Sidebar({
         );
         if (jarId) {
             try {
+                // 🔗 server.js > app.post("/rename-jar")
                 const res = await axios.post("/rename-jar", {
                     jarId: jarId,
                     newJarName: newJarName,
