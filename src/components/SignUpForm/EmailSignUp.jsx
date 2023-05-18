@@ -1,4 +1,5 @@
 import React from "react";
+import "../../pages/AuthPage/AuthPage.css";
 
 export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
     async function handleEmailSubmit(evt) {
@@ -13,6 +14,7 @@ export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
                 <input
                     type="text"
                     name="email"
+                    placeholder="Email Address"
                     value={newUser.email}
                     onChange={handleChange}
                     required

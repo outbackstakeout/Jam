@@ -1,4 +1,5 @@
 import React from "react";
+import "../../pages/AuthPage/AuthPage.css";
 
 export default function PasswordSignUp({
     newUser,
@@ -20,6 +21,7 @@ export default function PasswordSignUp({
                 <input
                     type="text"
                     name="password"
+                    placeholder="Choose Password"
                     value={newUser.password}
                     onChange={handleChange}
                     required
@@ -28,6 +30,7 @@ export default function PasswordSignUp({
                 <input
                     type="password"
                     name="confirm"
+                    placeholder="Confirm Password"
                     value={newUser.confirm}
                     onChange={handleChange}
                     required

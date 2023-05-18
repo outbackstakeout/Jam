@@ -30,7 +30,7 @@ export default function LoginForm({ setUser }) {
     }
 
     return (
-        <div>
+        <div className="signin-container">
             <div className="form-container">
                 <form autoComplete="off" onSubmit={handleSubmit}>
                     <label className="email">Email</label>
@@ -52,7 +52,7 @@ export default function LoginForm({ setUser }) {
                         required
                     />
                     <div className="button">
-                    <button type="submit">LOG IN</button>
+                    <button id="signin_btn" type="submit">LOG IN</button>
                     </div>
                 </form>
             </div>

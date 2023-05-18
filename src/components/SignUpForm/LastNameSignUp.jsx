@@ -1,4 +1,5 @@
 import React from "react";
+import "../../pages/AuthPage/AuthPage.css";
 
 export default function LastNameSignUp({
     newUser,
@@ -17,6 +18,7 @@ export default function LastNameSignUp({
                 <input
                     type="text"
                     name="last_name"
+                    placeholder="Last Name"
                     value={newUser.last_name}
                     onChange={handleChange}
                     required

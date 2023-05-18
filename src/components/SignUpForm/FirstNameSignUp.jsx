@@ -1,4 +1,5 @@
 import React from "react";
+import "../../pages/AuthPage/AuthPage.css";
 
 export default function FirstNameSignUp({
     newUser,
@@ -17,6 +18,7 @@ export default function FirstNameSignUp({
                 <input
                     type="text"
                     name="first_name"
+                    placeholder="First Name"
                     value={newUser.first_name}
                     onChange={handleChange}
                     required

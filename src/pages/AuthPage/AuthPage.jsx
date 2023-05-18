@@ -29,13 +29,17 @@ export default function AuthPage({ setUser }) {
           </div>
         </div>
       </div>
-      <button onClick={() => setShowSignUp(!showSignUp)}>
+      <button id="signup-btn" onClick={() => setShowSignUp(!showSignUp)}>
         {showSignUp ? "Log In" : "Sign Up"}
       </button>
-      {showSignUp ? (
-        <SignUpForm setUser={setUser} className="signupForm" />
-      ) : (
-        <LoginForm setUser={setUser} className="loginForm" />
+      {showSignUp ? ( <div className="signup-component">
+
+        <SignUpForm setUser={setUser} className={showSignUp ? "active" : ''}/>
+      </div>
+      ) : ( <div className="login-componenet">
+
+        <LoginForm setUser={setUser} className={showSignUp ? "" : "active"} />
+      </div>
       )}
     </div>
   );
