@@ -1,3 +1,11 @@
+/* .form-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    transform: translateX(-100%)
+}
+
+
+
 .form-container button {
     width: 200px;
     background-color: #8F4158;
@@ -12,7 +20,7 @@
     background-color: #eff2f5;
     color: #8F4158;
     cursor: pointer;
-}
+} */
 
 .email{
     font-weight: bold;
@@ -21,4 +29,5 @@
 
 .password{
     font-weight: bold;
+    color: #8F4158;
 }

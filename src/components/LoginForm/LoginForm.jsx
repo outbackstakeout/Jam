@@ -1,5 +1,6 @@
 import { useState } from "react";
 import * as usersService from "../../utilities/users/users-service";
+import '../../pages/AuthPage/AuthPage.css'
 import './LoginForm.css'
 
 export default function LoginForm({ setUser }) {
@@ -36,6 +37,7 @@ export default function LoginForm({ setUser }) {
                     <input
                         type="text"
                         name="email"
+                        placeholder="Email"
                         value={credentials.email}
                         onChange={handleChange}
                         required
@@ -44,6 +46,7 @@ export default function LoginForm({ setUser }) {
                     <input
                         type="password"
                         name="password"
+                        placeholder="Password"
                         value={credentials.password}
                         onChange={handleChange}
                         required

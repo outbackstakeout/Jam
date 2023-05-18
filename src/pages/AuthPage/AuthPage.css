@@ -1,26 +1,113 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat: 400, 800');
+*{
+    box-sizing: border-box;
+}
+body {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: 'monserrat', sans-serif;
+    min-height: 100%;
+    margin: 10%;
+    background: white;
+}
+/* #FBD5DB */
 .login {
-    display: grid;
-    place-items: center;
-    height: 100vh;
-    width: 100%;
-    background-color: #FBD5DB;
+    position: relative;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #ffffff;
+    box-shadow: 0 14px 28px rgba(255,0,0,1),
+                0 10px 10px rgba(255,0,0,.25)
 }
 
-.login > button {
-    width: 300px;
-    background-color: #8F4158;
-    color: #eff2f5;
-    font-weight: 800;
-    padding: 20px;
+.loginForm, .signupForm {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
 }
 
-.login > button:hover {
-    background-color: #eff2f5;
-    color: #8F4158;
-    cursor: pointer;
+.signupForm {
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
 }
 
-.login > div > img {
-    object-fit: contain;
-    height: 500px;
+.loginForm{
+    width: 50%;
+    z-index: 2;
 }
+
+form {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+}
+h1{
+   font-weight: bold;
+   margin: 0; 
+}
+p{
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 15px 0 20px;
+}
+
+input{
+    background: #eee;
+    padding: 12px 15px;
+    margin: 8px 15px;
+    width: 30%;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+}
+
+.overlay-container {
+    color: black;
+}
+
+a{
+    color: #333;
+    font-size:14px;
+    text-decoration: none;
+    margin: 15px 0;
+}
+
+button{
+    color: #fff;
+    background: #ff4b2b;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 55px;
+    margin: 20px;
+    border-radius: 20px;
+    border: 1px solid #ff4b2b;
+    outline: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+}
+
+button:active{
+    transform: scale(0.90);
+}
+
+#signIn, #signUp{
+    background-color: transparent;
+    border: 2px solid #fff;
+    
+}
+
