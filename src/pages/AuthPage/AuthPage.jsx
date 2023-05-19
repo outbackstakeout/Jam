@@ -6,6 +6,10 @@ import jamlogo from '../../images/icons/jamtransparent.png'
 
 export default function AuthPage({ setUser }) {
   const [showSignUp, setShowSignUp] = useState(false);
+  
+
+
+
   return (
     <div className="login">
       {/* <div className="login_logo">
@@ -32,15 +36,9 @@ export default function AuthPage({ setUser }) {
       <button id="signup-btn" onClick={() => setShowSignUp(!showSignUp)}>
         {showSignUp ? "Log In" : "Sign Up"}
       </button>
-      {showSignUp ? ( <div className="signup-component">
-
-        <SignUpForm setUser={setUser} className={showSignUp ? "active" : ''}/>
-      </div>
-      ) : ( <div className="login-componenet">
-
-        <LoginForm setUser={setUser} className={showSignUp ? "" : "active"} />
-      </div>
-      )}
+      {showSignUp ? (<SignUpForm setUser={setUser} />
+      
+      ) : (<LoginForm setUser={setUser} />)}
     </div>
   );
 }

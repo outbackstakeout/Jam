@@ -130,11 +130,11 @@ button:active{
 }
 
 
-.login .active .login-component{
+.login .active{
     transform: translateX(100%);
 }
 
-.login .active .signup-component{
+.login .active{
     transform: translateX(100%);
     opacity: 1;
     z-index: 5;
