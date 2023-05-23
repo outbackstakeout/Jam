@@ -10,6 +10,7 @@ export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
     return (
         <div className="form-container">
             <form autoComplete="off" onSubmit={handleEmailSubmit}>
+                <h3>Return to Sender?</h3>
                 <label>Email</label>
                 <input
                     type="text"

@@ -17,6 +17,7 @@ export default function PasswordSignUp({
     return (
         <div className="form-container">
             <form autoComplete="off" onSubmit={handlePasswordSubmit}>
+                <h3>Seal That Lid!</h3>
                 <label>Password</label>
                 <input
                     type="text"

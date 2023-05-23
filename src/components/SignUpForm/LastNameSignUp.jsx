@@ -14,6 +14,7 @@ export default function LastNameSignUp({
     return (
         <div className="form-container">
             <form autoComplete="off" onSubmit={handleLastNameSubmit}>
+                <h3>Put a label on that Jar!</h3>
                 <label>Last Name</label>
                 <input
                     type="text"

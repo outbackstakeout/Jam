@@ -22,6 +22,10 @@
     cursor: pointer;
 } */
 
+h1{
+    padding-bottom: 10px;
+}
+
 .email{
     font-weight: bold;
     color: #8F4158;

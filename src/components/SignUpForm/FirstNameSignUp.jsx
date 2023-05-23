@@ -14,6 +14,7 @@ export default function FirstNameSignUp({
     return (
         <div className="form-container">
             <form autoComplete="off" onSubmit={handleFirstNameSubmit}>
+                <h3>Let's Get Jammin!</h3>
                 <label>First Name</label>
                 <input
                     type="text"
