@@ -26,19 +26,18 @@ export default function AuthPage({ setUser }) {
           </div>
           <div className="overlay-right">
             <h1>Hello Friend!</h1>
-            <p>
-              Set up your account and lets start this journey together!
-            </p>
-            <button id="signUp">Sign Up</button>
+            <p>Set up your account and lets start this journey together!</p>
+            <button id="signUp" onClick={() => setShowSignUp(!showSignUp)}>
+              {showSignUp ? "LogIn" : "Sign Up"}
+            </button>
           </div>
         </div>
       </div>
-      <button id="signup-btn" onClick={() => setShowSignUp(!showSignUp)}>
-        {showSignUp ? "Log In" : "Sign Up"}
-      </button>
-      {showSignUp ? (<SignUpForm setUser={setUser} />
-      
-      ) : (<LoginForm setUser={setUser} />)}
+      {showSignUp ? (
+        <SignUpForm setUser={setUser} />
+      ) : (
+        <LoginForm setUser={setUser} />
+      )}
     </div>
   );
 }

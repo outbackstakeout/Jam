@@ -2,22 +2,18 @@
 *{
     box-sizing: border-box;
 }
-body {
-    align-items: center;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    font-family: 'monserrat', sans-serif;
-    min-height: 100%;
-    margin: 10%;
+Body {
     background: white;
 }
-/* #FBD5DB */
+
 .login {
-    position: relative;
+    position: absolute;
+    top: 30%;
+    left: 30%;
     width: 768px;
     max-width: 100%;
     min-height: 480px;
+    justify-content: center;
     border-radius: 10px;
     overflow: hidden;
     background-color: #ffffff;
