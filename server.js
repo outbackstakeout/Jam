@@ -21,7 +21,7 @@ app.use(require("./config/checkToken"));
 
 const port = process.env.PORT || 3001;
 
-// api routes that link through to the controllers (users and messages)
+// api routes that link through to the controllers
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/jars", require("./routes/api/jars"));
 app.use("/api/jams", require("./routes/api/jams"));
@@ -55,7 +55,7 @@ async function renameJar(id, newName) {
         });
         const renamedJar = await Jar.findById(id);
         console.log(`renameJar() in server.js says the jar is: ${renamedJar}`);
-        io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
+        // io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
         return renamedJar;
     } catch (err) {
         console.log(`The error from renameJar() from server.js is: ${err}`);
@@ -121,7 +121,9 @@ io.on("connection", (socket) => {
         }
         try {
             const renamedJar = renameJar(jarId, newJarName);
-            io.to(`jar:${jarId}`).emit("jarRenamed", renamedJar);
+
+            // I think that io.in will work better since we do want to emit to all users in the given room, but we might need to change jarId to the room id, as they might be different...
+            io.in(`jar:${jarId}`).emit("jarRenamed", renamedJar);
         } catch (err) {
             console.log(
                 `The error from socket.on("renameJar") in server.js is: ${err}`

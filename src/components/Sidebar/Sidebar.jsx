@@ -15,6 +15,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 
 function Sidebar({
+    // Inherited and destructured props
     setSelectedRoom,
     jams,
     user,
@@ -23,10 +24,12 @@ function Sidebar({
     pickJar,
     setCurrentJar,
 }) {
+    // States
     const [rooms, setRooms] = useState([]);
     const [jarName, setJarName] = useState("");
     const [editing, setEditing] = useState(false);
 
+    // Function to be called once upon component's loading
     useEffect(() => {
         if (currentJar.name) {
             setJarName(currentJar.name);
@@ -39,32 +42,22 @@ function Sidebar({
 
         socket.on("jarRenamed", (renamedJar) => {
             setCurrentJar(renamedJar);
-            console.log(`The new jar name is ${renamedJar.name}`);
+            console.log(`🥨 The new jar name is ${renamedJar.name}`);
             // pickJar(renamedJar);
             setJarName(renamedJar.name);
         });
 
+        // Return statement signifies clean-up functions to be called when the component is exited
         return () => {
             socket.off("roomCreated");
             socket.off("jarRenamed");
         };
-    }, []);
-
-    const handleCreateRoom = () => {
-        console.log("Creating a new room...");
-        const newRoom = {
-            id: uuidv4(),
-            name: prompt("Enter a name for the new room:"),
-            // user: user,
-        };
-        if (newRoom.name) {
-            socket.emit("createRoom", newRoom);
-            socket.emit("joinRoom", newRoom.id);
-        }
-    };
+    }, [currentJar.name, setCurrentJar, socket]);
 
     async function handleNewJarName(e) {
-        console.log("🛶🛶🛶");
+        console.log(
+            "async function handleNewJarName() in Sidebar.jsx has been called"
+        );
         e.preventDefault();
         const newJarName = jarName;
         const jarId = currentJar._id;
@@ -92,12 +85,25 @@ function Sidebar({
     }
 
     function handleEditClick() {
-        setEditing(true);
+        setEditing(!editing);
     }
 
     function handleNameChange(e) {
         setJarName(e.target.value);
     }
+
+    const handleCreateRoom = () => {
+        console.log("Creating a new room...");
+        const newRoom = {
+            id: uuidv4(),
+            name: prompt("Enter a name for the new room:"),
+            user: user,
+        };
+        if (newRoom.name) {
+            socket.emit("createRoom", newRoom);
+            socket.emit("joinRoom", newRoom.id);
+        }
+    };
 
     const handleRoomClick = (roomId, roomName) => {
         // setSelectedRoom({ id: roomId, name: roomName });
