@@ -37,18 +37,6 @@ export default function App() {
         setJars(jarList);
     }
 
-    function pickJar(jar) {
-        console.log("pickJar() in App.jsx hit successfully");
-        console.log(
-            `The jar that pickJar() received from NavBar is: ${jar.name}`
-        );
-        console.log(
-            `The current jar before resetting it is ${currentJar.name}`
-        );
-        setCurrentJar(jar);
-        console.log(`And now the current jar is: ${currentJar.name}`);
-    }
-
     function setJarList(newJar) {
         setJars((jars) => [...jars, newJar]);
     }
@@ -76,7 +64,6 @@ export default function App() {
                                 currentUser={user}
                                 jars={jars}
                                 setJarList={setJarList}
-                                pickJar={pickJar}
                                 getJars={getJars}
                                 currentJar={currentJar}
                                 setCurrentJar={setCurrentJar}
@@ -92,7 +79,7 @@ export default function App() {
                                         socket={socketRef.current}
                                         currentJar={currentJar}
                                         setCurrentJar={setCurrentJar}
-                                        pickJar={pickJar}
+                                        getJars={getJars}
                                     />
                                 </div>
                                 <div className="container-3">

@@ -10,11 +10,11 @@ import { useEffect } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 
 export default function NavBar({
+    // Inherited and destructured props
     currentUser,
     getJars,
     jars,
     setJarList,
-    pickJar,
     setCurrentJar,
     currentJar,
 }) {

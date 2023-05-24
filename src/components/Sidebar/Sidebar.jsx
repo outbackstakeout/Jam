@@ -21,8 +21,8 @@ function Sidebar({
     user,
     socket,
     currentJar,
-    pickJar,
     setCurrentJar,
+    getJars,
 }) {
     // States
     const [rooms, setRooms] = useState([]);
@@ -40,11 +40,12 @@ function Sidebar({
             setRooms((rooms) => [...rooms, room]);
         });
 
-        socket.on("jarRenamed", (renamedJar) => {
+        socket.on(`jarRenamed/${currentJar._id}`, (renamedJar) => {
             setCurrentJar(renamedJar);
             console.log(`🥨 The new jar name is ${renamedJar.name}`);
             // pickJar(renamedJar);
             setJarName(renamedJar.name);
+            getJars();
         });
 
         // Return statement signifies clean-up functions to be called when the component is exited

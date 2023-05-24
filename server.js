@@ -120,10 +120,10 @@ io.on("connection", (socket) => {
             console.log(`ERRORz`);
         }
         try {
-            const renamedJar = renameJar(jarId, newJarName);
+            const renamedJar = await renameJar(jarId, newJarName);
 
             // I think that io.in will work better since we do want to emit to all users in the given room, but we might need to change jarId to the room id, as they might be different...
-            io.in(`jar:${jarId}`).emit("jarRenamed", renamedJar);
+            io.emit(`jarRenamed/${jarId}`, renamedJar);
         } catch (err) {
             console.log(
                 `The error from socket.on("renameJar") in server.js is: ${err}`
