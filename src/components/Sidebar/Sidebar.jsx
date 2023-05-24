@@ -48,7 +48,7 @@ function Sidebar({
             getJars();
         });
 
-        // Return statement signifies clean-up functions to be called when the component is exited
+        // Return statement contains clean-up functions to be called when the component is exited
         return () => {
             socket.off("roomCreated");
             socket.off("jarRenamed");
@@ -93,7 +93,7 @@ function Sidebar({
         setJarName(e.target.value);
     }
 
-    const handleCreateRoom = () => {
+    function handleCreateRoom() {
         console.log("Creating a new room...");
         const newRoom = {
             id: uuidv4(),
@@ -104,13 +104,12 @@ function Sidebar({
             socket.emit("createRoom", newRoom);
             socket.emit("joinRoom", newRoom.id);
         }
-    };
+    }
 
-    const handleRoomClick = (roomId, roomName) => {
-        // setSelectedRoom({ id: roomId, name: roomName });
+    function handleRoomClick(roomId, roomName) {
         setSelectedRoom(roomName);
         socket.emit("joinRoom", roomId);
-    };
+    }
 
     return (
         <div className="sidebar">

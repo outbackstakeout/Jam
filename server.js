@@ -89,9 +89,11 @@ const rooms = {};
 io.on("connection", (socket) => {
     console.log(`user id: ${socket.id} has connected`);
 
-    socket.on("createRoom", (roomName) => {
-        const roomId = uuidv4();
-        const newRoom = { id: roomId, name: roomName, users: [roomName.user] };
+    socket.on("createRoom", (newRoom) => {
+        // ❌ the following two lines are unnecessary because these object attributes are defined as the NewRoom object in the handleCreateRoom() function within sidebar.jsx before the object gets emitted
+        // const roomId = uuidv4();
+        // const newRoom = { id: roomId, name: roomName, users: [roomName.user] };
+
         // createJam(roomName.name, roomName.id, roomName.user);
         rooms[roomId] = newRoom;
         io.emit("roomCreated", newRoom);
@@ -122,7 +124,7 @@ io.on("connection", (socket) => {
         try {
             const renamedJar = await renameJar(jarId, newJarName);
 
-            // I think that io.in will work better since we do want to emit to all users in the given room, but we might need to change jarId to the room id, as they might be different...
+            // Before this line looked like io.to(`jar:${jarId}`).emit, but our jars (channels) are not our socket rooms -- 'io.to' only sends to specific socket rooms, so it will only be useful when we're working with jams (threads)
             io.emit(`jarRenamed/${jarId}`, renamedJar);
         } catch (err) {
             console.log(
