@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat: 400, 800');
-*{
-    box-sizing: border-box;
-}
+
 Body {
     background: white;
 }
@@ -49,9 +47,15 @@ form {
     height: 100%;
     text-align: center;
 }
+
+#signUp {
+    margin-left: 8rem;
+    cursor: pointer;
+}
 h1{
    font-weight: bold;
-   margin: 0; 
+   margin: 0;
+   margin-left: 5rem; 
 }
 
 h3{
@@ -64,7 +68,7 @@ p{
     font-weight: 100;
     line-height: 20px;
     letter-spacing: 0.5px;
-    margin: 15px 0 20px;
+    margin: 15px 0 20px 50px;
 }
 
 input{
@@ -90,7 +94,7 @@ button{
     font-size: 12px;
     font-weight: bold;
     padding: 12px 55px;
-    margin: 20px;
+    margin: 20px 60px;
     border-radius: 20px;
     border: 1px solid #ff4b2b;
     outline: none;
@@ -142,11 +146,6 @@ button:active{
     z-index: 5;
 }
 
-/* .signin-container .signupForm{
-    transform: translateX(100%);
-    opacity: 1;
-    z-index: 5;
-} */
 
 .login .overlay-container{
     color: black;

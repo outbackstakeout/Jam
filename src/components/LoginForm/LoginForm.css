@@ -26,6 +26,10 @@ h1{
     padding-bottom: 10px;
 }
 
+h2{
+    padding-bottom: 40px;
+}
+
 .email{
     font-weight: bold;
     color: #8F4158;
@@ -34,4 +38,8 @@ h1{
 .password{
     font-weight: bold;
     color: #8F4158;
+}
+
+#signin_btn{
+    cursor: pointer;
 }
