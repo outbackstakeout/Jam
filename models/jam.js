@@ -16,6 +16,7 @@ const jamSchema = new Schema(
         users: [
             {
                 type: mongoose.Schema.Types.ObjectId,
+                ref: "User",
             },
         ],
         jar: {

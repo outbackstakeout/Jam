@@ -93,6 +93,7 @@ function Sidebar({
 
     function handleCreateRoom() {
         // console.log("📍 handleCreateRoom() in Sidebar.jsx");
+
         const newRoom = {
             name: prompt("Enter a name for the new room:"),
             messages: [],

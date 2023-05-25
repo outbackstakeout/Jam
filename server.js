@@ -53,7 +53,6 @@ async function renameJar(id, newName) {
         });
         const renamedJar = await Jar.findById(id);
         console.log(`renameJar() in server.js says the jar is: ${renamedJar}`);
-        // io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
         return renamedJar;
     } catch (err) {
         console.log(`The error from renameJar() from server.js is: ${err}`);
@@ -82,24 +81,31 @@ const server = app.listen(port, function () {
 
 const io = require("./config/socket").init(server);
 
-const rooms = {};
+// ❌ I don't think we need to try to store rooms data in this object.
+// const rooms = {};
 
 io.on("connection", (socket) => {
     console.log(`user id: ${socket.id} has connected`);
 
     socket.on("createRoom", (newRoom) => {
-        // createJam(newRoom);
-        rooms[newRoom.socket_id] = newRoom;
+        createJam(newRoom);
+
+        // ❌ I don't think we need to work with the rooms object defined in server.js
+        // rooms[newRoom.socket_id] = newRoom;
+
         io.emit("roomCreated", newRoom);
     });
 
     socket.on("joinRoom", (roomId) => {
         // Add the user to the room with the given ID
         console.log(`User ${socket.id} joined room ${roomId}`);
-        if (!rooms[roomId]) {
-            return;
-        }
-        rooms[roomId].users.push(socket.id);
+
+        // ❌ I don't think we need to work with the rooms object defined in server.js
+        // if (!rooms[roomId]) {
+        //     return;
+        // }
+        // rooms[roomId].users.push(socket.id);
+
         socket.join(`room-${roomId}`);
         io.in(`room-${roomId}`).emit("userJoined", {
             roomId,
