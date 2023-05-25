@@ -37,13 +37,10 @@ async function storeMessage(msg) {
     }
 }
 
-async function createJam(roomName, id, user) {
+async function createJam(newRoom) {
+    console.log("📍 createJam() function in server.js");
     try {
-        const newJam = await Jam.create({
-            name: roomName,
-            socket_id: id,
-            users: [user],
-        });
+        const newJam = await Jam.create(newRoom);
     } catch (err) {
         console.log(`The error from createJam() in server.js is: ${err}`);
     }
@@ -91,7 +88,7 @@ io.on("connection", (socket) => {
     console.log(`user id: ${socket.id} has connected`);
 
     socket.on("createRoom", (newRoom) => {
-        // createJam(roomName.name, roomName.id, roomName.user);
+        // createJam(newRoom);
         rooms[newRoom.socket_id] = newRoom;
         io.emit("roomCreated", newRoom);
     });
