@@ -96,10 +96,8 @@ io.on("connection", (socket) => {
         io.emit("roomCreated", newRoom);
     });
 
-    socket.on("joinRoom", (newRoom) => {
-        console.log(
-            `User ${newRoom.users[0]} joined room ${newRoom.socket_id}`
-        );
+    socket.on("joinRoom", (room) => {
+        console.log(`User ${room.users[0]} joined room ${room.socket_id}`);
 
         // ❌ I don't think we need to work with the rooms object defined in server.js
         // if (!rooms[roomId]) {
@@ -107,11 +105,11 @@ io.on("connection", (socket) => {
         // }
         // rooms[roomId].users.push(socket.id);
 
-        // ⭕️ Alternative is to use newRoom object, accessing relevant properties through dot notation - the newRoom object will reflect the jam that is stored in the database
-        socket.join(`${newRoom.socket_id}`);
+        // ⭕️ Our alternative is to use newRoom object, accessing relevant properties through dot notation - the newRoom object will reflect the jam that is stored in the database
+        socket.join(`${room.socket_id}`);
 
         // ❓ There is no listener in another file currently awaiting this event emitter
-        io.in(`${newRoom.socket_id}`).emit("userJoined", newRoom);
+        io.in(`${room.socket_id}`).emit("userJoined", room);
     });
 
     socket.on("renameJar", async (jarId, newJarName) => {
@@ -156,6 +154,7 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("newMsg", msg);
     });
 
+    // ❌ this listener needs to be refactored utilizing the socket_id attribute of the jam object instead of the rooms object defined in server.js - though perhaps defining a user object within this file to be updated by socket events within server.js might be the way to access the necessary room IDs that need to be left upon disconnecting. Although, a user should only be within one room at a time, so only one room should need to be left when disconnect happens
     socket.on("disconnect", () => {
         console.log(`user id: ${socket.id} has disconnected`);
         for (const roomId in rooms) {

@@ -35,9 +35,9 @@ function Sidebar({
             setJarName(currentJar.name);
         }
 
-        socket.on("roomCreated", (room) => {
-            console.log("Room Created: ", room);
-            setRooms((rooms) => [...rooms, room]);
+        socket.on("roomCreated", (newRoom) => {
+            console.log("Room Created: ", newRoom);
+            setRooms((rooms) => [...rooms, newRoom]);
         });
 
         socket.on(`jarRenamed/${currentJar._id}`, (renamedJar) => {
