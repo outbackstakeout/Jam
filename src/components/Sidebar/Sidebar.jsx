@@ -103,7 +103,7 @@ function Sidebar({
         };
         if (newRoom.name) {
             socket.emit("createRoom", newRoom);
-            socket.emit("joinRoom", newRoom.socket_id);
+            socket.emit("joinRoom", newRoom);
         }
     }
 

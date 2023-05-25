@@ -96,9 +96,10 @@ io.on("connection", (socket) => {
         io.emit("roomCreated", newRoom);
     });
 
-    socket.on("joinRoom", (roomId) => {
-        // Add the user to the room with the given ID
-        console.log(`User ${socket.id} joined room ${roomId}`);
+    socket.on("joinRoom", (newRoom) => {
+        console.log(
+            `User ${newRoom.users[0]} joined room ${newRoom.socket_id}`
+        );
 
         // ❌ I don't think we need to work with the rooms object defined in server.js
         // if (!rooms[roomId]) {
@@ -106,11 +107,8 @@ io.on("connection", (socket) => {
         // }
         // rooms[roomId].users.push(socket.id);
 
-        socket.join(`room-${roomId}`);
-        io.in(`room-${roomId}`).emit("userJoined", {
-            roomId,
-            userId: socket.id,
-        });
+        socket.join(`${newRoom.socket_id}`);
+        io.in(`${newRoom.socket_id}`).emit("userJoined", newRoom);
     });
 
     socket.on("renameJar", async (jarId, newJarName) => {
