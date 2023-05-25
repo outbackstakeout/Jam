@@ -15,9 +15,6 @@ export default function FirstNameSignUp({
 
     return (
         <div className="signin-form-body">
-            <div className="jam-logo-container">
-                <img src={jamlogo} alt="jam logo" />
-            </div>
             <form autoComplete="off" onSubmit={handleFirstNameSubmit}>
 
                 <h3>Let's Get Jammin!</h3>

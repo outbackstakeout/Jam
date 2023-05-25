@@ -6,7 +6,6 @@ import LastNameSignUp from "./LastNameSignUp";
 import UsernameSignUp from "./UsernameSignUp";
 import EmailSignUp from "./EmailSignUp";
 import PasswordSignUp from "./PasswordSignUp";
-import SuccessSignUp from "./SuccessSignUp";
 import '../../pages/AuthPage/AuthPage.css'
 
 export default function SignUpForm({ setUser }) {
@@ -93,8 +92,6 @@ export default function SignUpForm({ setUser }) {
                     handleSubmit={handleSubmit}
                 />
             );
-        } else {
-            return <SuccessSignUp />;
         }
     }
 

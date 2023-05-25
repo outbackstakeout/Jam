@@ -12,9 +12,6 @@ export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
 
 
         <div className="signin-form-body">
-            <div className="jam-logo-container">
-                <img src={jamlogo} alt="jam logo" />
-            </div>
             <form autoComplete="off" onSubmit={handleEmailSubmit}>
 
                 <h3>Return to Sender?</h3>

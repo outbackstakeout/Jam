@@ -18,15 +18,11 @@ export default function PasswordSignUp({
 
     return (
         <div className="signin-form-body">
-            <div className="jam-logo-container">
-                <img src={jamlogo} alt="jam logo" />
-            </div>
             <form autoComplete="off" onSubmit={handlePasswordSubmit}>
                 <h3>Seal That Lid!</h3>
                 <label>Password</label>
 
                 <input
-                    placeholder="Password"
                     type="text"
                     name="password"
                     placeholder="Choose Password"
@@ -36,7 +32,6 @@ export default function PasswordSignUp({
                     required
                 />
                 <input
-                    placeholder="Confirm Password"
                     type="password"
                     name="confirm"
                     placeholder="Confirm Password"

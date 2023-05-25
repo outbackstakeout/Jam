@@ -14,9 +14,6 @@ export default function LastNameSignUp({
 
     return (
         <div className="signin-form-body">
-            <div className="jam-logo-container">
-                <img src={jamlogo} alt="jam logo" />
-            </div>
             <form autoComplete="off" onSubmit={handleLastNameSubmit}>
 
                 <h3>Put a label on that Jar!</h3>
