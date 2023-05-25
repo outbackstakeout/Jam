@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css?family=Montserrat: 400, 800');
 
 Body {
@@ -209,6 +210,8 @@ button:active{
     transform: translateX(0);
 }
 
+
 .login .active .overlay-right{
     transform: translateX(20%);
 }
+

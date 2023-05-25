@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { io } from "socket.io-client";
-import { sendRequest } from "./utilities/users/send-request";
+import { sendRequest } from "../../utilities/users/send-request";
 import "./Chat.css";
-import ChatHeader from "./ChatHeader.jsx";
-import Message from "./Message.jsx";
+import ChatHeader from "../../components/ChatHeader/ChatHeader.jsx";
+import Message from "../../components/Message/Message.jsx";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
@@ -17,6 +17,7 @@ function Chat({ selectedRoom, socket }) {
     const [msgs, setMsgs] = useState([]);
     const [roomMessages, setRoomMessages] = useState({});
 
+    // 👩🏼‍🔧 this function is leaving an unresolved promise which is being reported in the client-side console
     async function getMessages() {
         const msgLog = await sendRequest(`/api/messages/${selectedRoom.id}`);
 

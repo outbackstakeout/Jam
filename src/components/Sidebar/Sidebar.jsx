@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -9,101 +9,107 @@ import Avatar from "@mui/material/Avatar";
 import MicIcon from "@mui/icons-material/Mic";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HeadsetIcon from "@mui/icons-material/Headset";
-import SidebarChannel from "./SidebarChannel";
-// import { io } from "socket.io-client";
+import SidebarChannel from "../SidebarChannel/SidebarChannel";
 import { v4 as uuidv4 } from "uuid";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
 
-// 🎉 user might drill in hear
-function Sidebar({ setSelectedRoom, jams, user, socket, currentJar, pickJar, setCurrentJar }) {
+function Sidebar({
+    // Inherited and destructured props
+    setSelectedRoom,
+    jams,
+    user,
+    socket,
+    currentJar,
+    setCurrentJar,
+    getJars,
+}) {
+    // States
     const [rooms, setRooms] = useState([]);
-    const [jarName, setJarName] = useState(currentJar.name);
-    // const socketRef = useRef();
+    const [jarName, setJarName] = useState("");
     const [editing, setEditing] = useState(false);
 
+    // Function to be called once upon component's loading
     useEffect(() => {
-        // if (!socket) {
-        //     socket = io({
-        //         autoConnect: false,
-        //         path: "/socket",
-        //     });
-        // }
-
-        // socket.connect();
+        if (currentJar.name) {
+            setJarName(currentJar.name);
+        }
 
         socket.on("roomCreated", (room) => {
             console.log("Room Created: ", room);
             setRooms((rooms) => [...rooms, room]);
         });
 
-        socket.on("jarRenamed", (renamedJar) => {
-            setCurrentJar(renamedJar)
-            console.log(`The new jar name is ${renamedJar.name}`);
+        socket.on(`jarRenamed/${currentJar._id}`, (renamedJar) => {
+            setCurrentJar(renamedJar);
+            console.log(`🥨 The new jar name is ${renamedJar.name}`);
+            // pickJar(renamedJar);
             setJarName(renamedJar.name);
-            pickJar(renamedJar);
+            getJars();
         });
 
+        // Return statement contains clean-up functions to be called when the component is exited
         return () => {
             socket.off("roomCreated");
             socket.off("jarRenamed");
-            // socket.disconnect();
         };
-    }, []);
+    }, [currentJar.name, setCurrentJar, socket]);
 
-    const handleCreateRoom = () => {
-        console.log("Creating a new room...");
-        const newRoom = {
-            id: uuidv4(),
-            name: prompt("Enter a name for the new room:"),
-            // user: user,
-        };
-        if (newRoom.name) {
-            socket.emit("createRoom", newRoom);
-            socket.emit("joinRoom", newRoom.id);
+    async function handleNewJarName(e) {
+        console.log(
+            "async function handleNewJarName() in Sidebar.jsx has been called"
+        );
+        e.preventDefault();
+        const newJarName = jarName;
+        const jarId = currentJar._id;
+        console.log(
+            `handleNewJarName() in sidebar says the jarName is: ${jarName} and the jarId is: ${jarId}`
+        );
+        if (jarId) {
+            try {
+                // 🔗 server.js > app.post("/rename-jar")
+                const res = await axios.post("/rename-jar", {
+                    jarId: jarId,
+                    newJarName: newJarName,
+                });
+                const renamedJar = res.data;
+                setCurrentJar((currentJar) => ({
+                    ...currentJar,
+                    name: renamedJar.name,
+                }));
+                socket.emit("renameJar", jarId, newJarName);
+            } catch (err) {
+                console.log(err);
+            }
         }
-    };
-
-    // function isn't getting called
-async function handleNewJarName(e) {
-    console.log("🛶🛶🛶");
-    e.preventDefault();
-    const newJarName = jarName;
-    const jarId = currentJar._id;
-    console.log(
-        `handleNewJarName() in sidebar says the jarName is: ${jarName} and the jarId is: ${jarId}`
-    );
-    if (jarId) {
-        try {
-            const res = await axios.post('/rename-jar', {
-                jarId: jarId,
-                newJarName: newJarName
-            });
-            const renamedJar = res.data;
-            setCurrentJar(currentJar => ({...currentJar, name: renamedJar.name}));
-            socket.emit("renameJar", jarId, newJarName);
-        } catch (err) {
-            console.log(err);
-        }
+        setEditing(false);
     }
-    setEditing(false);
-}
 
     function handleEditClick() {
-        setEditing(true);
+        setEditing(!editing);
     }
 
     function handleNameChange(e) {
         setJarName(e.target.value);
     }
 
+    function handleCreateRoom() {
+        console.log("Creating a new room...");
+        const newRoom = {
+            id: uuidv4(),
+            name: prompt("Enter a name for the new room:"),
+            user: user,
+        };
+        if (newRoom.name) {
+            socket.emit("createRoom", newRoom);
+            socket.emit("joinRoom", newRoom.id);
+        }
+    }
 
-
-    const handleRoomClick = (roomId, roomName) => {
-        // setSelectedRoom({ id: roomId, name: roomName });
+    function handleRoomClick(roomId, roomName) {
         setSelectedRoom(roomName);
         socket.emit("joinRoom", roomId);
-    };
+    }
 
     return (
         <div className="sidebar">
@@ -122,7 +128,6 @@ async function handleNewJarName(e) {
                         </form>
                     ) : (
                         currentJar.name
-                        // `${currentJar._id}`
                     )}
                 </h3>
                 <EditIcon
@@ -136,12 +141,11 @@ async function handleNewJarName(e) {
                         <ExpandMoreIcon />
                         <h4>Text Channels</h4>
                     </div>
-                    
+
                     <AddIcon
                         className="sidebar_addChannel"
                         onClick={() => handleCreateRoom()}
                     />
-                    
                 </div>
                 <div className="sidebar_channelsList">
                     {rooms.map((room) => (
@@ -187,11 +191,11 @@ async function handleNewJarName(e) {
         </div>
     );
 
-    <div className="sidebar_channelsList">
-        {jams.map((jamItem) => {
-            return <SidebarChannel jam={jamItem} />;
-        })}
-    </div>;
+    // <div className="sidebar_channelsList">
+    //     {jams.map((jamItem) => {
+    //         return <SidebarChannel jam={jamItem} />;
+    //     })}
+    // </div>;
 }
 
 export default Sidebar;

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import * as usersService from "../../utilities/users/users-service";
+
 import '../../pages/AuthPage/AuthPage.css'
 import './LoginForm.css'
 import { useNavigate } from "react-router-dom";
+
 
 export default function LoginForm({ setUser }) {
   const [credentials, setCredentials] = useState({
@@ -11,6 +13,7 @@ export default function LoginForm({ setUser }) {
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
 
   //function to handle login button click
   const handleLoginClick = () => {
@@ -70,4 +73,5 @@ export default function LoginForm({ setUser }) {
       <p className="error-message">&nbsp;{error}</p>
     </div>
   );
+
 }

@@ -21,7 +21,7 @@ app.use(require("./config/checkToken"));
 
 const port = process.env.PORT || 3001;
 
-// api routes that link through to the controllers (users and messages)
+// api routes that link through to the controllers
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/jars", require("./routes/api/jars"));
 app.use("/api/jams", require("./routes/api/jams"));
@@ -53,26 +53,26 @@ async function renameJar(id, newName) {
         const jar = await Jar.findByIdAndUpdate(id, {
             name: newName,
         });
-        console.log(`renameJar() in server.js says the jar is: ${jar}`);
         const renamedJar = await Jar.findById(id);
-         io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
+        console.log(`renameJar() in server.js says the jar is: ${renamedJar}`);
+        // io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
         return renamedJar;
     } catch (err) {
         console.log(`The error from renameJar() from server.js is: ${err}`);
     }
 }
 
-app.post('/rename-jar', async (req, res) => {
-  const { jarId, newJarName } = req.body;
-  try {
-    const renamedJar = await renameJar(jarId, newJarName);
-    res.json(renamedJar);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error renaming jar');
-  }
+// 🔗 Sidebar.jsx > Sidebar() > handleNewJarName(e) > axios.post
+app.post("/rename-jar", async (req, res) => {
+    const { jarId, newJarName } = req.body;
+    try {
+        const renamedJar = await renameJar(jarId, newJarName);
+        res.json(renamedJar);
+    } catch (err) {
+        console.log(err);
+        res.status(500).send("Error renaming jar");
+    }
 });
-
 
 app.get("/*", function (req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
@@ -89,11 +89,9 @@ const rooms = {};
 io.on("connection", (socket) => {
     console.log(`user id: ${socket.id} has connected`);
 
-    socket.on("createRoom", (roomName) => {
-        const roomId = uuidv4();
-        const newRoom = { id: roomId, name: roomName, users: [roomName.user] };
+    socket.on("createRoom", (newRoom) => {
         // createJam(roomName.name, roomName.id, roomName.user);
-        rooms[roomId] = newRoom;
+        rooms[newRoom.id] = newRoom;
         io.emit("roomCreated", newRoom);
     });
 
@@ -120,8 +118,10 @@ io.on("connection", (socket) => {
             console.log(`ERRORz`);
         }
         try {
-        const renamedJar = renameJar(jarId, newJarName);
-            io.to(`jar:${jarId}`).emit("jarRenamed", renamedJar);
+            const renamedJar = await renameJar(jarId, newJarName);
+
+            // Before this line looked like io.to(`jar:${jarId}`).emit, but our jars (channels) are not our socket rooms -- 'io.to' only sends to specific socket rooms, so it will only be useful when we're working with jams (threads)
+            io.emit(`jarRenamed/${jarId}`, renamedJar);
         } catch (err) {
             console.log(
                 `The error from socket.on("renameJar") in server.js is: ${err}`

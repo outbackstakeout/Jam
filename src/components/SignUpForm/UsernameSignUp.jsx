@@ -1,5 +1,7 @@
 import React from "react";
+
 import "../../pages/AuthPage/AuthPage.css";
+
 
 export default function UsernameSignUp({
     newUser,
@@ -27,5 +29,6 @@ export default function UsernameSignUp({
           <button type="submit">Next</button>
         </form>
       </div>
+
     );
 }

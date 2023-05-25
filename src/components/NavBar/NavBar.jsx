@@ -6,14 +6,27 @@ import chatIcon from "../../images/icons/chatIcon.png";
 import notificationIcon from "../../images/icons/notiBellIcon.png";
 import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
-import AddBoxIcon from '@mui/icons-material/AddBox';
+import { useEffect } from "react";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 
-export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurrentJar, currentJar }) {
+export default function NavBar({
+    // Inherited and destructured props
+    currentUser,
+    getJars,
+    jars,
+    setJarList,
+    setCurrentJar,
+    currentJar,
+}) {
     // we wanna move this to user profile
     // function handleLogOut() {
     //     userService.logOut();
     //     setUser(null);
     // }
+
+    useEffect(() => {
+        getJars();
+    }, []);
 
     async function handleCreate() {
         try {
@@ -30,14 +43,17 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurr
             setJarList(newJar);
             console.log("HANDLE CREATE");
         } catch (err) {
-            console.log(`handleCreate() in NavBar says the error is: ${err}`);
+            console.log(
+                `handleCreate() in NavBar.jsx says the error is: ${err}`
+            );
         }
     }
 
     function handleClick(jar) {
         setCurrentJar(jar);
-        console.log(`Current Jar is: ${JSON.stringify(currentJar)}`)
-        pickJar(jar);
+
+        // ⬇️ This will log before the CurrentJar state in app.jsx is actually updated
+        // console.log(`Current Jar is: ${JSON.stringify(currentJar)}`);
     }
 
     return (
@@ -50,11 +66,17 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurr
                         return (
                             <li
                                 key={jar._id}
-                                className={`squircle purple-one ${currentJar._id === jar._id ? "active" : ""}`} // <-- add the 'selected' class if the jar is selected
+                                className={`squircle purple-one ${
+                                    currentJar._id === jar._id ? "active" : ""
+                                }`} // <-- add the 'selected' class if the jar is selected
                                 onClick={() => handleClick(jar)}
                             >
                                 <div className="popup">
-                                    <h4 className="popup-text">{currentJar._id === jar._id ? currentJar.name : jar.name}</h4>
+                                    <h4 className="popup-text">
+                                        {currentJar._id === jar._id
+                                            ? currentJar.name
+                                            : jar.name}
+                                    </h4>
                                 </div>
                             </li>
                         );
@@ -62,7 +84,8 @@ export default function NavBar({ currentUser, jars, setJarList, pickJar, setCurr
                     {/*  */}
                     <AddBoxIcon
                         className="add_jar"
-                        onClick={() => handleCreate()} />
+                        onClick={() => handleCreate()}
+                    />
                 </ul>
             </nav>
         </div>
