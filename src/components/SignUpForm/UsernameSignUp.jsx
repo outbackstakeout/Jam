@@ -1,5 +1,7 @@
 import React from "react";
-import jamlogo from "../../images/icons/jamtransparent.png";
+
+import "../../pages/AuthPage/AuthPage.css";
+
 
 export default function UsernameSignUp({
     newUser,
@@ -12,24 +14,21 @@ export default function UsernameSignUp({
     }
 
     return (
-        <div className="signin-form-body">
-            <div className="jam-logo-container">
-                <img src={jamlogo} alt="jam logo" />
-            </div>
-            <form autoComplete="off" onSubmit={handleUsernameSubmit}>
-                <input
-                    placeholder="Username"
-                    type="text"
-                    name="username"
-                    value={newUser.username}
-                    onChange={handleChange}
-                    className="signin-form-input"
-                    required
-                />
-                <button
-                    className="signin-form-button"
-                    type="submit">Next</button>
-            </form>
-        </div>
+      <div className="form-container">
+        <form autoComplete="off" onSubmit={handleUsernameSubmit}>
+          <h3>Put a label on that Jar!</h3>
+          <label>Username</label>
+          <input
+            type="text"
+            name="username"
+            placeholder="Your Username"
+            value={newUser.username}
+            onChange={handleChange}
+            required
+          />
+          <button type="submit">Next</button>
+        </form>
+      </div>
+
     );
 }

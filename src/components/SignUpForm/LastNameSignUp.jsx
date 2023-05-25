@@ -1,5 +1,7 @@
 import React from "react";
-import jamlogo from '../../images/icons/jamtransparent.png'
+
+import "../../pages/AuthPage/AuthPage.css";
+
 export default function LastNameSignUp({
     newUser,
     handleChange,
@@ -16,10 +18,15 @@ export default function LastNameSignUp({
                 <img src={jamlogo} alt="jam logo" />
             </div>
             <form autoComplete="off" onSubmit={handleLastNameSubmit}>
+
+                <h3>Put a label on that Jar!</h3>
+                <label>Last Name</label>
+
                 <input
                     placeholder="Last Name"
                     type="text"
                     name="last_name"
+                    placeholder="Last Name"
                     value={newUser.last_name}
                     onChange={handleChange}
                     className="signin-form-input"

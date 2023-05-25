@@ -1,5 +1,7 @@
 import React from "react";
-import jamlogo from '../../images/icons/jamtransparent.png'
+
+import "../../pages/AuthPage/AuthPage.css";
+
 export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
     async function handleEmailSubmit(evt) {
         evt.preventDefault();
@@ -14,10 +16,15 @@ export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
                 <img src={jamlogo} alt="jam logo" />
             </div>
             <form autoComplete="off" onSubmit={handleEmailSubmit}>
+
+                <h3>Return to Sender?</h3>
+                <label>Email</label>
+
                 <input
                     placeholder="Email"
                     type="text"
                     name="email"
+                    placeholder="Email Address"
                     value={newUser.email}
                     onChange={handleChange}
                     className="signin-form-input"

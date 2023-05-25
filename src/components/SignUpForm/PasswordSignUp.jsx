@@ -1,5 +1,7 @@
 import React from "react";
-import jamlogo from '../../images/icons/jamtransparent.png'
+
+import "../../pages/AuthPage/AuthPage.css";
+
 
 export default function PasswordSignUp({
     newUser,
@@ -20,10 +22,14 @@ export default function PasswordSignUp({
                 <img src={jamlogo} alt="jam logo" />
             </div>
             <form autoComplete="off" onSubmit={handlePasswordSubmit}>
+                <h3>Seal That Lid!</h3>
+                <label>Password</label>
+
                 <input
                     placeholder="Password"
                     type="text"
                     name="password"
+                    placeholder="Choose Password"
                     value={newUser.password}
                     onChange={handleChange}
                     className="signin-form-input"
@@ -33,6 +39,7 @@ export default function PasswordSignUp({
                     placeholder="Confirm Password"
                     type="password"
                     name="confirm"
+                    placeholder="Confirm Password"
                     value={newUser.confirm}
                     onChange={handleChange}
                     className="signin-form-input"

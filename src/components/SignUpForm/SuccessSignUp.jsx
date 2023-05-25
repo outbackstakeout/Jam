@@ -1,5 +1,7 @@
 import React from "react";
-import jamlogo from "../../images/icons/jamtransparent.png";
+
+import "../../pages/AuthPage/AuthPage.css";
+
 
 export default function SuccessSignUp() {
     return <div className="signin-form-body">
