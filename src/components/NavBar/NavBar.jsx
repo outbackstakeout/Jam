@@ -1,10 +1,5 @@
-import { Link } from "react-router-dom";
-import * as userService from "../../utilities/users/users-service";
+// import * as userService from "../../utilities/users/users-service";
 import "./NavBar.css";
-import homeIcon from "../../images/icons/homeIcon.png";
-import chatIcon from "../../images/icons/chatIcon.png";
-import notificationIcon from "../../images/icons/notiBellIcon.png";
-import ProfilePicture from "../../images/icons/profilepicdemo.png";
 import { sendRequest } from "../../utilities/users/send-request";
 import { useEffect } from "react";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -29,6 +24,7 @@ export default function NavBar({
     }, []);
 
     async function handleCreate() {
+        // console.log("📍 handleCreate() function in NavBar.jsx");
         try {
             const payload = {
                 name: "Fresh Jar",
@@ -41,7 +37,6 @@ export default function NavBar({
                 payload
             );
             setJarList(newJar);
-            console.log("HANDLE CREATE");
         } catch (err) {
             console.log(
                 `handleCreate() in NavBar.jsx says the error is: ${err}`
@@ -51,9 +46,6 @@ export default function NavBar({
 
     function handleClick(jar) {
         setCurrentJar(jar);
-
-        // ⬇️ This will log before the CurrentJar state in app.jsx is actually updated
-        // console.log(`Current Jar is: ${JSON.stringify(currentJar)}`);
     }
 
     return (
