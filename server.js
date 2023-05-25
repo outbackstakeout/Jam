@@ -28,6 +28,7 @@ app.use("/api/jams", require("./routes/api/jams"));
 app.use("/api/messages", require("./routes/api/messages"));
 
 async function storeMessage(msg) {
+    // console.log("📍 storeMessage(msg) function in server.js");
     try {
         const storeMsg = await Message.create(msg);
         console.log("storeMessage() success!");
@@ -91,7 +92,7 @@ io.on("connection", (socket) => {
 
     socket.on("createRoom", (newRoom) => {
         // createJam(roomName.name, roomName.id, roomName.user);
-        rooms[newRoom.id] = newRoom;
+        rooms[newRoom.socket_id] = newRoom;
         io.emit("roomCreated", newRoom);
     });
 

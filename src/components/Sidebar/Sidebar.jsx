@@ -94,13 +94,15 @@ function Sidebar({
     function handleCreateRoom() {
         // console.log("📍 handleCreateRoom() in Sidebar.jsx");
         const newRoom = {
-            id: uuidv4(),
             name: prompt("Enter a name for the new room:"),
-            user: user,
+            messages: [],
+            users: [user],
+            jar: currentJar._id,
+            socket_id: uuidv4(),
         };
         if (newRoom.name) {
             socket.emit("createRoom", newRoom);
-            socket.emit("joinRoom", newRoom.id);
+            socket.emit("joinRoom", newRoom.socket_id);
         }
     }
 
