@@ -29,7 +29,7 @@ function Sidebar({
     const [jarName, setJarName] = useState("");
     const [editing, setEditing] = useState(false);
 
-    // Function to be called once upon component's loading
+    // UseEffect() - to be called once upon component's loading
     useEffect(() => {
         if (currentJar.name) {
             setJarName(currentJar.name);
@@ -56,14 +56,12 @@ function Sidebar({
     }, [currentJar.name, setCurrentJar, socket]);
 
     async function handleNewJarName(e) {
-        console.log(
-            "async function handleNewJarName() in Sidebar.jsx has been called"
-        );
+        // console.log("📍 handleNewJarName(e) in Sidebar.jsx");
         e.preventDefault();
         const newJarName = jarName;
         const jarId = currentJar._id;
         console.log(
-            `handleNewJarName() in sidebar says the jarName is: ${jarName} and the jarId is: ${jarId}`
+            `handleNewJarName() in Sidebar.jsx says jarName: ${jarName} and jarId: ${jarId}`
         );
         if (jarId) {
             try {
@@ -94,7 +92,7 @@ function Sidebar({
     }
 
     function handleCreateRoom() {
-        console.log("Creating a new room...");
+        // console.log("📍 handleCreateRoom() in Sidebar.jsx");
         const newRoom = {
             id: uuidv4(),
             name: prompt("Enter a name for the new room:"),
