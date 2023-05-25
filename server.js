@@ -90,12 +90,8 @@ io.on("connection", (socket) => {
     console.log(`user id: ${socket.id} has connected`);
 
     socket.on("createRoom", (newRoom) => {
-        // ❌ the following two lines are unnecessary because these object attributes are defined as the NewRoom object in the handleCreateRoom() function within sidebar.jsx before the object gets emitted
-        // const roomId = uuidv4();
-        // const newRoom = { id: roomId, name: roomName, users: [roomName.user] };
-
         // createJam(roomName.name, roomName.id, roomName.user);
-        rooms[roomId] = newRoom;
+        rooms[newRoom.id] = newRoom;
         io.emit("roomCreated", newRoom);
     });
 
