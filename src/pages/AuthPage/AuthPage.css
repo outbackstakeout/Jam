@@ -1,9 +1,9 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat: 400, 800');
 
-Body {
+/* Body {
     background: white;
-}
+} */
 
 .login {
     position: absolute;
@@ -40,7 +40,7 @@ Body {
 }
 
 form {
-    background: #fff;
+    /* background: #fff; */
     display: flex;
     align-items: center;
     flex-direction: column;

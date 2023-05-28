@@ -109,13 +109,18 @@
     left: 155%;
     transform: translateY(-50%) scale(0.98);
     width: max-content;
+    height: 2rem;
     border-radius: 2px;
-    font-size: 10px;
+    font-size: 5px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     opacity: 0;
     transition: opacity 64ms
   }
   
-  .popoup li{
+  .popup li{
     margin: .2rem 0;
   }
   
