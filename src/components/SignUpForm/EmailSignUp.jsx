@@ -18,7 +18,6 @@ export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
                 <label>Email</label>
 
                 <input
-                    placeholder="Email"
                     type="text"
                     name="email"
                     placeholder="Email Address"
