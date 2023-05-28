@@ -28,15 +28,18 @@
     transition: all 0.6s ease-in-out;
 }
 
-.signupForm {
+.signin-form-body {
     width: 50%;
-    opacity: 0;
-    z-index: 1;
+    margin-top: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .loginForm{
     width: 50%;
     z-index: 2;
+    left: 50%;
 }
 
 form {
@@ -49,6 +52,7 @@ form {
     text-align: center;
 }
 
+
 #signUp {
     margin-left: 8rem;
     cursor: pointer;
@@ -59,27 +63,17 @@ form {
    margin-left: 5rem; 
 }
 
-.signin-form-body > h3{
+.login h3{
     margin-top: 15px;
     margin-bottom: 15px;
     color:#ff228c
 }
-p{
+.login p{
     font-size: 14px;
     font-weight: 100;
     line-height: 20px;
     letter-spacing: 0.5px;
     margin: 15px 0 20px 50px;
-}
-
-input{
-    background: #eee;
-    padding: 12px 15px;
-    margin: 8px 15px;
-    width: 30%;
-    border-radius: 5px;
-    border: none;
-    outline: none;
 }
 
 a{
@@ -116,9 +110,9 @@ button:active{
     align-items: center;
     justify-content: flex-start;
 }
-.form-container form input{
+/* .form-container form input{
     width: 70%;
-}
+} */
 
 
 
