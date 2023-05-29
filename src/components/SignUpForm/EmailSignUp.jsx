@@ -5,7 +5,7 @@ import "../../pages/AuthPage/AuthPage.css";
 export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
     async function handleEmailSubmit(evt) {
         evt.preventDefault();
-        setFormNumber(5);
+        setFormNumber(6);
     }
 
     return (
