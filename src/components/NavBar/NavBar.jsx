@@ -73,7 +73,6 @@ export default function NavBar({
                             </li>
                         );
                     })}
-                    {/*  */}
                     <AddBoxIcon
                         className="add_jar"
                         onClick={() => handleCreate()}

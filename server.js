@@ -96,8 +96,8 @@ io.on("connection", (socket) => {
         io.emit("roomCreated", newRoom);
     });
 
-    socket.on("joinRoom", (room) => {
-        console.log(`User ${room.users[0]} joined room ${room.socket_id}`);
+    socket.on("joinRoom", (room, user) => {
+        console.log(`User ${user.username} joined room ${room.socket_id}`);
 
         // ❌ I don't think we need to work with the rooms object defined in server.js
         // if (!rooms[roomId]) {
@@ -118,7 +118,9 @@ io.on("connection", (socket) => {
         );
 
         if (!mongoose.Types.ObjectId.isValid(jarId)) {
-            console.log(`ERRORz`);
+            console.log(
+                '📍⚠️ socket.on("rename jar") in server.js - jarId is not a valid mongoose Object ID'
+            );
         }
         try {
             const renamedJar = await renameJar(jarId, newJarName);
@@ -155,19 +157,19 @@ io.on("connection", (socket) => {
     });
 
     // ❌ this listener needs to be refactored utilizing the socket_id attribute of the jam object instead of the rooms object defined in server.js - though perhaps defining a user object within this file to be updated by socket events within server.js might be the way to access the necessary room IDs that need to be left upon disconnecting. Although, a user should only be within one room at a time, so only one room should need to be left when disconnect happens
-    socket.on("disconnect", () => {
-        console.log(`user id: ${socket.id} has disconnected`);
-        for (const roomId in rooms) {
-            if (rooms[roomId].users.includes(socket.id)) {
-                rooms[roomId].users = rooms[roomId].users.filter(
-                    (userId) => userId !== socket.id
-                );
-                socket.leave(`room-${roomId}`);
-                io.in(`room-${roomId}`).emit("userLeft", {
-                    roomId,
-                    userId: socket.id,
-                });
-            }
-        }
-    });
+    // socket.on("disconnect", () => {
+    //     console.log(`user id: ${socket.id} has disconnected`);
+    //     for (const roomId in rooms) {
+    //         if (rooms[roomId].users.includes(socket.id)) {
+    //             rooms[roomId].users = rooms[roomId].users.filter(
+    //                 (userId) => userId !== socket.id
+    //             );
+    //             socket.leave(`room-${roomId}`);
+    //             io.in(`room-${roomId}`).emit("userLeft", {
+    //                 roomId,
+    //                 userId: socket.id,
+    //             });
+    //         }
+    //     }
+    // });
 });

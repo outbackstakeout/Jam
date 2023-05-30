@@ -74,6 +74,7 @@ export default function App() {
                                 <div className="container-2">
                                     <Sidebar
                                         setSelectedRoom={setSelectedRoom}
+                                        selectedRoom={selectedRoom}
                                         jams={jams}
                                         user={user}
                                         socket={socketRef.current}

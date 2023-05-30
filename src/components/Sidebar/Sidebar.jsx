@@ -17,6 +17,7 @@ import axios from "axios";
 function Sidebar({
     // Inherited and destructured props
     setSelectedRoom,
+    selectedRoom,
     jams,
     user,
     socket,
@@ -102,31 +103,13 @@ function Sidebar({
         };
         if (newRoom.name) {
             socket.emit("createRoom", newRoom);
-            socket.emit("joinRoom", newRoom);
+            socket.emit("joinRoom", newRoom, user);
         }
     }
 
     function handleRoomClick(room) {
-        setSelectedRoom(room.name);
-        socket.emit("joinRoom", room);
-    }
-
-    function getJamsInJar() {
-        console.log("Room.jar: ", rooms, "Currentjar._id", currentJar._id);
-        rooms.map((room) => {
-            if (room.jar === currentJar._id) {
-                return (
-                    <SidebarChannel
-                        key={uuidv4()}
-                        id={room.id}
-                        channel={room.name}
-                        selected={room.id === setSelectedRoom}
-                        onClick={() => handleRoomClick(room)}
-                        setSelectedRoom={setSelectedRoom}
-                    />
-                );
-            }
-        });
+        setSelectedRoom(room.id);
+        socket.emit("joinRoom", room, user);
     }
 
     return (
@@ -173,7 +156,7 @@ function Sidebar({
                                     key={uuidv4()}
                                     id={room.id}
                                     channel={room.name}
-                                    selected={room.id === setSelectedRoom}
+                                    selected={room.id === selectedRoom}
                                     onClick={() => handleRoomClick(room)}
                                     setSelectedRoom={setSelectedRoom}
                                 />

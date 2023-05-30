@@ -15,7 +15,10 @@ function Chat({ selectedRoom, socket, user }) {
 
     // 👩🏼‍🔧 this function is leaving an unresolved promise which is being reported in the client-side console
     async function getMessages() {
-        const msgLog = await sendRequest(`/api/messages/${selectedRoom.id}`);
+        console.log(
+            `getMessages in chat.jsx says the selectedRoom.id is: ${selectedRoom}`
+        );
+        const msgLog = await sendRequest(`/api/messages/${selectedRoom}`);
 
         //i could use prevState and a ...prevState thing to bring back previous messages from state, but not sure exactly how
         console.log(msgLog);
@@ -26,17 +29,8 @@ function Chat({ selectedRoom, socket, user }) {
     const roomIdRef = useRef();
 
     useEffect(() => {
-        setMsgs([]);
-        getMessages();
-
-        // if (!socket) {
-        //     socket = io({
-        //         autoConnect: false,
-        //     });
-        // }
-        // const socket = socketRef.current;
-
         if (selectedRoom) {
+            getMessages();
             // Set the room ID so it can be accessed inside socket callbacks
             roomIdRef.current = selectedRoom.id;
 
@@ -57,27 +51,24 @@ function Chat({ selectedRoom, socket, user }) {
             setMsgs((msgs) => [...msgs, newMsg]);
         });
 
-        // Join the selected room
-        // socket.emit("joinRoom", selectedRoom.id);
-
         return () => {
             socket.off("newMsg");
             // socket.disconnect();
         };
-    }, [selectedRoom]);
+    }, [selectedRoom, getMessages, socket]);
 
     function handleChange(e) {
         setInput(e.target.value);
     }
 
     async function handleSubmit(e) {
+        console.log("📍 handleSubmit() in Chat.jsx");
         e.preventDefault();
 
         const newMsg = { text: input };
         // roomId: selectedRoom.id place this in next to text input
 
         setMsgs((msgs) => [...msgs, newMsg]);
-        console.log("handle submit is working");
         // 💡 to server.js > io.on > socket.on
         socket.emit("sendMsg", input);
         console.log(newMsg);
@@ -87,7 +78,7 @@ function Chat({ selectedRoom, socket, user }) {
 
     return (
         <div className="chat">
-            <ChatHeader channel={selectedRoom?.name || ""} />
+            <ChatHeader channel={selectedRoom ? selectedRoom : null} />
 
             <div className="chat_messages">
                 {/* pass luke msgs state down as a prop */}

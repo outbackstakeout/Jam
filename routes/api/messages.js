@@ -5,5 +5,6 @@ const messagesCtrl = require("../../controllers/api/messages");
 // All paths start with '/api/messages'
 
 router.get("/", messagesCtrl.getMessages);
+router.get("/:jamId", messagesCtrl.getJamMessages);
 
 module.exports = router;
