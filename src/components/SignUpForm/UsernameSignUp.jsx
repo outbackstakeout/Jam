@@ -14,7 +14,7 @@ export default function UsernameSignUp({
     }
 
     return (
-      <div className="form-container">
+      <div className="signin-form-body">
         <form autoComplete="off" onSubmit={handleUsernameSubmit}>
           <h3>Put a label on that Jar!</h3>
           <label>Username</label>

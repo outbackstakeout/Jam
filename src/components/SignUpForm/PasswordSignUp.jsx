@@ -11,7 +11,7 @@ export default function PasswordSignUp({
 }) {
     async function handlePasswordSubmit(evt) {
         handleSubmit(evt);
-        setFormNumber(6);
+        setFormNumber(7);
     }
 
     const disable = newUser.password !== newUser.confirm;
