@@ -43,7 +43,6 @@ function Sidebar({
         socket.on(`jarRenamed/${currentJar._id}`, (renamedJar) => {
             setCurrentJar(renamedJar);
             console.log(`🥨 The new jar name is ${renamedJar.name}`);
-            // pickJar(renamedJar);
             setJarName(renamedJar.name);
             getJars();
         });
@@ -53,7 +52,7 @@ function Sidebar({
             socket.off("roomCreated");
             socket.off("jarRenamed");
         };
-    }, [currentJar.name, setCurrentJar, socket]);
+    }, [currentJar.name, currentJar._id, setCurrentJar, getJars, socket]);
 
     async function handleNewJarName(e) {
         // console.log("📍 handleNewJarName(e) in Sidebar.jsx");
