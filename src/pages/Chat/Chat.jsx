@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { io } from "socket.io-client";
 import { sendRequest } from "../../utilities/users/send-request";
 import "./Chat.css";
 import ChatHeader from "../../components/ChatHeader/ChatHeader.jsx";
@@ -10,9 +9,6 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import GifIcon from "@mui/icons-material/Gif";
 
 function Chat({ selectedRoom, socket, user }) {
-    // include pre-return functions from ChatPage.jsx
-    // console.log(selectedRoom);
-
     const [input, setInput] = useState("");
     const [msgs, setMsgs] = useState([]);
     const [roomMessages, setRoomMessages] = useState({});
