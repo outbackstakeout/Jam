@@ -11,6 +11,7 @@ import ProfilePage from "../../components/ProfilePage/ProfilePage";
 import { io } from "socket.io-client";
 
 export default function App() {
+    // App.jsx states
     const [user, setUser] = useState(getUser());
     const [selectedRoom, setSelectedRoom] = useState("");
     const [showProfilePage, setShowProfilePage] = useState(false);
@@ -20,8 +21,12 @@ export default function App() {
     const [currentJam, setCurrentJam] = useState({});
     let jamSelected;
 
+    // Store a mutable ref object to be updated later
     const socketRef = useRef();
+
+    // UseEffect() - to be called once upon component's loading
     useEffect(() => {
+        // Initialize socket connection
         if (!socketRef.current) {
             socketRef.current = io({
                 autoConnect: false,
@@ -32,12 +37,13 @@ export default function App() {
     }, []);
 
     async function getJars() {
-        console.log("getJars() function in App.jsx");
+        // console.log("📍 getJars() function in App.jsx");
         const jarList = await sendRequest("/api/jars");
         setJars(jarList);
     }
 
     function setJarList(newJar) {
+        // console.log("📍 setJarList() function in App.jsx");
         setJars((jars) => [...jars, newJar]);
     }
 
@@ -46,13 +52,13 @@ export default function App() {
         setCurrentJam(jam);
     }
 
-    const handleFriendClick = () => {
+    function handleFriendClick() {
         setShowProfilePage(true);
-    };
+    }
 
-    const handleExitClick = () => {
+    function handleExitClick() {
         setShowProfilePage(false);
-    };
+    }
 
     return (
         <main className="App">

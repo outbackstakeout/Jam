@@ -28,6 +28,7 @@ app.use("/api/jams", require("./routes/api/jams"));
 app.use("/api/messages", require("./routes/api/messages"));
 
 async function storeMessage(msg) {
+    // console.log("📍 storeMessage(msg) function in server.js");
     try {
         const storeMsg = await Message.create(msg);
         console.log("storeMessage() success!");
@@ -36,13 +37,10 @@ async function storeMessage(msg) {
     }
 }
 
-async function createJam(roomName, id, user) {
+async function createJam(newRoom) {
+    console.log("📍 createJam() function in server.js");
     try {
-        const newJam = await Jam.create({
-            name: roomName,
-            socket_id: id,
-            users: [user],
-        });
+        const newJam = await Jam.create(newRoom);
     } catch (err) {
         console.log(`The error from createJam() in server.js is: ${err}`);
     }
@@ -55,7 +53,6 @@ async function renameJar(id, newName) {
         });
         const renamedJar = await Jar.findById(id);
         console.log(`renameJar() in server.js says the jar is: ${renamedJar}`);
-        // io.to(`jar:${id}`).emit("jarRenamed", renamedJar);
         return renamedJar;
     } catch (err) {
         console.log(`The error from renameJar() from server.js is: ${err}`);
@@ -84,29 +81,35 @@ const server = app.listen(port, function () {
 
 const io = require("./config/socket").init(server);
 
-const rooms = {};
+// ❌ I don't think we need to try to store rooms data in this object.
+// const rooms = {};
 
 io.on("connection", (socket) => {
     console.log(`user id: ${socket.id} has connected`);
 
     socket.on("createRoom", (newRoom) => {
-        // createJam(roomName.name, roomName.id, roomName.user);
-        rooms[newRoom.id] = newRoom;
+        createJam(newRoom);
+
+        // ❌ I don't think we need to work with the rooms object defined in server.js
+        // rooms[newRoom.socket_id] = newRoom;
+
         io.emit("roomCreated", newRoom);
     });
 
-    socket.on("joinRoom", (roomId) => {
-        // Add the user to the room with the given ID
-        console.log(`User ${socket.id} joined room ${roomId}`);
-        if (!rooms[roomId]) {
-            return;
-        }
-        rooms[roomId].users.push(socket.id);
-        socket.join(`room-${roomId}`);
-        io.in(`room-${roomId}`).emit("userJoined", {
-            roomId,
-            userId: socket.id,
-        });
+    socket.on("joinRoom", (room) => {
+        console.log(`User ${room.users[0]} joined room ${room.socket_id}`);
+
+        // ❌ I don't think we need to work with the rooms object defined in server.js
+        // if (!rooms[roomId]) {
+        //     return;
+        // }
+        // rooms[roomId].users.push(socket.id);
+
+        // ⭕️ Our alternative is to use newRoom object, accessing relevant properties through dot notation - the newRoom object will reflect the jam that is stored in the database
+        socket.join(`${room.socket_id}`);
+
+        // ❓ There is no listener in another file currently awaiting this event emitter
+        io.in(`${room.socket_id}`).emit("userJoined", room);
     });
 
     socket.on("renameJar", async (jarId, newJarName) => {
@@ -151,6 +154,7 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("newMsg", msg);
     });
 
+    // ❌ this listener needs to be refactored utilizing the socket_id attribute of the jam object instead of the rooms object defined in server.js - though perhaps defining a user object within this file to be updated by socket events within server.js might be the way to access the necessary room IDs that need to be left upon disconnecting. Although, a user should only be within one room at a time, so only one room should need to be left when disconnect happens
     socket.on("disconnect", () => {
         console.log(`user id: ${socket.id} has disconnected`);
         for (const roomId in rooms) {
