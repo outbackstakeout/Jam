@@ -37,7 +37,7 @@
     border: none;
     width: 100%;
     outline-width: 0;
-    color: white;
+    color: var(--jet);
     font-size: large;
   }
 

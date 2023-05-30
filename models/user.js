@@ -20,6 +20,7 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
+        profile_picture: { type: String },
         jams: [
             {
                 type: mongoose.Schema.Types.ObjectId,

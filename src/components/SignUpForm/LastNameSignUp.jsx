@@ -20,7 +20,6 @@ export default function LastNameSignUp({
                 <label>Last Name</label>
 
                 <input
-                    placeholder="Last Name"
                     type="text"
                     name="last_name"
                     placeholder="Last Name"

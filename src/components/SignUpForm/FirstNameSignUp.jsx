@@ -21,7 +21,6 @@ export default function FirstNameSignUp({
                 <label>First Name</label>
 
                 <input
-                    placeholder="First Name"
                     type="text"
                     name="first_name"
                     placeholder="First Name"

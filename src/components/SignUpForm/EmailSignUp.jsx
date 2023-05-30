@@ -5,7 +5,7 @@ import "../../pages/AuthPage/AuthPage.css";
 export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
     async function handleEmailSubmit(evt) {
         evt.preventDefault();
-        setFormNumber(5);
+        setFormNumber(6);
     }
 
     return (
@@ -18,7 +18,6 @@ export default function EmailSignUp({ newUser, handleChange, setFormNumber }) {
                 <label>Email</label>
 
                 <input
-                    placeholder="Email"
                     type="text"
                     name="email"
                     placeholder="Email Address"

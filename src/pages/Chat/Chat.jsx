@@ -9,7 +9,7 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import GifIcon from "@mui/icons-material/Gif";
 
-function Chat({ selectedRoom, socket }) {
+function Chat({ selectedRoom, socket, user }) {
     // include pre-return functions from ChatPage.jsx
     // console.log(selectedRoom);
 
@@ -96,7 +96,7 @@ function Chat({ selectedRoom, socket }) {
             <div className="chat_messages">
                 {/* pass luke msgs state down as a prop */}
                 {msgs.map((msg) => {
-                    return <Message msg={msg} />;
+                    return <Message msg={msg} user={user} />;
                 })}
             </div>
             <div className="chat_input">
