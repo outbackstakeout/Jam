@@ -178,7 +178,7 @@ function Sidebar({
                 </div>
             </div>
             <div className="sidebar_profile">
-                <Avatar src="https://cdn.discordapp.com/attachments/1067565429771481131/1067565566413516961/95705FF1-2815-442F-B814-08C2F99B0C8F.jpg" />
+                <Avatar src={user.profile_picture} />
                 <div className="sidebar_profileInfo">
                     <h3>@{user.username}</h3>
                     <p>#thisismyID</p>
