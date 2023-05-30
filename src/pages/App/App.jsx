@@ -87,6 +87,7 @@ export default function App() {
                                         selectedRoom={selectedRoom}
                                         jam={currentJam}
                                         socket={socketRef.current}
+                                        user={user}
                                     />
                                 </div>
                             </>
