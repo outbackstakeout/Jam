@@ -106,9 +106,27 @@ function Sidebar({
         }
     }
 
-    function handleRoomClick(roomId, roomName) {
-        setSelectedRoom(roomName);
-        socket.emit("joinRoom", roomId);
+    function handleRoomClick(room) {
+        setSelectedRoom(room.name);
+        socket.emit("joinRoom", room);
+    }
+
+    function getJamsInJar() {
+        console.log("Room.jar: ", rooms, "Currentjar._id", currentJar._id);
+        rooms.map((room) => {
+            if (room.jar === currentJar._id) {
+                return (
+                    <SidebarChannel
+                        key={uuidv4()}
+                        id={room.id}
+                        channel={room.name}
+                        selected={room.id === setSelectedRoom}
+                        onClick={() => handleRoomClick(room)}
+                        setSelectedRoom={setSelectedRoom}
+                    />
+                );
+            }
+        });
     }
 
     return (
@@ -148,16 +166,20 @@ function Sidebar({
                     />
                 </div>
                 <div className="sidebar_channelsList">
-                    {rooms.map((room) => (
-                        <SidebarChannel
-                            key={uuidv4()}
-                            id={room.id}
-                            channel={room.name}
-                            selected={room.id === setSelectedRoom}
-                            onClick={() => handleRoomClick(room.id, room.name)}
-                            setSelectedRoom={setSelectedRoom}
-                        />
-                    ))}
+                    {rooms.map((room) => {
+                        if (room.jar === currentJar._id) {
+                            return (
+                                <SidebarChannel
+                                    key={uuidv4()}
+                                    id={room.id}
+                                    channel={room.name}
+                                    selected={room.id === setSelectedRoom}
+                                    onClick={() => handleRoomClick(room)}
+                                    setSelectedRoom={setSelectedRoom}
+                                />
+                            );
+                        }
+                    })}
                 </div>
             </div>
 

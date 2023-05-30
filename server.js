@@ -105,7 +105,7 @@ io.on("connection", (socket) => {
         // }
         // rooms[roomId].users.push(socket.id);
 
-        // ⭕️ Our alternative is to use newRoom object, accessing relevant properties through dot notation - the newRoom object will reflect the jam that is stored in the database
+        // ⭕️ Our alternative is to use the room object getting passed in from client-side, accessing relevant properties through dot notation - the room object will reflect the jam that is stored in the database
         socket.join(`${room.socket_id}`);
 
         // ❓ There is no listener in another file currently awaiting this event emitter
