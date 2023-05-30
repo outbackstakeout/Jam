@@ -34,12 +34,13 @@ export default function SignUpForm({ setUser }) {
     async function handleSubmit(evt) {
         evt.preventDefault();
         try {
-            const { first_name, last_name, username, email, password } =
+            const { first_name, last_name, username, profile_picture, email, password } =
                 newUser;
             const formData = {
                 first_name,
                 last_name,
                 username,
+                profile_picture,
                 email,
                 password,
             };
