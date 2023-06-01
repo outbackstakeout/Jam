@@ -12,6 +12,7 @@ export default function NavBar({
     setJarList,
     setCurrentJar,
     currentJar,
+    getJams,
 }) {
     // we wanna move this to user profile
     // function handleLogOut() {
@@ -46,6 +47,7 @@ export default function NavBar({
 
     function handleClick(jar) {
         setCurrentJar(jar);
+        getJams();
     }
 
     return (

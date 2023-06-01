@@ -1,12 +1,13 @@
-const User = require("../../models/user");
+const Jar = require("../../models/jar");
+const Jam = require("../../models/jam");
 
 async function getJams(req, res) {
+    console.log("📍 getJams() function in the jams controller");
     try {
-        if (!req.user) {
-            throw new Error();
-        }
-        const user = await User.findOne({ id: req.user.id });
-        const jamList = user.jams;
+        const jar = await Jar.findById(req.params.jarId).select("jams");
+
+        const jamList = await Jam.find({ _id: { $in: jar.jams } });
+
         res.json(jamList);
     } catch (err) {
         console.log(

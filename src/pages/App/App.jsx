@@ -16,9 +16,8 @@ export default function App() {
     const [selectedRoom, setSelectedRoom] = useState("");
     const [showProfilePage, setShowProfilePage] = useState(false);
     const [jars, setJars] = useState([]);
-    const [jams, setJams] = useState([]);
+    const [rooms, setRooms] = useState([]);
     const [currentJar, setCurrentJar] = useState({});
-    const [currentJam, setCurrentJam] = useState({});
 
     // Store a mutable ref object to be updated later
     const socketRef = useRef();
@@ -39,6 +38,15 @@ export default function App() {
         // console.log("📍 getJars() function in App.jsx");
         const jarList = await sendRequest("/api/jars");
         setJars(jarList);
+    }
+
+    async function getJams() {
+        console.log("📍 getJams() function in App.jsx");
+
+        if (selectedRoom) {
+            const jamList = await sendRequest(`/api/jams/${currentJar._id}`);
+            setRooms(jamList);
+        }
     }
 
     function setJarList(newJar) {
@@ -65,6 +73,7 @@ export default function App() {
                                 jars={jars}
                                 setJarList={setJarList}
                                 getJars={getJars}
+                                getJams={getJams}
                                 currentJar={currentJar}
                                 setCurrentJar={setCurrentJar}
                             />
@@ -75,18 +84,18 @@ export default function App() {
                                     <Sidebar
                                         setSelectedRoom={setSelectedRoom}
                                         selectedRoom={selectedRoom}
-                                        jams={jams}
                                         user={user}
                                         socket={socketRef.current}
                                         currentJar={currentJar}
                                         setCurrentJar={setCurrentJar}
                                         getJars={getJars}
+                                        rooms={rooms}
+                                        setRooms={setRooms}
                                     />
                                 </div>
                                 <div className="container-3">
                                     <Chat
                                         selectedRoom={selectedRoom}
-                                        jam={currentJam}
                                         socket={socketRef.current}
                                         user={user}
                                     />

@@ -4,10 +4,11 @@ const path = require("path");
 const logger = require("morgan");
 require("dotenv").config();
 require("./config/database");
-const Message = require("./models/message");
 const { v4: uuidv4 } = require("uuid");
-const Jam = require("./models/jam");
+const User = require("./models/user");
 const Jar = require("./models/jar");
+const Jam = require("./models/jam");
+const Message = require("./models/message");
 const { ObjectId } = require("mongodb");
 
 const app = express();
@@ -37,10 +38,18 @@ async function storeMessage(msg) {
     }
 }
 
-async function createJam(newRoom) {
+async function createJam(newRoom, jarId, user) {
     console.log("📍 createJam() function in server.js");
     try {
         const newJam = await Jam.create(newRoom);
+        const jar = await Jar.findById(jarId);
+        const activeUser = await User.findById(user);
+
+        jar.jams.push(newJam._id);
+        jar.save();
+
+        activeUser.jams.push(newJam._id);
+        activeUser.save();
     } catch (err) {
         console.log(`The error from createJam() in server.js is: ${err}`);
     }
@@ -85,10 +94,10 @@ const io = require("./config/socket").init(server);
 // const rooms = {};
 
 io.on("connection", (socket) => {
-    console.log(`user id: ${socket.id} has connected`);
+    console.log(`Socket.id: ${socket.id} has connected in server.js`);
 
-    socket.on("createRoom", (newRoom) => {
-        createJam(newRoom);
+    socket.on("createRoom", (newRoom, jarId, user) => {
+        createJam(newRoom, jarId, user);
 
         // ❌ I don't think we need to work with the rooms object defined in server.js
         // rooms[newRoom.socket_id] = newRoom;

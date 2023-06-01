@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
+import { sendRequest } from "../../utilities/users/send-request";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
@@ -24,9 +25,10 @@ function Sidebar({
     currentJar,
     setCurrentJar,
     getJars,
+    rooms,
+    setRooms,
 }) {
     // States
-    const [rooms, setRooms] = useState([]);
     const [jarName, setJarName] = useState("");
     const [editing, setEditing] = useState(false);
 
@@ -92,7 +94,7 @@ function Sidebar({
     }
 
     function handleCreateRoom() {
-        // console.log("📍 handleCreateRoom() in Sidebar.jsx");
+        console.log("📍 handleCreateRoom() in Sidebar.jsx");
 
         const newRoom = {
             name: prompt("Enter a name for the new room:"),
@@ -102,7 +104,7 @@ function Sidebar({
             socket_id: uuidv4(),
         };
         if (newRoom.name) {
-            socket.emit("createRoom", newRoom);
+            socket.emit("createRoom", newRoom, currentJar._id, user);
             socket.emit("joinRoom", newRoom, user);
         }
     }
