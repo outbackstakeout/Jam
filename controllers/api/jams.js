@@ -7,7 +7,7 @@ async function getJams(req, res) {
         const jar = await Jar.findById(req.params.jarId).select("jams");
 
         const jamList = await Jam.find({ _id: { $in: jar.jams } });
-
+        console.log(`Here's the jamList in jams controller: ${jamList}`);
         res.json(jamList);
     } catch (err) {
         console.log(

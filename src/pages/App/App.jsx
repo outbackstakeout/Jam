@@ -40,13 +40,10 @@ export default function App() {
         setJars(jarList);
     }
 
-    async function getJams() {
+    async function getJams(jarId) {
         console.log("📍 getJams() function in App.jsx");
-
-        if (selectedRoom) {
-            const jamList = await sendRequest(`/api/jams/${currentJar._id}`);
-            setRooms(jamList);
-        }
+        const jamList = await sendRequest(`/api/jams/${jarId}`);
+        setRooms(jamList);
     }
 
     function setJarList(newJar) {

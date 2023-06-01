@@ -47,7 +47,7 @@ export default function NavBar({
 
     function handleClick(jar) {
         setCurrentJar(jar);
-        getJams();
+        getJams(jar._id);
     }
 
     return (
