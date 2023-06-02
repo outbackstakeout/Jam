@@ -28,10 +28,10 @@ app.use("/api/jars", require("./routes/api/jars"));
 app.use("/api/jams", require("./routes/api/jams"));
 app.use("/api/messages", require("./routes/api/messages"));
 
-async function storeMessage(msg) {
-    // console.log("📍 storeMessage(msg) function in server.js");
+async function storeMessage(newMsg) {
+    console.log("📍 storeMessage(msg) function in server.js");
     try {
-        const storeMsg = await Message.create(msg);
+        const storeMsg = await Message.create(newMsg);
         console.log("storeMessage() success!");
     } catch (err) {
         console.log(`The error from storeMessage() in server.js is: ${err}`);
@@ -156,13 +156,13 @@ io.on("connection", (socket) => {
         io.in(`room-${roomId}`).emit("userLeft", { roomId, userId: socket.id });
     });
 
-    socket.on("sendMsg", (msg) => {
-        storeMessage({ text: msg });
+    socket.on("sendMsg", (newMsg) => {
+        storeMessage(newMsg);
         // io.in(`room-${roomId}`).emit("newMsg", {
         //     text: msg,
         //     sender: socket.id,
         // });
-        socket.broadcast.emit("newMsg", msg);
+        socket.broadcast.emit("newMsg", newMsg);
     });
 
     // ❌ this listener needs to be refactored utilizing the socket_id attribute of the jam object instead of the rooms object defined in server.js - though perhaps defining a user object within this file to be updated by socket events within server.js might be the way to access the necessary room IDs that need to be left upon disconnecting. Although, a user should only be within one room at a time, so only one room should need to be left when disconnect happens

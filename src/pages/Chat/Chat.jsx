@@ -11,7 +11,6 @@ import GifIcon from "@mui/icons-material/Gif";
 function Chat({ selectedRoom, socket, user }) {
     const [input, setInput] = useState("");
     const [msgs, setMsgs] = useState([]);
-    const [roomMessages, setRoomMessages] = useState({});
 
     async function getMessages() {
         console.log("📍 getMessages() function in Chat.jsx");
@@ -31,32 +30,17 @@ function Chat({ selectedRoom, socket, user }) {
         );
     }
 
-    // const socketRef = useRef();
-    const roomIdRef = useRef();
-
     useEffect(() => {
-        if (selectedRoom.name) {
-            getMessages();
-            // Set the room ID so it can be accessed inside socket callbacks
-            roomIdRef.current = selectedRoom.id;
+        getMessages();
 
-            // Connect the socket to the server
-            // socket.connect();
-
-            // Set up the event listeners for the selected room
-        }
-        socket.on("newMsg", (msg) => {
-            // if (msg.roomId === roomIdRef.current) {
-            // }
-            const newMsg = { text: msg };
-            setMsgs((msgs) => [...msgs, newMsg]);
+        socket.on("newMsg", (newMsg) => {
+            setMsgs((msgs) => [...msgs, newMsg.text]);
         });
 
         return () => {
             socket.off("newMsg");
-            // socket.disconnect();
         };
-    }, [selectedRoom, getMessages, socket]);
+    }, [getMessages, socket]);
 
     function handleChange(e) {
         setInput(e.target.value);
@@ -65,13 +49,12 @@ function Chat({ selectedRoom, socket, user }) {
     async function handleSubmit(e) {
         console.log("📍 handleSubmit() in Chat.jsx");
         e.preventDefault();
+        setMsgs((msgs) => [...msgs, input]);
 
-        const newMsg = { text: input };
-        // roomId: selectedRoom.id place this in next to text input
+        const newMsg = { jam: selectedRoom.id, user: user.id, text: input };
 
-        setMsgs((msgs) => [...msgs, newMsg]);
         // 💡 to server.js > io.on > socket.on
-        socket.emit("sendMsg", input);
+        socket.emit("sendMsg", newMsg);
         console.log(newMsg);
 
         setInput("");
