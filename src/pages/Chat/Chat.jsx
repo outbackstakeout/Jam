@@ -34,11 +34,6 @@ function Chat({ selectedRoom, socket, user }) {
             // Set the room ID so it can be accessed inside socket callbacks
             roomIdRef.current = selectedRoom.id;
 
-            // Get the messages for the selected room
-            getMessages(selectedRoom.id).then((msgLog) => {
-                setMsgs(msgLog);
-            });
-
             // Connect the socket to the server
             // socket.connect();
 
