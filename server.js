@@ -51,6 +51,8 @@ async function createJam(newRoom, jarId, user) {
 
         activeUser.jams.push(newJam._id);
         activeUser.save();
+
+        return newJam;
     } catch (err) {
         console.log(`The error from createJam() in server.js is: ${err}`);
     }
@@ -98,12 +100,12 @@ io.on("connection", (socket) => {
     console.log(`Socket.id: ${socket.id} has connected in server.js`);
 
     socket.on("createRoom", (newRoom, jarId, user) => {
-        createJam(newRoom, jarId, user);
+        const returnRoom = createJam(newRoom, jarId, user);
 
         // ❌ I don't think we need to work with the rooms object defined in server.js
         // rooms[newRoom.socket_id] = newRoom;
 
-        io.emit("roomCreated", newRoom);
+        io.emit("roomCreated", returnRoom);
     });
 
     socket.on("joinRoom", (room, user) => {

@@ -36,9 +36,9 @@ function Sidebar({
             setJarName(currentJar.name);
         }
 
-        socket.on("roomCreated", (newRoom) => {
-            console.log("Room Created: ", newRoom);
-            setRooms((rooms) => [...rooms, newRoom]);
+        socket.on("roomCreated", (returnRoom) => {
+            console.log("Room Created: ", returnRoom);
+            setRooms((rooms) => [...rooms, returnRoom]);
         });
 
         socket.on(`jarRenamed/${currentJar._id}`, (renamedJar) => {
@@ -115,6 +115,7 @@ function Sidebar({
     }
 
     function handleRoomClick(room) {
+        console.log("📍 handleRoomClick() function in Sidebar.jsx");
         setSelectedRoom({ name: room.name, id: room._id });
         socket.emit("joinRoom", room, user);
     }

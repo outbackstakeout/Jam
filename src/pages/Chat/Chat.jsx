@@ -16,6 +16,7 @@ function Chat({ selectedRoom, socket, user }) {
         async function getMessages() {
             console.log("📍 getMessages() function in Chat.jsx");
             if (selectedRoom.id) {
+                setMsgs([]);
                 console.log(
                     `getMessages in chat.jsx says the selectedRoom id is: ${selectedRoom.id}`
                 );
@@ -39,7 +40,7 @@ function Chat({ selectedRoom, socket, user }) {
         return () => {
             socket.off("newMsg");
         };
-    }, [socket, selectedRoom.name, selectedRoom.id]);
+    }, [socket, selectedRoom]);
 
     function handleChange(e) {
         setInput(e.target.value);
