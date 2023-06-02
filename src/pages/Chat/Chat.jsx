@@ -13,16 +13,22 @@ function Chat({ selectedRoom, socket, user }) {
     const [msgs, setMsgs] = useState([]);
     const [roomMessages, setRoomMessages] = useState({});
 
-    // 👩🏼‍🔧 this function is leaving an unresolved promise which is being reported in the client-side console
     async function getMessages() {
+        console.log("📍 getMessages() function in Chat.jsx");
+        if (selectedRoom.name) {
+            console.log(
+                `getMessages in chat.jsx says the selectedRoom name is: ${selectedRoom.name}`
+            );
+            const msgLog = await sendRequest(
+                `/api/messages/${selectedRoom.id}`
+            );
+            console.log(`getMessages() function in Chat.jsx msgLog: ${msgLog}`);
+            setMsgs(msgLog);
+            return;
+        }
         console.log(
-            `getMessages in chat.jsx says the selectedRoom name is: ${selectedRoom.name}`
+            "❓ getMessages() function in Chat.jsx says no room has been selected"
         );
-        const msgLog = await sendRequest(`/api/messages/${selectedRoom.id}`);
-
-        //i could use prevState and a ...prevState thing to bring back previous messages from state, but not sure exactly how
-        console.log(msgLog);
-        setMsgs(msgLog);
     }
 
     // const socketRef = useRef();
