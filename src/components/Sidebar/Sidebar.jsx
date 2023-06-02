@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
+import { sendRequest } from "../../utilities/users/send-request";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
@@ -17,15 +18,17 @@ import axios from "axios";
 function Sidebar({
     // Inherited and destructured props
     setSelectedRoom,
+    selectedRoom,
     jams,
     user,
     socket,
     currentJar,
     setCurrentJar,
     getJars,
+    rooms,
+    setRooms,
 }) {
     // States
-    const [rooms, setRooms] = useState([]);
     const [jarName, setJarName] = useState("");
     const [editing, setEditing] = useState(false);
 
@@ -43,7 +46,6 @@ function Sidebar({
         socket.on(`jarRenamed/${currentJar._id}`, (renamedJar) => {
             setCurrentJar(renamedJar);
             console.log(`🥨 The new jar name is ${renamedJar.name}`);
-            // pickJar(renamedJar);
             setJarName(renamedJar.name);
             getJars();
         });
@@ -53,7 +55,7 @@ function Sidebar({
             socket.off("roomCreated");
             socket.off("jarRenamed");
         };
-    }, [currentJar.name, setCurrentJar, socket]);
+    }, [currentJar.name, currentJar._id, setCurrentJar, getJars, socket]);
 
     async function handleNewJarName(e) {
         // console.log("📍 handleNewJarName(e) in Sidebar.jsx");
@@ -92,7 +94,7 @@ function Sidebar({
     }
 
     function handleCreateRoom() {
-        // console.log("📍 handleCreateRoom() in Sidebar.jsx");
+        console.log("📍 handleCreateRoom() in Sidebar.jsx");
 
         const newRoom = {
             name: prompt("Enter a name for the new room:"),
@@ -102,14 +104,14 @@ function Sidebar({
             socket_id: uuidv4(),
         };
         if (newRoom.name) {
-            socket.emit("createRoom", newRoom);
-            socket.emit("joinRoom", newRoom);
+            socket.emit("createRoom", newRoom, currentJar._id, user);
+            socket.emit("joinRoom", newRoom, user);
         }
     }
 
-    function handleRoomClick(roomId, roomName) {
-        setSelectedRoom(roomName);
-        socket.emit("joinRoom", roomId);
+    function handleRoomClick(room) {
+        setSelectedRoom({ name: room.name, id: room.id });
+        socket.emit("joinRoom", room, user);
     }
 
     return (
@@ -149,16 +151,20 @@ function Sidebar({
                     />
                 </div>
                 <div className="sidebar_channelsList">
-                    {rooms.map((room) => (
-                        <SidebarChannel
-                            key={uuidv4()}
-                            id={room.id}
-                            channel={room.name}
-                            selected={room.id === setSelectedRoom}
-                            onClick={() => handleRoomClick(room.id, room.name)}
-                            setSelectedRoom={setSelectedRoom}
-                        />
-                    ))}
+                    {rooms.map((room) => {
+                        if (room.jar === currentJar._id) {
+                            return (
+                                <SidebarChannel
+                                    key={uuidv4()}
+                                    id={room.id}
+                                    channel={room.name}
+                                    selected={room.name === selectedRoom.name}
+                                    onClick={() => handleRoomClick(room)}
+                                    setSelectedRoom={setSelectedRoom}
+                                />
+                            );
+                        }
+                    })}
                 </div>
             </div>
 

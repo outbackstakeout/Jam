@@ -4,10 +4,11 @@ const path = require("path");
 const logger = require("morgan");
 require("dotenv").config();
 require("./config/database");
-const Message = require("./models/message");
 const { v4: uuidv4 } = require("uuid");
-const Jam = require("./models/jam");
+const User = require("./models/user");
 const Jar = require("./models/jar");
+const Jam = require("./models/jam");
+const Message = require("./models/message");
 const { ObjectId } = require("mongodb");
 
 const app = express();
@@ -27,20 +28,28 @@ app.use("/api/jars", require("./routes/api/jars"));
 app.use("/api/jams", require("./routes/api/jams"));
 app.use("/api/messages", require("./routes/api/messages"));
 
-async function storeMessage(msg) {
-    // console.log("📍 storeMessage(msg) function in server.js");
+async function storeMessage(newMsg) {
+    console.log("📍 storeMessage(msg) function in server.js");
     try {
-        const storeMsg = await Message.create(msg);
+        const storeMsg = await Message.create(newMsg);
         console.log("storeMessage() success!");
     } catch (err) {
         console.log(`The error from storeMessage() in server.js is: ${err}`);
     }
 }
 
-async function createJam(newRoom) {
+async function createJam(newRoom, jarId, user) {
     console.log("📍 createJam() function in server.js");
     try {
         const newJam = await Jam.create(newRoom);
+        const jar = await Jar.findById(jarId);
+        const activeUser = await User.findById(user);
+
+        jar.jams.push(newJam._id);
+        jar.save();
+
+        activeUser.jams.push(newJam._id);
+        activeUser.save();
     } catch (err) {
         console.log(`The error from createJam() in server.js is: ${err}`);
     }
@@ -85,10 +94,10 @@ const io = require("./config/socket").init(server);
 // const rooms = {};
 
 io.on("connection", (socket) => {
-    console.log(`user id: ${socket.id} has connected`);
+    console.log(`Socket.id: ${socket.id} has connected in server.js`);
 
-    socket.on("createRoom", (newRoom) => {
-        createJam(newRoom);
+    socket.on("createRoom", (newRoom, jarId, user) => {
+        createJam(newRoom, jarId, user);
 
         // ❌ I don't think we need to work with the rooms object defined in server.js
         // rooms[newRoom.socket_id] = newRoom;
@@ -96,8 +105,8 @@ io.on("connection", (socket) => {
         io.emit("roomCreated", newRoom);
     });
 
-    socket.on("joinRoom", (room) => {
-        console.log(`User ${room.users[0]} joined room ${room.socket_id}`);
+    socket.on("joinRoom", (room, user) => {
+        console.log(`User ${user.username} joined room ${room.socket_id}`);
 
         // ❌ I don't think we need to work with the rooms object defined in server.js
         // if (!rooms[roomId]) {
@@ -105,7 +114,7 @@ io.on("connection", (socket) => {
         // }
         // rooms[roomId].users.push(socket.id);
 
-        // ⭕️ Our alternative is to use newRoom object, accessing relevant properties through dot notation - the newRoom object will reflect the jam that is stored in the database
+        // ⭕️ Our alternative is to use the room object getting passed in from client-side, accessing relevant properties through dot notation - the room object will reflect the jam that is stored in the database
         socket.join(`${room.socket_id}`);
 
         // ❓ There is no listener in another file currently awaiting this event emitter
@@ -118,7 +127,9 @@ io.on("connection", (socket) => {
         );
 
         if (!mongoose.Types.ObjectId.isValid(jarId)) {
-            console.log(`ERRORz`);
+            console.log(
+                '📍⚠️ socket.on("rename jar") in server.js - jarId is not a valid mongoose Object ID'
+            );
         }
         try {
             const renamedJar = await renameJar(jarId, newJarName);
@@ -145,29 +156,29 @@ io.on("connection", (socket) => {
         io.in(`room-${roomId}`).emit("userLeft", { roomId, userId: socket.id });
     });
 
-    socket.on("sendMsg", (msg) => {
-        storeMessage({ text: msg });
+    socket.on("sendMsg", (newMsg) => {
+        storeMessage(newMsg);
         // io.in(`room-${roomId}`).emit("newMsg", {
         //     text: msg,
         //     sender: socket.id,
         // });
-        socket.broadcast.emit("newMsg", msg);
+        socket.broadcast.emit("newMsg", newMsg);
     });
 
     // ❌ this listener needs to be refactored utilizing the socket_id attribute of the jam object instead of the rooms object defined in server.js - though perhaps defining a user object within this file to be updated by socket events within server.js might be the way to access the necessary room IDs that need to be left upon disconnecting. Although, a user should only be within one room at a time, so only one room should need to be left when disconnect happens
-    socket.on("disconnect", () => {
-        console.log(`user id: ${socket.id} has disconnected`);
-        for (const roomId in rooms) {
-            if (rooms[roomId].users.includes(socket.id)) {
-                rooms[roomId].users = rooms[roomId].users.filter(
-                    (userId) => userId !== socket.id
-                );
-                socket.leave(`room-${roomId}`);
-                io.in(`room-${roomId}`).emit("userLeft", {
-                    roomId,
-                    userId: socket.id,
-                });
-            }
-        }
-    });
+    // socket.on("disconnect", () => {
+    //     console.log(`user id: ${socket.id} has disconnected`);
+    //     for (const roomId in rooms) {
+    //         if (rooms[roomId].users.includes(socket.id)) {
+    //             rooms[roomId].users = rooms[roomId].users.filter(
+    //                 (userId) => userId !== socket.id
+    //             );
+    //             socket.leave(`room-${roomId}`);
+    //             io.in(`room-${roomId}`).emit("userLeft", {
+    //                 roomId,
+    //                 userId: socket.id,
+    //             });
+    //         }
+    //     }
+    // });
 });

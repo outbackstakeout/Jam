@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { io } from "socket.io-client";
 import { sendRequest } from "../../utilities/users/send-request";
 import "./Chat.css";
 import ChatHeader from "../../components/ChatHeader/ChatHeader.jsx";
@@ -10,80 +9,52 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import GifIcon from "@mui/icons-material/Gif";
 
 function Chat({ selectedRoom, socket, user }) {
-    // include pre-return functions from ChatPage.jsx
-    // console.log(selectedRoom);
-
     const [input, setInput] = useState("");
     const [msgs, setMsgs] = useState([]);
-    const [roomMessages, setRoomMessages] = useState({});
 
-    // 👩🏼‍🔧 this function is leaving an unresolved promise which is being reported in the client-side console
     async function getMessages() {
-        const msgLog = await sendRequest(`/api/messages/${selectedRoom.id}`);
-
-        //i could use prevState and a ...prevState thing to bring back previous messages from state, but not sure exactly how
-        console.log(msgLog);
-        setMsgs(msgLog);
+        console.log("📍 getMessages() function in Chat.jsx");
+        if (selectedRoom.name) {
+            console.log(
+                `getMessages in chat.jsx says the selectedRoom name is: ${selectedRoom.name}`
+            );
+            const msgLog = await sendRequest(
+                `/api/messages/${selectedRoom.id}`
+            );
+            console.log(`getMessages() function in Chat.jsx msgLog: ${msgLog}`);
+            setMsgs(msgLog);
+            return;
+        }
+        console.log(
+            "❓ getMessages() function in Chat.jsx says no room has been selected"
+        );
     }
 
-    // const socketRef = useRef();
-    const roomIdRef = useRef();
-
     useEffect(() => {
-        setMsgs([]);
         getMessages();
 
-        // if (!socket) {
-        //     socket = io({
-        //         autoConnect: false,
-        //     });
-        // }
-        // const socket = socketRef.current;
-
-        if (selectedRoom) {
-            // Set the room ID so it can be accessed inside socket callbacks
-            roomIdRef.current = selectedRoom.id;
-
-            // Get the messages for the selected room
-            getMessages(selectedRoom.id).then((msgLog) => {
-                setMsgs(msgLog);
-            });
-
-            // Connect the socket to the server
-            // socket.connect();
-
-            // Set up the event listeners for the selected room
-        }
-        socket.on("newMsg", (msg) => {
-            // if (msg.roomId === roomIdRef.current) {
-            // }
-            const newMsg = { text: msg };
-            setMsgs((msgs) => [...msgs, newMsg]);
+        socket.on("newMsg", (newMsg) => {
+            setMsgs((msgs) => [...msgs, newMsg.text]);
         });
-
-        // Join the selected room
-        // socket.emit("joinRoom", selectedRoom.id);
 
         return () => {
             socket.off("newMsg");
-            // socket.disconnect();
         };
-    }, [selectedRoom]);
+    }, [getMessages, socket]);
 
     function handleChange(e) {
         setInput(e.target.value);
     }
 
     async function handleSubmit(e) {
+        console.log("📍 handleSubmit() in Chat.jsx");
         e.preventDefault();
+        setMsgs((msgs) => [...msgs, input]);
 
-        const newMsg = { text: input };
-        // roomId: selectedRoom.id place this in next to text input
+        const newMsg = { jam: selectedRoom.id, user: user.id, text: input };
 
-        setMsgs((msgs) => [...msgs, newMsg]);
-        console.log("handle submit is working");
         // 💡 to server.js > io.on > socket.on
-        socket.emit("sendMsg", input);
+        socket.emit("sendMsg", newMsg);
         console.log(newMsg);
 
         setInput("");
@@ -91,7 +62,9 @@ function Chat({ selectedRoom, socket, user }) {
 
     return (
         <div className="chat">
-            <ChatHeader channel={selectedRoom?.name || ""} />
+            <ChatHeader
+                channel={selectedRoom.name ? selectedRoom.name : null}
+            />
 
             <div className="chat_messages">
                 {/* pass luke msgs state down as a prop */}

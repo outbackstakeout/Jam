@@ -4,6 +4,6 @@ const jamsCtrl = require("../../controllers/api/jams");
 
 // All paths start with '/api/jams'
 
-router.get("/", jamsCtrl.getJams);
+router.get("/:jarId", jamsCtrl.getJams);
 
 module.exports = router;
