@@ -13,7 +13,7 @@ import { io } from "socket.io-client";
 export default function App() {
     // States
     const [user, setUser] = useState(getUser());
-    const [selectedRoom, setSelectedRoom] = useState("");
+    const [selectedRoom, setSelectedRoom] = useState({});
     const [showProfilePage, setShowProfilePage] = useState(false);
     const [jars, setJars] = useState([]);
     const [rooms, setRooms] = useState([]);

@@ -110,7 +110,7 @@ function Sidebar({
     }
 
     function handleRoomClick(room) {
-        setSelectedRoom(room.id);
+        setSelectedRoom({ name: room.name, id: room.id });
         socket.emit("joinRoom", room, user);
     }
 
@@ -158,7 +158,7 @@ function Sidebar({
                                     key={uuidv4()}
                                     id={room.id}
                                     channel={room.name}
-                                    selected={room.id === selectedRoom}
+                                    selected={room.name === selectedRoom.name}
                                     onClick={() => handleRoomClick(room)}
                                     setSelectedRoom={setSelectedRoom}
                                 />
