@@ -3,7 +3,7 @@ import "./SidebarChannel.css";
 
 function SidebarChannel({ id, channel, selected, onClick, setSelectedRoom }) {
     const handleClick = () => {
-        setSelectedRoom(channel);
+        setSelectedRoom({ name: channel, id: id });
         onClick();
     };
     return (

@@ -29,7 +29,7 @@ function Chat({ selectedRoom, socket, user }) {
     const roomIdRef = useRef();
 
     useEffect(() => {
-        if (selectedRoom) {
+        if (selectedRoom.name) {
             getMessages();
             // Set the room ID so it can be accessed inside socket callbacks
             roomIdRef.current = selectedRoom.id;
@@ -78,7 +78,9 @@ function Chat({ selectedRoom, socket, user }) {
 
     return (
         <div className="chat">
-            <ChatHeader channel={selectedRoom ? selectedRoom : null} />
+            <ChatHeader
+                channel={selectedRoom.name ? selectedRoom.name : null}
+            />
 
             <div className="chat_messages">
                 {/* pass luke msgs state down as a prop */}
