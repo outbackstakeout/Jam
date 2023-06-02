@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { sendRequest } from "../../utilities/users/send-request";
 import "./Chat.css";
 import ChatHeader from "../../components/ChatHeader/ChatHeader.jsx";
@@ -12,50 +12,51 @@ function Chat({ selectedRoom, socket, user }) {
     const [input, setInput] = useState("");
     const [msgs, setMsgs] = useState([]);
 
-    async function getMessages() {
-        console.log("📍 getMessages() function in Chat.jsx");
-        if (selectedRoom.name) {
-            console.log(
-                `getMessages in chat.jsx says the selectedRoom name is: ${selectedRoom.name}`
-            );
-            const msgLog = await sendRequest(
-                `/api/messages/${selectedRoom.id}`
-            );
-            console.log(`getMessages() function in Chat.jsx msgLog: ${msgLog}`);
-            setMsgs(msgLog);
-            return;
-        }
-        console.log(
-            "❓ getMessages() function in Chat.jsx says no room has been selected"
-        );
-    }
-
     useEffect(() => {
+        async function getMessages() {
+            console.log("📍 getMessages() function in Chat.jsx");
+            if (selectedRoom.id) {
+                console.log(
+                    `getMessages in chat.jsx says the selectedRoom id is: ${selectedRoom.id}`
+                );
+                const msgLog = await sendRequest(
+                    `/api/messages/${selectedRoom.id}`
+                );
+                setMsgs(msgLog);
+                return;
+            }
+            console.log(
+                "❓ getMessages() function in Chat.jsx says no room has been selected"
+            );
+        }
+
         getMessages();
 
-        socket.on("newMsg", (newMsg) => {
-            setMsgs((msgs) => [...msgs, newMsg.text]);
+        socket.on(`newMsg/${selectedRoom.id}`, (newMsg) => {
+            setMsgs((msgs) => [...msgs, newMsg]);
         });
 
         return () => {
             socket.off("newMsg");
         };
-    }, [getMessages, socket]);
+    }, [socket, selectedRoom.name, selectedRoom.id]);
 
     function handleChange(e) {
         setInput(e.target.value);
     }
 
+    // 🌈
     async function handleSubmit(e) {
         console.log("📍 handleSubmit() in Chat.jsx");
         e.preventDefault();
-        setMsgs((msgs) => [...msgs, input]);
 
         const newMsg = { jam: selectedRoom.id, user: user.id, text: input };
 
         // 💡 to server.js > io.on > socket.on
         socket.emit("sendMsg", newMsg);
-        console.log(newMsg);
+        console.log(
+            `handleSubmit() function in Chat.jsx says the newMsg is: ${newMsg.text}`
+        );
 
         setInput("");
     }
@@ -69,7 +70,7 @@ function Chat({ selectedRoom, socket, user }) {
             <div className="chat_messages">
                 {/* pass luke msgs state down as a prop */}
                 {msgs.map((msg) => {
-                    return <Message msg={msg} user={user} />;
+                    return <Message key={msg._id} msg={msg} user={user} />;
                 })}
             </div>
             <div className="chat_input">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Sidebar.css";
-import { sendRequest } from "../../utilities/users/send-request";
 import AddIcon from "@mui/icons-material/Add";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
@@ -19,7 +18,6 @@ function Sidebar({
     // Inherited and destructured props
     setSelectedRoom,
     selectedRoom,
-    jams,
     user,
     socket,
     currentJar,
@@ -55,7 +53,14 @@ function Sidebar({
             socket.off("roomCreated");
             socket.off("jarRenamed");
         };
-    }, [currentJar.name, currentJar._id, setCurrentJar, getJars, socket]);
+    }, [
+        currentJar.name,
+        currentJar._id,
+        setCurrentJar,
+        getJars,
+        socket,
+        setRooms,
+    ]);
 
     async function handleNewJarName(e) {
         // console.log("📍 handleNewJarName(e) in Sidebar.jsx");
@@ -110,7 +115,7 @@ function Sidebar({
     }
 
     function handleRoomClick(room) {
-        setSelectedRoom({ name: room.name, id: room.id });
+        setSelectedRoom({ name: room.name, id: room._id });
         socket.emit("joinRoom", room, user);
     }
 
@@ -156,7 +161,7 @@ function Sidebar({
                             return (
                                 <SidebarChannel
                                     key={uuidv4()}
-                                    id={room.id}
+                                    id={room._id}
                                     channel={room.name}
                                     selected={room.name === selectedRoom.name}
                                     onClick={() => handleRoomClick(room)}
@@ -164,6 +169,7 @@ function Sidebar({
                                 />
                             );
                         }
+                        return null;
                     })}
                 </div>
             </div>
