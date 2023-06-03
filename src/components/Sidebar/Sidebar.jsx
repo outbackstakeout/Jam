@@ -14,6 +14,13 @@ import SidebarChannel from "../SidebarChannel/SidebarChannel";
 import { v4 as uuidv4 } from "uuid";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 function Sidebar({
     // Inherited and destructured props
@@ -31,6 +38,9 @@ function Sidebar({
     // States
     const [jarName, setJarName] = useState("");
     const [editing, setEditing] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [jamName, setJamName] = useState("")
+
 
     // UseEffect() - to be called once upon component's loading
     useEffect(() => {
@@ -95,9 +105,10 @@ function Sidebar({
 
     function handleCreateRoom() {
         console.log("📍 handleCreateRoom() in Sidebar.jsx");
+        setOpen(true);
 
         const newRoom = {
-            name: prompt("Enter a name for the new room:"),
+            name: jamName,
             messages: [],
             users: [user],
             jar: currentJar._id,
@@ -106,7 +117,14 @@ function Sidebar({
         if (newRoom.name) {
             socket.emit("createRoom", newRoom, currentJar._id, user);
             socket.emit("joinRoom", newRoom, user);
+            setOpen(false);
+            setJamName("");
         }
+    }
+
+    function handleDialogClose(){
+        setOpen(false);
+        setJamName("")
     }
 
     function handleRoomClick(room) {
@@ -115,87 +133,108 @@ function Sidebar({
     }
 
     return (
-        <div className="sidebar">
-            <div className="sidebar_top">
-                <h3>
-                    {editing ? (
-                        <form onSubmit={handleNewJarName}>
-                            <input
-                                type="text"
-                                name="name"
-                                value={jarName}
-                                onChange={handleNameChange}
-                                required
-                            />
-                            <button type="submit" hidden></button>
-                        </form>
-                    ) : (
-                        currentJar.name
-                    )}
-                </h3>
-                <EditIcon
-                    className="sidebar_changeJarName"
-                    onClick={handleEditClick}
+      <div className="sidebar">
+        <div className="sidebar_top">
+          <h3>
+            {editing ? (
+              <form onSubmit={handleNewJarName}>
+                <input
+                  type="text"
+                  name="name"
+                  value={jarName}
+                  onChange={handleNameChange}
+                  required
                 />
-            </div>
-            <div className="sidebar_channels">
-                <div className="sidebar_channelsHeader">
-                    <div className="sidebar_header">
-                        <ExpandMoreIcon />
-                        <h4>Text Channels</h4>
-                    </div>
-
-                    <AddIcon
-                        className="sidebar_addChannel"
-                        onClick={() => handleCreateRoom()}
-                    />
-                </div>
-                <div className="sidebar_channelsList">
-                    {rooms.map((room) => {
-                        if (room.jar === currentJar._id) {
-                            return (
-                                <SidebarChannel
-                                    key={uuidv4()}
-                                    id={room.id}
-                                    channel={room.name}
-                                    selected={room.name === selectedRoom.name}
-                                    onClick={() => handleRoomClick(room)}
-                                    setSelectedRoom={setSelectedRoom}
-                                />
-                            );
-                        }
-                    })}
-                </div>
-            </div>
-
-            <div className="sidebar_voice">
-                <SignalCellularAltIcon
-                    className="sidebar_voiceIcon"
-                    fontSize="large"
-                />
-                <div className="sidebar_voiceInfo">
-                    <h3>Voice Connected</h3>
-                    <p>Stream</p>
-                </div>
-
-                <div className="sidebar_voiceIcons">
-                    <InfoIcon />
-                    <CallIcon />
-                </div>
-            </div>
-            <div className="sidebar_profile">
-                <Avatar src={user.profile_picture} />
-                <div className="sidebar_profileInfo">
-                    <h3>@{user.username}</h3>
-                    <p>#thisismyID</p>
-                </div>
-                <div className="sidebar_profileIcons">
-                    <MicIcon />
-                    <HeadsetIcon />
-                    <SettingsIcon />
-                </div>
-            </div>
+                <button type="submit" hidden></button>
+              </form>
+            ) : (
+              currentJar.name
+            )}
+          </h3>
+          <EditIcon
+            className="sidebar_changeJarName"
+            onClick={handleEditClick}
+          />
         </div>
+        <div className="sidebar_channels">
+          <div className="sidebar_channelsHeader">
+            <div className="sidebar_header">
+              <ExpandMoreIcon />
+              <h4>Text Channels</h4>
+            </div>
+
+            <AddIcon
+              className="sidebar_addChannel"
+              onClick={() => handleCreateRoom()}
+            />
+            <Dialog open={open} onClose={handleDialogClose} className="custom-dialog">
+              <DialogTitle>Create a New Jam</DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Enter a name for the new thread 🍯:
+                </DialogContentText>
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  label="Room Name"
+                  type="text"
+                  fullWidth
+                  value={jamName}
+                  onChange={(e) => setJamName(e.target.value)}
+                />
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleDialogClose}>Cancel</Button>
+                <Button color="secondary" variant="outlined" onClick={handleCreateRoom}>Create</Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+          <div className="sidebar_channelsList">
+            {rooms.map((room) => {
+              if (room.jar === currentJar._id) {
+                return (
+                  <SidebarChannel
+                    key={uuidv4()}
+                    id={room.id}
+                    channel={room.name}
+                    selected={room.name === selectedRoom.name}
+                    onClick={() => handleRoomClick(room)}
+                    setSelectedRoom={setSelectedRoom}
+                  />
+                );
+              }
+            })}
+          </div>
+        </div>
+
+        <div className="sidebar_voice">
+          <SignalCellularAltIcon
+            className="sidebar_voiceIcon"
+            fontSize="large"
+          />
+          <div className="sidebar_voiceInfo">
+            <h3>Voice Connected</h3>
+            <p>Stream</p>
+          </div>
+
+          <div className="sidebar_voiceIcons">
+            <InfoIcon />
+            <CallIcon />
+          </div>
+        </div>
+        <div className="sidebar_profile">
+          <Avatar src={user.profile_picture} />
+          <div className="sidebar_profileInfo">
+            <h3>@{user.username}</h3>
+            <p>#thisismyID</p>
+          </div>
+          <div className="sidebar_profileIcons">
+            <MicIcon />
+            <HeadsetIcon />
+            <SettingsIcon />
+          </div>
+        </div>
+      </div>
     );
 
     // <div className="sidebar_channelsList">

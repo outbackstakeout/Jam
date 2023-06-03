@@ -13,9 +13,6 @@ export default function AuthPage({ setUser }) {
 
   return (
     <div className="login">
-      {/* <div className="login_logo">
-        <img src={jamlogo} alt="jam logo" />
-      </div> */}
       <div className="overlay-container">
         <div className="overlay">
           <div className="overlay-left">
