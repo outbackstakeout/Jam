@@ -6,7 +6,7 @@ import LastNameSignUp from "./LastNameSignUp";
 import UsernameSignUp from "./UsernameSignUp";
 import EmailSignUp from "./EmailSignUp";
 import PasswordSignUp from "./PasswordSignUp";
-import '../../pages/AuthPage/AuthPage.css'
+import "../../pages/AuthPage/AuthPage.css";
 import PfpSignUp from "./PfpSignUp";
 import SuccessSignUp from "./SuccessSignUp";
 
@@ -14,14 +14,14 @@ export default function SignUpForm({ setUser }) {
     const [formNumber, setFormNumber] = useState(1);
 
     const [newUser, setNewUser] = useState({
-      first_name: "",
-      last_name: "",
-      username: "",
-      profile_picture: "",
-      email: "",
-      password: "",
-      confirm: "",
-      error: "",
+        first_name: "",
+        last_name: "",
+        username: "",
+        profile_picture: "",
+        email: "",
+        password: "",
+        confirm: "",
+        error: "",
     });
 
     function handleChange(evt) {
@@ -35,8 +35,14 @@ export default function SignUpForm({ setUser }) {
     async function handleSubmit(evt) {
         evt.preventDefault();
         try {
-            const { first_name, last_name, username, profile_picture, email, password } =
-                newUser;
+            const {
+                first_name,
+                last_name,
+                username,
+                profile_picture,
+                email,
+                password,
+            } = newUser;
             const formData = {
                 first_name,
                 last_name,
@@ -106,7 +112,8 @@ export default function SignUpForm({ setUser }) {
             );
         } else if (formNumber === 7) {
             return <SuccessSignUp />;
-        };
-    return <div>{whichForm()}</div>;
+        }
     }
-};
+
+    return <div>{whichForm()}</div>;
+}
