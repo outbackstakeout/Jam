@@ -12,9 +12,9 @@ async function getMessages(req, res) {
 }
 
 async function getJamMessages(req, res) {
-    // console.log(
-    //     `getJamMessages() in the Messages controller says the req.params.jamId is: ${req.params.jamName}`
-    // );
+    console.log(
+        `getJamMessages() in the Messages controller says the req.params.jamId is: ${req.params.jamId}`
+    );
     try {
         const msgLog = await Message.find({ jam: req.params.jamId });
         res.json(msgLog);

@@ -18,6 +18,7 @@ export default function App() {
     const [jars, setJars] = useState([]);
     const [rooms, setRooms] = useState([]);
     const [currentJar, setCurrentJar] = useState({});
+    const [msgs, setMsgs] = useState([]);
 
     // Store a mutable ref object to be updated later
     const socketRef = useRef();
@@ -33,6 +34,14 @@ export default function App() {
 
         socketRef.current.connect();
     }, []);
+
+    async function getMessages(roomId) {
+        console.log("📍 getMessages() function in App.jsx");
+        const msgLog = await sendRequest(`/api/messages/${roomId}`);
+        // console.log(`getMessages() function in Chat.jsx msgLog: ${msgLog}`);
+        setMsgs(msgLog);
+        return;
+    }
 
     async function getJars() {
         // console.log("📍 getJars() function in App.jsx");
@@ -88,6 +97,7 @@ export default function App() {
                                         getJars={getJars}
                                         rooms={rooms}
                                         setRooms={setRooms}
+                                        getMessages={getMessages}
                                     />
                                 </div>
                                 <div className="container-3">
@@ -95,6 +105,8 @@ export default function App() {
                                         selectedRoom={selectedRoom}
                                         socket={socketRef.current}
                                         user={user}
+                                        msgs={msgs}
+                                        setMsgs={setMsgs}
                                     />
                                 </div>
                             </>
