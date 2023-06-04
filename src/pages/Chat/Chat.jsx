@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
-import { sendRequest } from "../../utilities/users/send-request";
+import React, { useState, useEffect } from "react";
 import "./Chat.css";
 import ChatHeader from "../../components/ChatHeader/ChatHeader.jsx";
 import Message from "../../components/Message/Message.jsx";
@@ -8,30 +7,30 @@ import EmojiEmotionsIcon from "@mui/icons-material/EmojiEmotions";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import GifIcon from "@mui/icons-material/Gif";
 
-function Chat({ selectedRoom, socket, user }) {
+function Chat({ selectedRoom, socket, user, msgs, setMsgs }) {
     const [input, setInput] = useState("");
-    const [msgs, setMsgs] = useState([]);
+    // const [msgs, setMsgs] = useState([]);
 
-    async function getMessages() {
-        console.log("📍 getMessages() function in Chat.jsx");
-        if (selectedRoom.name) {
-            console.log(
-                `getMessages in chat.jsx says the selectedRoom name is: ${selectedRoom.name}`
-            );
-            const msgLog = await sendRequest(
-                `/api/messages/${selectedRoom.id}`
-            );
-            console.log(`getMessages() function in Chat.jsx msgLog: ${msgLog}`);
-            setMsgs(msgLog);
-            return;
-        }
-        console.log(
-            "❓ getMessages() function in Chat.jsx says no room has been selected"
-        );
-    }
+    // async function getMessages() {
+    //     console.log("📍 getMessages() function in Chat.jsx");
+    //     if (selectedRoom.name) {
+    //         console.log(
+    //             `getMessages in chat.jsx says the selectedRoom name is: ${selectedRoom.name}`
+    //         );
+    //         const msgLog = await sendRequest(
+    //             `/api/messages/${selectedRoom.id}`
+    //         );
+    //         console.log(`getMessages() function in Chat.jsx msgLog: ${msgLog}`);
+    //         setMsgs(msgLog);
+    //         return;
+    //     }
+    //     console.log(
+    //         "❓ getMessages() function in Chat.jsx says no room has been selected"
+    //     );
+    // }
 
     useEffect(() => {
-        getMessages();
+        // getMessages();
 
         socket.on("newMsg", (newMsg) => {
             setMsgs((msgs) => [...msgs, newMsg.text]);
@@ -40,7 +39,7 @@ function Chat({ selectedRoom, socket, user }) {
         return () => {
             socket.off("newMsg");
         };
-    }, [getMessages, socket]);
+    }, [socket, setMsgs]);
 
     function handleChange(e) {
         setInput(e.target.value);
@@ -49,9 +48,8 @@ function Chat({ selectedRoom, socket, user }) {
     async function handleSubmit(e) {
         console.log("📍 handleSubmit() in Chat.jsx");
         e.preventDefault();
-        setMsgs((msgs) => [...msgs, input]);
-
-        const newMsg = { jam: selectedRoom.id, user: user.id, text: input };
+        const newMsg = { jam: selectedRoom.id, user: user._id, text: input };
+        setMsgs((msgs) => [...msgs, newMsg]);
 
         // 💡 to server.js > io.on > socket.on
         socket.emit("sendMsg", newMsg);
@@ -68,9 +66,14 @@ function Chat({ selectedRoom, socket, user }) {
 
             <div className="chat_messages">
                 {/* pass luke msgs state down as a prop */}
-                {msgs.map((msg) => {
-                    return <Message msg={msg} user={user} />;
-                })}
+
+                {msgs.length > 0
+                    ? msgs.map((msg) => {
+                          return (
+                              <Message key={msg._id} msg={msg} user={user} />
+                          );
+                      })
+                    : null}
             </div>
             <div className="chat_input">
                 <AddCircleIcon fontSize="large" id="add-circle-icon" />
