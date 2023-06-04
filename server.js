@@ -33,8 +33,11 @@ async function storeMessage(newMsg) {
     try {
         const storeMsg = await Message.create(newMsg);
         console.log("storeMessage() success!");
+        return storeMsg;
     } catch (err) {
-        console.log(`The error from storeMessage() in server.js is: ${err}`);
+        console.log(
+            `⛔️ - The error from storeMessage() in server.js is: ${err}`
+        );
     }
 }
 
@@ -51,7 +54,7 @@ async function createJam(newRoom, jarId, user) {
         activeUser.jams.push(newJam._id);
         activeUser.save();
     } catch (err) {
-        console.log(`The error from createJam() in server.js is: ${err}`);
+        console.log(`⛔️ - The error from createJam() in server.js is: ${err}`);
     }
 }
 
@@ -64,7 +67,9 @@ async function renameJar(id, newName) {
         console.log(`renameJar() in server.js says the jar is: ${renamedJar}`);
         return renamedJar;
     } catch (err) {
-        console.log(`The error from renameJar() from server.js is: ${err}`);
+        console.log(
+            `⛔️ - The error from renameJar() from server.js is: ${err}`
+        );
     }
 }
 
@@ -76,7 +81,7 @@ app.post("/rename-jar", async (req, res) => {
         res.json(renamedJar);
     } catch (err) {
         console.log(err);
-        res.status(500).send("Error renaming jar");
+        res.status(500).send("⛔️ - Error renaming jar");
     }
 });
 
@@ -90,17 +95,11 @@ const server = app.listen(port, function () {
 
 const io = require("./config/socket").init(server);
 
-// ❌ I don't think we need to try to store rooms data in this object.
-// const rooms = {};
-
 io.on("connection", (socket) => {
     console.log(`Socket.id: ${socket.id} has connected in server.js`);
 
     socket.on("createRoom", (newRoom, jarId, user) => {
         createJam(newRoom, jarId, user);
-
-        // ❌ I don't think we need to work with the rooms object defined in server.js
-        // rooms[newRoom.socket_id] = newRoom;
 
         io.emit("roomCreated", newRoom);
     });
@@ -108,13 +107,6 @@ io.on("connection", (socket) => {
     socket.on("joinRoom", (room, user) => {
         console.log(`User ${user.username} joined room ${room.socket_id}`);
 
-        // ❌ I don't think we need to work with the rooms object defined in server.js
-        // if (!rooms[roomId]) {
-        //     return;
-        // }
-        // rooms[roomId].users.push(socket.id);
-
-        // ⭕️ Our alternative is to use the room object getting passed in from client-side, accessing relevant properties through dot notation - the room object will reflect the jam that is stored in the database
         socket.join(`${room.socket_id}`);
 
         // ❓ There is no listener in another file currently awaiting this event emitter
@@ -128,17 +120,15 @@ io.on("connection", (socket) => {
 
         if (!mongoose.Types.ObjectId.isValid(jarId)) {
             console.log(
-                '📍⚠️ socket.on("rename jar") in server.js - jarId is not a valid mongoose Object ID'
+                '⛔️ - socket.on("rename jar") in server.js - jarId is not a valid mongoose Object ID'
             );
         }
         try {
             const renamedJar = await renameJar(jarId, newJarName);
-
-            // Before this line looked like io.to(`jar:${jarId}`).emit, but our jars (channels) are not our socket rooms -- 'io.to' only sends to specific socket rooms, so it will only be useful when we're working with jams (threads)
             io.emit(`jarRenamed/${jarId}`, renamedJar);
         } catch (err) {
             console.log(
-                `The error from socket.on("renameJar") in server.js is: ${err}`
+                `⛔️ - The error from socket.on("renameJar") in server.js is: ${err}`
             );
         }
     });
@@ -157,12 +147,8 @@ io.on("connection", (socket) => {
     });
 
     socket.on("sendMsg", (newMsg) => {
-        storeMessage(newMsg);
-        // io.in(`room-${roomId}`).emit("newMsg", {
-        //     text: msg,
-        //     sender: socket.id,
-        // });
-        socket.broadcast.emit("newMsg", newMsg);
+        const returnMsg = storeMessage(newMsg);
+        socket.broadcast.emit("newMsg", returnMsg);
     });
 
     // ❌ this listener needs to be refactored utilizing the socket_id attribute of the jam object instead of the rooms object defined in server.js - though perhaps defining a user object within this file to be updated by socket events within server.js might be the way to access the necessary room IDs that need to be left upon disconnecting. Although, a user should only be within one room at a time, so only one room should need to be left when disconnect happens
