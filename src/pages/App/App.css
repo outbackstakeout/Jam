@@ -1,7 +1,7 @@
 .container {
   grid-template-columns: 5% 15% 65% 1fr;
   display: grid;
-  gap: 5px;
+  gap: 0.5px;
   height: 100vh;
   overflow: hidden;
   margin-right: 5px;
