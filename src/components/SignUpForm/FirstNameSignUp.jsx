@@ -32,5 +32,5 @@ export default function FirstNameSignUp({
                 <button className="signin-form-button" type="submit">Next</button>
             </form>
         </div>
-    );
-}
+
+)};

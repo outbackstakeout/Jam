@@ -217,10 +217,10 @@ function Sidebar({
             <p>Stream</p>
           </div>
 
-          <div className="sidebar_voiceIcons">
+          {/* <div className="sidebar_voiceIcons">
             <InfoIcon />
             <CallIcon />
-          </div>
+          </div> */}
         </div>
         <div className="sidebar_profile">
           <Avatar src={user.profile_picture} />
@@ -228,11 +228,11 @@ function Sidebar({
             <h3>@{user.username}</h3>
             <p>#thisismyID</p>
           </div>
-          <div className="sidebar_profileIcons">
+          {/* <div className="sidebar_profileIcons">
             <MicIcon />
             <HeadsetIcon />
             <SettingsIcon />
-          </div>
+          </div> */}
         </div>
       </div>
     );

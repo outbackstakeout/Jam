@@ -15,13 +15,13 @@ export default function AuthPage({ setUser }) {
     <div className="login">
       <div className="overlay-container">
         <div className="overlay">
-          <div className="overlay-left">
+          {/* <div className="overlay-left">
             <h1>Welcome back!</h1>
             <p>
               To keep connected with us please login with your personal info
             </p>
             <button id="signIn">Sign In</button>
-          </div>
+          </div> */}
           <div className="overlay-right">
             <h1>Hello Friend!</h1>
             <p>Set up your account and lets start this journey together!</p>

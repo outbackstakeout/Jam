@@ -24,13 +24,13 @@ body {
                 0 10px 10px rgba(255,0,0,.25)
 }
 
-.loginForm, .signupForm {
+/* .loginForm, .signupForm {
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     transition: all 0.6s ease-in-out;
-}
+} */
 
 .login input {
     background: #eee;
@@ -57,7 +57,6 @@ body {
 }
 
 form {
-    /* background: #fff; */
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -124,10 +123,6 @@ button:active{
     align-items: center;
     justify-content: flex-start;
 }
-/* .form-container form input{
-    width: 70%;
-} */
-
 
 
 #signIn, #signUp{

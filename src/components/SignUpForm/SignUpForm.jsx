@@ -8,6 +8,7 @@ import EmailSignUp from "./EmailSignUp";
 import PasswordSignUp from "./PasswordSignUp";
 import '../../pages/AuthPage/AuthPage.css'
 import PfpSignUp from "./PfpSignUp";
+import SuccessSignUp from "./SuccessSignUp";
 
 export default function SignUpForm({ setUser }) {
     const [formNumber, setFormNumber] = useState(1);
@@ -103,8 +104,9 @@ export default function SignUpForm({ setUser }) {
                     handleSubmit={handleSubmit}
                 />
             );
-        }
-    }
-
+        } else if (formNumber === 7) {
+            return <SuccessSignUp />;
+        };
     return <div>{whichForm()}</div>;
-}
+    }
+};
