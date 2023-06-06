@@ -1,6 +1,6 @@
 {
   "name": "mern-infrastructure",
-  "homepage": "http://theforeveroptimist.github.io/Jam-Chat",
+  "homepage": "https://jam-chat.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
