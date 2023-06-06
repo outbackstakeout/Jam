@@ -1,10 +1,28 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import '../ProfilePage/ProfilePage.css'
 import MessageIcon from "../../images/icons/message-icon.png"
 import BackIcon from "../../images/icons/backIcon.png"
 import ProfilePicture from "../../images/icons/profilepicdemo.png"
+import { useNavigate } from 'react-router-dom'
 
 export default function ProfilePage(props) {
+    const navigate = useNavigate();
+
+    // useEffect(() => {
+
+    // }, [navigate]);
+
+    const handleSignOutClick = () => {
+        localStorage.removeItem('token');
+
+        navigate(
+          "/AuthPage"
+        );
+
+        window.location.reload();
+    }
+
+
     return (
       <div className="profile-page-container">
         <div className="profile-page-cover">
@@ -30,7 +48,7 @@ export default function ProfilePage(props) {
             </p>
             <p className="users_email">{props.user.email}</p>
 
-            <button id="signOut"> Sign Out </button>
+            <button id="signOut" onClick={handleSignOutClick}> Sign Out </button>
           </div>
         </div>
       </div>
